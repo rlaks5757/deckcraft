@@ -12,9 +12,13 @@
 //!
 //! Only the parent window on the page's own origin is heard or answered. With a parent on another
 //! origin there is no bridge: the app runs as if unframed. In host mode the page starts with an
-//! empty presentation instead of the sample deck. A save in DeckCraft's own format
-//! (`.deckcraft`, what Save downloads when the presentation has no file name) is converted to
-//! `.pptx` before it goes to the parent.
+//! empty presentation instead of the sample deck.
+//!
+//! Save of a presentation with no file name (and Save As with the DeckCraft type) hands the parent
+//! a `.pptx` instead of DeckCraft's own format (`Services::save_as_pptx`), and counts as saved. An
+//! explicit File › Export › DeckCraft is sent unchanged as `.deckcraft` and doesn't mark the
+//! presentation saved. If handing a file to the parent fails, the user sees a message in the app
+//! and the parent gets `deckcraft:failed { error }`; the presentation stays unsaved.
 
 use std::cell::{Cell, RefCell};
 use std::rc::Rc;
@@ -42,6 +46,8 @@ pub struct Bridge {
     saved: Rc<RefCell<Vec<String>>>,
     /// The unsaved-changes state last reported to the parent.
     reported: Rc<Cell<Option<bool>>>,
+    /// Why files couldn't be handed to the parent since the last frame.
+    failures: Rc<RefCell<Vec<String>>>,
 }
 
 impl Bridge {
@@ -57,7 +63,7 @@ impl Bridge {
         if parent.location().origin().ok()? != origin {
             return None;
         }
-        Some(Self { window, parent, origin, opened: Rc::default(), saved: Rc::default(), reported: Rc::default() })
+        Some(Self { window, parent, origin, opened: Rc::default(), saved: Rc::default(), reported: Rc::default(), failures: Rc::default() })
     }
 
     /// Send saved and exported files to the parent instead of downloading them, and hear files
@@ -65,9 +71,13 @@ impl Bridge {
     pub fn connect(&self, services: &mut Services, ctx: egui::Context) {
         self.listen(ctx);
         let bridge = self.clone();
+        services.save_as_pptx = true;
         services.download = Some(Box::new(move |name: &str, bytes: &[u8]| {
             if let Err(e) = bridge.post_save(name, bytes) {
                 log::error!("couldn't hand {name} to the page: {e}");
+                // The download callback can't reach the app; `sync` shows it after the frame.
+                bridge.failures.borrow_mut().push(format!("Couldn't hand {name} to the page: {e}"));
+                bridge.post_failed(&e);
             }
         }));
     }
@@ -99,6 +109,9 @@ impl Bridge {
     /// After each frame: a presentation handed to the parent this frame counts as saved under the
     /// name it was saved as, and the parent hears when unsaved changes appear or go away.
     pub fn sync(&self, app: &mut SlideApp) {
+        for failure in std::mem::take(&mut *self.failures.borrow_mut()) {
+            app.notify(failure);
+        }
         let saved = std::mem::take(&mut *self.saved.borrow_mut());
         if let Some(name) = saved.iter().rev().find(|name| is_presentation(name))
             && let Some(doc) = app.session.active_mut()
@@ -115,15 +128,8 @@ impl Bridge {
     }
 
     fn post_save(&self, path: &str, bytes: &[u8]) -> Result<(), String> {
-        let mut name = std::path::Path::new(path).file_name().map(|n| n.to_string_lossy().to_string()).unwrap_or_else(|| path.to_string());
-        let mut bytes = bytes.to_vec();
-        // Save without a file name downloads DeckCraft's own format; the parent stores .pptx.
-        if let Some(stem) = name.strip_suffix(".deckcraft") {
-            let (doc, _) = deckcraft_engine::cmd::file::open_checked(&name, &bytes).map_err(|e| e.to_string())?;
-            bytes = deckcraft_engine::cmd::file::save_bytes(&doc, "pptx").map_err(|e| e.to_string())?;
-            name = format!("{stem}.pptx");
-        }
-        let buffer = js_sys::Uint8Array::from(bytes.as_slice()).buffer();
+        let name = std::path::Path::new(path).file_name().map(|n| n.to_string_lossy().to_string()).unwrap_or_else(|| path.to_string());
+        let buffer = js_sys::Uint8Array::from(bytes).buffer();
         let message = message(&[("type", "deckcraft:save".into()), ("name", name.as_str().into()), ("bytes", buffer.clone().into())])
             .ok_or_else(|| "couldn't build the message".to_string())?;
         self.parent

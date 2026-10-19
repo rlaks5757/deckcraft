@@ -211,6 +211,9 @@ pub struct Services {
     pub open_async: Option<OpenAsyncFn>,
     /// Hand bytes to the user as a named file (browser download).
     pub download: Option<DownloadFn>,
+    /// Web Save (no file name) hands over a `.pptx` instead of DeckCraft's own format. Export
+    /// as DeckCraft is unaffected. Set by a host page that stores the presentation itself.
+    pub save_as_pptx: bool,
     pub inbox: Option<Inbox>,
     /// Image on the system clipboard (PNG bytes), when the host can read one.
     pub clipboard_image: Option<Box<dyn FnMut() -> Option<Vec<u8>>>>,
@@ -1280,7 +1283,8 @@ impl SlideApp {
 
     pub fn save_as_dialog(&mut self, format: &str) {
         let name = self.session.active().map(|d| d.title()).unwrap_or_else(|| "Presentation".into());
-        let ext = if format == "pptx" { "pptx" } else { "deckcraft" };
+        let web_pptx = self.services.pick_save.is_none() && self.services.save_as_pptx;
+        let ext = if format == "pptx" || web_pptx { "pptx" } else { "deckcraft" };
         let suggested = format!("{name}.{ext}");
         if let Some(pick) = self.services.pick_save.as_mut() {
             if let Some(path) = pick(&suggested) {

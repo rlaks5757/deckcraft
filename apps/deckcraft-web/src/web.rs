@@ -55,7 +55,7 @@ pub fn start() {
                     } else if let Err(e) = app.run("file.new", serde_json::json!({})) {
                         log::error!("new presentation: {e}");
                     }
-                    if q.contains("show") {
+                    if q.contains("show") && app_bridge.is_none() {
                         app.start_show(0, false);
                     }
                     if let Some(bridge) = &app_bridge {

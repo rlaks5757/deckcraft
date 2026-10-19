@@ -44,7 +44,8 @@ pub fn instance_id() -> u64 {
     *ID.get_or_init(|| {
         use std::hash::{BuildHasher, Hasher};
         let mut h = std::collections::hash_map::RandomState::new().build_hasher();
-        // wasm has no pids (`process::id` panics there); RandomState already seeds from the host.
+        // wasm has no pids (`process::id` panics there). Its RandomState may be unseeded, which is
+        // fine: the web has no shared recovery folder to keep instances apart in.
         #[cfg(not(target_arch = "wasm32"))]
         h.write_u32(std::process::id());
         #[cfg(not(target_arch = "wasm32"))]
