@@ -2,7 +2,7 @@
 //! `docs/integration.md`). With `CRAFT_FONTS_DIR=<checkout>` the fonts in its
 //! `fonts/latin-manifest.txt` (presentation fonts) and `fonts/manifest.txt` are embedded as
 //! `CRAFT_FONTS`, Latin first; unset, `CRAFT_FONTS` is empty. Web (wasm32) builds embed only Inter
-//! Regular/Bold and BIZ UDPGothic Regular, to stay within the web size budget. It only reads the
+//! Regular/Bold, BIZ UDPGothic Regular and any `Kore` face, to stay within the web size budget. It only reads the
 //! local checkout: no network.
 use std::fmt::Write as _;
 use std::path::PathBuf;
@@ -57,7 +57,9 @@ fn manifest(dir: &std::path::Path, manifest: &std::path::Path) -> Result<String,
         if EXCLUDED_FAMILIES.contains(family) {
             continue;
         }
-        if wasm && !matches!((*family, *style), ("BIZ UDPGothic", "Regular") | ("Inter", "Regular" | "Bold" | "Variable")) {
+        // The web build also keeps any Korean face: Hangul draws as boxes without one.
+        let korean = scripts.split(',').any(|s| s.trim() == "Kore");
+        if wasm && !korean && !matches!((*family, *style), ("BIZ UDPGothic", "Regular") | ("Inter", "Regular" | "Bold" | "Variable")) {
             continue;
         }
         let path = dir.join(file).canonicalize().map_err(|e| format!("{file}: {e}"))?;

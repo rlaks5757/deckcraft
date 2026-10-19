@@ -33,7 +33,12 @@ pub fn write_file(path: &str, bytes: &[u8]) -> Result<(), String> {
     // temporary bytes.
     let mut attempts = 0;
     let (tmp, mut file) = loop {
-        let tmp = format!("{path}.{}.{}.saving", std::process::id(), COUNTER.fetch_add(1, Ordering::Relaxed));
+        // wasm has no pids (`process::id` panics there).
+        #[cfg(not(target_arch = "wasm32"))]
+        let pid = std::process::id();
+        #[cfg(target_arch = "wasm32")]
+        let pid = 0;
+        let tmp = format!("{path}.{pid}.{}.saving", COUNTER.fetch_add(1, Ordering::Relaxed));
         match std::fs::OpenOptions::new().write(true).create_new(true).open(&tmp) {
             Ok(f) => break (tmp, f),
             Err(e) if e.kind() == std::io::ErrorKind::AlreadyExists && attempts < 16 => attempts += 1,
