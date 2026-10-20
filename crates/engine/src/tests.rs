@@ -4072,3 +4072,33 @@ fn a_shape_in_front_of_edited_text_takes_the_click() {
     let st = s.doc().unwrap();
     assert!(st.selection.text.as_ref().is_none_or(|t| t.shape.0 as u64 != tb), "the click on the member in front left the text: {:?}", st.selection);
 }
+
+/// The host's "insert a loop table" request: a header row and a loop row whose start and end
+/// markers sit in different cells of the same row, placed in the middle of the slide.
+#[test]
+fn insert_loop_table_lands_centered_saves_and_undoes() {
+    let mut s = session();
+    let data = json!([["Name", "Qty"], ["{{loop items}}{{name}}", "{{qty}}{{endloop}}"]]);
+    assert!(!s.doc().unwrap().is_dirty());
+    let r = s.execute("insert.table", &json!({"rows": 2, "cols": 2, "data": data})).unwrap();
+    let id = deckcraft_model::ShapeId(r["id"].as_u64().unwrap() as u32);
+    assert!(s.doc().unwrap().is_dirty());
+    let size = s.doc().unwrap().doc.slide_size;
+    let x = s.doc().unwrap().shape(id).unwrap().xfrm.unwrap();
+    assert!(((x.x + x.w / 2.0) - size.width / 2.0).abs() < 1.0 && ((x.y + x.h / 2.0) - size.height / 2.0).abs() < 1.0, "{x:?}");
+    let texts = |t: &deckcraft_model::Table| -> Vec<Vec<String>> { t.rows.iter().map(|r| r.cells.iter().map(|c| c.text.text()).collect()).collect() };
+    let expected = [["Name", "Qty"], ["{{loop items}}{{name}}", "{{qty}}{{endloop}}"]].map(|r| r.map(String::from).to_vec()).to_vec();
+    assert_eq!(texts(&table_of(&s, id)), expected);
+    // One undo removes the table.
+    s.execute("edit.undo", &json!({})).unwrap();
+    assert!(s.doc().unwrap().shape(id).is_none());
+    s.execute("edit.redo", &json!({})).unwrap();
+    // The table keeps its cells through a .pptx save and open.
+    let bytes = cmd::file::save_bytes(&s.doc().unwrap().doc, "pptx").unwrap();
+    s.execute("file.openBytes", &json!({"name": "t.pptx", "data": cmd::base64_encode(&bytes)})).unwrap();
+    let back = s.doc().unwrap().doc.slides.iter().flat_map(|sl| sl.shapes.iter()).find_map(|sh| match &sh.kind {
+        deckcraft_model::ShapeKind::Table(t) => Some(t.clone()),
+        _ => None,
+    });
+    assert_eq!(texts(&back.expect("a table after save and open")), expected);
+}

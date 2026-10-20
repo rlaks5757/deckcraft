@@ -15,6 +15,7 @@ pub mod dialogs;
 pub mod doc_window;
 pub mod eyedropper;
 pub mod fillui;
+pub mod host_table;
 pub mod icons;
 pub mod media;
 pub mod menus;
