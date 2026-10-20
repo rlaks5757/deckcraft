@@ -95,6 +95,29 @@ mod tests {
     }
 
     #[test]
+    fn no_open_presentation_is_a_failure_not_a_panic() {
+        let mut a = SlideApp::new(deckcraft_engine::Session::new(), Default::default());
+        assert!(a.session.doc().is_err());
+        assert!(insert_table(&mut a, &rows(&[&["a"]])).is_err());
+    }
+
+    #[test]
+    fn the_table_is_on_the_current_slide_and_the_header_row_is_first() {
+        let mut a = app();
+        a.run("slide.new", serde_json::json!({})).unwrap();
+        let current = a.session.doc().unwrap().selection.slide;
+        assert!(current > 0);
+        insert_table(&mut a, &rows(&[&["Name", "Qty"], &["{{loop items}}{{name}}", "{{qty}}{{endloop}}"]])).unwrap();
+        let st = a.session.doc().unwrap();
+        let tables: Vec<_> = st.doc.slides.iter().enumerate().flat_map(|(i, sl)| sl.shapes.iter().map(move |s| (i, s))).filter(|(_, s)| matches!(s.kind, deckcraft_model::ShapeKind::Table(_))).collect();
+        assert_eq!(tables.len(), 1);
+        assert_eq!(tables[0].0, current);
+        let deckcraft_model::ShapeKind::Table(t) = &tables[0].1.kind else { unreachable!() };
+        assert_eq!(t.cell(0, 0).unwrap().text.text(), "Name");
+        assert!(t.cell(1, 1).unwrap().text.text().ends_with("{{endloop}}"));
+    }
+
+    #[test]
     fn line_breaks_in_a_cell_become_spaces() {
         let data = table_data(&rows(&[&["a\nb\tc"]])).unwrap();
         assert_eq!(data[0][0], "a b c");
