@@ -114,7 +114,7 @@ fn small_icon_button(ui: &mut Ui, icon: Icon, label: &str, enabled: bool) -> egu
     }
     ui.painter().rect_stroke(rect, CornerRadius::same(4), Stroke::new(1.0, t.border), egui::StrokeKind::Inside);
     icons::paint(ui.painter(), rect.shrink(4.0), icon, t.text, !enabled);
-    resp.on_hover_text(label)
+    resp.on_hover_text(tl!(label))
 }
 
 pub fn show(app: &mut SlideApp, ui: &mut Ui) {
@@ -126,10 +126,10 @@ pub fn show(app: &mut SlideApp, ui: &mut Ui) {
     let has_sel = !selected.is_empty();
 
     ui.horizontal(|ui| {
-        if ui.add(egui::Button::new("Show All").stroke(Stroke::new(1.0, t.border))).clicked() {
+        if ui.add(egui::Button::new(tl!("Show All")).stroke(Stroke::new(1.0, t.border))).clicked() {
             run(app, "selection.showAll", json!({}));
         }
-        if ui.add(egui::Button::new("Hide All").stroke(Stroke::new(1.0, t.border))).clicked() {
+        if ui.add(egui::Button::new(tl!("Hide All")).stroke(Stroke::new(1.0, t.border))).clicked() {
             run(app, "selection.hideAll", json!({}));
         }
         ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
@@ -219,10 +219,10 @@ pub fn show(app: &mut SlideApp, ui: &mut Ui) {
         icons::paint(&painter, eye, if row.hidden { Icon::EyeOff } else { Icon::Eye }, ink, false);
         icons::paint(&painter, lock, if row.locked { Icon::Lock } else { Icon::Unlock }, ink, false);
         let eye_resp = ui.interact(eye.expand(3.0), ui.id().with(("eye", row.id)), Sense::click());
-        let eye_label = format!("{} {}", if row.hidden { "Show" } else { "Hide" }, row.name);
+        let eye_label = format!("{} {}", if row.hidden { tl!("Show") } else { tl!("Hide") }, row.name);
         eye_resp.widget_info(|| WidgetInfo::labeled(WidgetType::Button, true, &eye_label));
         let lock_resp = ui.interact(lock.expand(3.0), ui.id().with(("lock", row.id)), Sense::click());
-        let lock_label = format!("{} {}", if row.locked { "Unlock" } else { "Lock" }, row.name);
+        let lock_label = format!("{} {}", if row.locked { tl!("Unlock") } else { tl!("Lock") }, row.name);
         lock_resp.widget_info(|| WidgetInfo::labeled(WidgetType::Button, true, &lock_label));
         if eye_resp.clicked() {
             run(app, "shape.visible", json!({"id": row.id, "visible": row.hidden}));
@@ -375,22 +375,22 @@ fn context_menu(app: &mut SlideApp, resp: &egui::Response, row: &Row) {
             ("Send Backward", "arrange.sendBackward"),
             ("Send to Back", "arrange.sendToBack"),
         ] {
-            if ui.button(label).clicked() {
+            if ui.button(tl!(label)).clicked() {
                 run(app, cmd, json!({"ids": [row.id]}));
                 ui.close();
             }
         }
         ui.separator();
-        if ui.button("Rename").clicked() {
+        if ui.button(tl!("Rename")).clicked() {
             app.selpane.renaming = Some((row.id, row.name.clone()));
             app.selpane.rename_started = false;
             ui.close();
         }
-        if ui.button(if row.hidden { "Show" } else { "Hide" }).clicked() {
+        if ui.button(if row.hidden { tl!("Show") } else { tl!("Hide") }).clicked() {
             run(app, "shape.visible", json!({"id": row.id, "visible": row.hidden}));
             ui.close();
         }
-        if ui.button(if row.locked { "Unlock" } else { "Lock" }).clicked() {
+        if ui.button(if row.locked { tl!("Unlock") } else { tl!("Lock") }).clicked() {
             run(app, "shape.lock", json!({"id": row.id}));
             ui.close();
         }

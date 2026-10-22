@@ -6,6 +6,13 @@
 #![deny(clippy::unwrap_used, clippy::expect_used, clippy::panic, clippy::unimplemented, clippy::todo, clippy::unreachable)]
 #![forbid(unsafe_code)]
 
+/// `tl!("English")`: the string in the interface language (see [`i18n`]).
+macro_rules! tl {
+    ($s:expr) => {
+        $crate::i18n::t($s)
+    };
+}
+
 pub mod animtimeline;
 pub mod backstage;
 pub mod canvas;
@@ -14,6 +21,7 @@ pub mod credits;
 pub mod dialogs;
 pub mod doc_window;
 pub mod eyedropper;
+pub mod i18n;
 pub mod fillui;
 pub mod host_table;
 pub mod host_lock;
@@ -673,13 +681,14 @@ impl SlideApp {
     }
 
     pub fn set_status(&mut self, msg: impl Into<String>) {
-        self.status = Some((msg.into(), now_ms()));
+        let msg = msg.into();
+        self.status = Some((tl!(&msg).to_string(), now_ms()));
     }
 
     /// A message that must be seen wherever the user is: a toast, which also shows over the start
     /// screen and the File tab, where there is no status bar.
     pub fn notify(&mut self, msg: impl Into<String>) {
-        self.toast = Some(toast::Toast { text: msg.into(), at: now_ms() });
+        self.toast = Some(toast::Toast { text: tl!(&msg.into()).to_string(), at: now_ms() });
     }
 
     /// The transient status message while it is fresh; clears it once stale. Both the status bar
@@ -841,7 +850,7 @@ impl SlideApp {
             "deckcraft" => ("deckcraft", "deckcraft", false),
             "gif" => ("gif", "gif", false),
             other => {
-                self.set_status(format!("DeckCraft can't export “{other}”"));
+                self.set_status(i18n::fmt(tl!("DeckCraft can't export “{name}”"), &[("name", &other)]));
                 return false;
             }
         };
@@ -854,7 +863,7 @@ impl SlideApp {
             }
             return match self.run("file.export", params) {
                 Ok(_) => {
-                    self.set_status(format!("Exported {path}"));
+                    self.set_status(i18n::fmt(tl!("Exported {path}"), &[("path", &path)]));
                     true
                 }
                 Err(_) => false,
@@ -892,7 +901,7 @@ impl SlideApp {
                 false
             }
             (Ok(_), None) => {
-                self.set_status("Saving a copy needs a file picker, which this window doesn't have.");
+                self.set_status(tl!("Saving a copy needs a file picker, which this window doesn't have."));
                 false
             }
         }
@@ -921,7 +930,7 @@ impl SlideApp {
         match self.run("file.export", params) {
             Ok(_) => {
                 self.open_url(&format!("file:///{}", path.replace('\\', "/").trim_start_matches('/')));
-                self.set_status("Opened the presentation as a PDF to print");
+                self.set_status(tl!("Opened the presentation as a PDF to print"));
                 true
             }
             Err(_) => false,
@@ -1124,7 +1133,7 @@ impl SlideApp {
                     self.pick_and_insert("theme", "design.browseTheme");
                 } else {
                     // The browser's asynchronous picker would open the file as a new document.
-                    self.set_status("Browse for Themes needs the desktop app for now".to_string());
+                    self.set_status(tl!("Browse for Themes needs the desktop app for now").to_string());
                 }
             }
             "app.qat" => return qat::command(self, p),
@@ -1142,7 +1151,7 @@ impl SlideApp {
                     self.pick_and_insert("open", "review.compare");
                 } else {
                     // The browser's asynchronous picker would open the file as a new document.
-                    self.set_status("Compare needs the desktop app for now".to_string());
+                    self.set_status(tl!("Compare needs the desktop app for now").to_string());
                 }
             }
             "app.dialog" => {
@@ -1253,7 +1262,7 @@ impl SlideApp {
         };
         if timeline.is_empty() {
             self.anim_preview = None;
-            self.set_status("This slide has no animations");
+            self.set_status(tl!("This slide has no animations"));
             return Ok(json!({"playing": false}));
         }
         if matches!(self.ui.view, ViewMode::Sorter | ViewMode::NotesPage) {
@@ -1262,7 +1271,7 @@ impl SlideApp {
         self.close_backstage();
         let duration = timeline.total_duration();
         self.anim_preview = Some(AnimPreview { uid, slide, slide_ptr: ptr, started: None, elapsed: 0.0, timeline });
-        self.set_status("Previewing animations");
+        self.set_status(tl!("Previewing animations"));
         Ok(json!({"playing": true, "slide": slide, "duration": duration}))
     }
 
@@ -1329,12 +1338,12 @@ impl SlideApp {
     /// current one (desktop only: the browser picker opens what it picks as a document).
     fn pick_and_reuse(&mut self, keep: bool) {
         let Some(pick) = self.services.pick_open.as_mut() else {
-            self.set_status("Reuse Slides needs the desktop app".to_string());
+            self.set_status(tl!("Reuse Slides needs the desktop app").to_string());
             return;
         };
         let Some(path) = pick("open") else { return };
         match self.session.execute("slide.reuse", &json!({"path": path, "keepFormatting": keep})) {
-            Ok(r) => self.set_status(format!("Inserted {} slides from {path}", r["slides"])),
+            Ok(r) => self.set_status(i18n::fmt(tl!("Inserted {n} slides from {path}"), &[("n", &r["slides"].to_string()), ("path", &path)])),
             Err(e) => self.set_status(e.to_string()),
         }
     }
@@ -1387,7 +1396,7 @@ impl SlideApp {
             if let Some(path) = pick(&suggested) {
                 match self.session.execute("file.saveAs", &json!({"path": path})) {
                     Ok(_) => {
-                        self.set_status(format!("Saved {path}"));
+                        self.set_status(i18n::fmt(tl!("Saved {path}"), &[("path", &path)]));
                         self.ui.recent.retain(|p| *p != path);
                         self.ui.recent.insert(0, path);
                     }
@@ -1421,7 +1430,7 @@ impl SlideApp {
     pub fn save(&mut self) {
         if self.session.active().and_then(|d| d.path.clone()).is_some() {
             match self.session.execute("file.save", &json!({})) {
-                Ok(_) => self.set_status("Saved"),
+                Ok(_) => self.set_status(tl!("Saved")),
                 Err(e) => self.set_status(e.to_string()),
             }
         } else {
@@ -1691,7 +1700,7 @@ impl SlideApp {
             if self.session.documents().iter().any(|d| d.is_dirty())
                 && let Err(e) = self.session.execute("file.recovery.save", &json!({}))
             {
-                self.set_status(format!("Couldn't save AutoRecover information: {e}"));
+                self.set_status(i18n::fmt(tl!("Couldn't save AutoRecover information: {error}"), &[("error", &e.to_string())]));
             }
         }
         // On the web, dropped files can only be read asynchronously: the host reads them and
