@@ -9,6 +9,8 @@ use super::*;
 use crate::SlideApp;
 
 /// Lowest edge a ribbon button may reach (the ribbon is 100 px tall under the tab strip).
+/// Where the ribbon clips: the window edge less the card margin (8) and its inner padding (10).
+const CLIP_RIGHT: f32 = 1280.0 - 18.0;
 const RIBBON_BOTTOM: f32 = 175.0;
 use deckcraft_engine::Session;
 
@@ -114,7 +116,7 @@ fn ribbon_buttons(h: &mut egui_kittest::Harness<'static, SlideApp>, tab: &str, f
 
 /// With Hangul measured in NanumGothic, no ribbon button of any tab overlaps another or leaves the
 /// ribbon, and the buttons end no further right than the English ones do (the Home and Insert
-/// tabs are wider than the window in English too, and scroll).
+/// tabs are wider than the window in English too; the ribbon clips what does not fit).
 #[test]
 fn korean_ribbon_buttons_keep_clear_of_each_other() {
     let mut en = app_in(Lang::EN);
@@ -124,7 +126,7 @@ fn korean_ribbon_buttons_keep_clear_of_each_other() {
         let rects = ribbon_buttons(&mut ko, tab, i == 0);
         assert!(rects.len() >= 4, "{tab}: found only {} ribbon buttons", rects.len());
         let right = rects.iter().map(|r| r.right()).fold(0.0, f32::max);
-        assert!(right <= english[i].max(1280.0) + 8.0, "{tab}: the buttons reach x={right}, English reaches {}", english[i]);
+        assert!(right <= english[i].max(CLIP_RIGHT) + 2.0, "{tab}: the buttons reach x={right}, English reaches {}", english[i]);
         for (j, a) in rects.iter().enumerate() {
             assert!(a.bottom() <= RIBBON_BOTTOM, "a button runs out of the ribbon on {tab}: {a:?}");
             for b in &rects[j + 1..] {

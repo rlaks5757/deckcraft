@@ -3250,7 +3250,7 @@ fn find_dialog(app: &mut SlideApp, ui: &mut Ui, d: &mut Dialog) -> bool {
                 p["with"] = json!(d.get("with", ""));
                 let msg = match app.session.execute("text.replace", &p) {
                     Ok(v) => i18n::fmt(tl!("Replaced {n} occurrence(s)."), &[("n", &v.get("replaced").and_then(Value::as_u64).unwrap_or(0).to_string())]),
-                    Err(_) => format!("DeckCraft can't find “{text}”."),
+                    Err(_) => i18n::fmt(tl!("DeckCraft can't find “{text}”."), &[("text", &text)]),
                 };
                 d.fields.insert("status".into(), msg);
                 d.fields.remove("cur");
@@ -3265,7 +3265,7 @@ fn find_dialog(app: &mut SlideApp, ui: &mut Ui, d: &mut Dialog) -> bool {
     if find_next {
         let list = app.session.execute("text.find", &q).ok().and_then(|v| v.as_array().cloned()).unwrap_or_default();
         if list.is_empty() {
-            d.fields.insert("status".into(), format!("DeckCraft can't find “{text}”."));
+            d.fields.insert("status".into(), i18n::fmt(tl!("DeckCraft can't find “{text}”."), &[("text", &text)]));
             d.fields.remove("cur");
         } else {
             let n = d.get("next", "0").parse::<usize>().unwrap_or(0) % list.len();
