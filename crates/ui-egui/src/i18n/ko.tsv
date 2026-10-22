@@ -1,12 +1,14 @@
 # Korean interface catalog. Format: context<TAB>English<TAB>Korean; the context column is empty.
 	  Present  	  슬라이드 쇼  
+	 (not checked)	 (검사 안 함)
+	 (notes)	 (노트)
 	 — Edited	 — 편집됨
 	(dictionary)	(사전)
 	(missing)	(없음)
 	(no spelling suggestions)	(맞춤법 제안 없음)
 	(none)	(없음)
 	+ Add	+ 추가
-	+ New Comment	+ 새 설명
+	+ New Comment	+ 새 메모
 	+ Row	+ 행
 	+ Series	+ 계열
 	1 Column	1열
@@ -42,6 +44,7 @@
 	Accent 6	강조 6
 	Accent Process	강조 프로세스
 	Accept	수락
+	Accept All	모두 수락
 	Accept All ({n})	모두 수락({n})
 	Accept Revision	변경 내용 수락
 	Accept\nAll	모두\n수락
@@ -88,7 +91,7 @@
 	Add a title	제목 추가
 	Add a title with a picture or some text to get layout ideas.	그림이나 텍스트가 있는 제목을 추가하면 레이아웃 아이디어를 볼 수 있습니다.
 	Add an author	작성자 추가
-	Add comments	설명 추가
+	Add comments	메모 추가
 	Add to Dictionary	사전에 추가
 	Add to Quick Access Toolbar	빠른 실행 도구 모음에 추가
 	Add\nAnimation	애니메이션\n추가
@@ -144,6 +147,7 @@
 	Apply Animation	애니메이션 적용
 	Apply Design Idea	디자인 아이디어 적용
 	Apply To All	모두 적용
+	Apply only to this picture	이 그림에만 적용
 	Apply to All	모두 적용
 	Apply\nTo All	모두\n적용
 	Arc	호
@@ -179,7 +183,7 @@
 	Arrow: Up-Down	화살표: 위쪽/아래쪽
 	Arrows	화살표
 	Arrows at both ends	양쪽 화살표
-	Artistic Effects	예술 효과
+	Artistic Effects	꾸밈 효과
 	Artistic\nEffects	꾸밈\n효과
 	As One Object	하나의 개체로
 	As:	형식:
@@ -198,6 +202,7 @@
 	Back	뒤로
 	Back (Esc)	뒤로(Esc)
 	Background	배경
+	Background Styles	배경 스타일
 	Background\nStyles	배경\n스타일
 	Backspace	백스페이스
 	Banded Columns	줄무늬 열
@@ -392,8 +397,8 @@
 	Combine	결합
 	Combo	콤보
 	Command Palette	명령 팔레트
-	Comment	댓글
-	Comments	댓글
+	Comment	메모
+	Comments	메모
 	Commit Composition	입력 확정
 	Commits	커밋
 	Community Links	커뮤니티 링크
@@ -407,7 +412,9 @@
 	Complementary Color	보색
 	Compose Text	텍스트 입력
 	Compound type	복합 선 종류
+	Compress	압축
 	Compress Pictures	그림 압축
+	Compression options	압축 옵션
 	Connect Shapes	도형 연결
 	Connection Sites	연결 지점
 	Connector: Curved	연결선: 곡선
@@ -519,7 +526,7 @@
 	Delay:	지연:
 	Delete	삭제
 	Delete Columns	열 삭제
-	Delete Comment	댓글 삭제
+	Delete Comment	메모 삭제
 	Delete Guide	안내선 삭제
 	Delete Layout	레이아웃 삭제
 	Delete Point	점 삭제
@@ -528,6 +535,7 @@
 	Delete Slide	슬라이드 삭제
 	Delete Table	표 삭제
 	Delete Text	텍스트 삭제
+	Delete cropped areas of pictures	그림의 잘린 영역 삭제
 	Demote	수준 내리기
 	Depth	깊이
 	Desaturate	채도 낮추기
@@ -594,9 +602,10 @@
 	Duplicate	복제
 	Duplicate Selected Slides	선택한 슬라이드 복제
 	Duplicate Slide	슬라이드 복제
-	Duration handle {}	재생 시간 핸들 {}
+	Duration handle {n}	재생 시간 핸들 {n}
 	Duration:	재생 시간:
 	Dynamic Content	동적 콘텐츠
+	E-mail (96 ppi): minimise document size for sharing	전자 메일(96ppi): 공유를 위해 문서 크기 최소화
 	Edit	편집
 	Edit Alt Text…	대체 텍스트 편집…
 	Edit Data	데이터 편집
@@ -657,7 +666,6 @@
 	Ferris Wheel	대관람차
 	File	파일
 	File (Alt+F)	파일(Alt+F)
-	File › {} needs an open presentation	파일 › {}은(는) 열린 프레젠테이션이 필요합니다
 	Fill	채우기
 	Fill & Line	채우기 및 선
 	Fill Color	채우기 색
@@ -736,12 +744,14 @@
 	Footer	바닥글
 	Footer Placeholder	바닥글 개체 틀
 	Footers	바닥글
+	For rectangles and rounded rectangles	사각형과 둥근 사각형에서 사용할 수 있습니다
 	Foreground	전경
 	Format	서식
 	Format Background	배경 서식
 	Format Background…	배경 서식…
 	Format Painter	서식 복사
 	Format Painter (double-click to keep it on)	서식 복사(두 번 클릭하면 계속 유지)
+	Format Pane	서식 창
 	Format Shape	도형 서식
 	Format Shape…	도형 서식…
 	Format\nBackground	배경\n서식
@@ -753,11 +763,12 @@
 	Frame Slides	슬라이드에 테두리
 	Frame shape	프레임 도형
 	Freeform	자유형
-	Freeform {}	자유형 {}
 	Freeform: Scribble	자유형: 낙서
 	Freeform: Shape	자유형: 도형
 	French (France)	프랑스어(프랑스)
+	From Beginning	처음부터
 	From Bottom	아래쪽에서
+	From Current Slide	현재 슬라이드부터
 	From Left	왼쪽에서
 	From Right	오른쪽에서
 	From Top	위쪽에서
@@ -783,7 +794,7 @@
 	Glow Edges	네온 가장자리
 	Go to	이동
 	Go to Slide	슬라이드로 이동
-	Go to slide {}	{}번 슬라이드로 이동
+	Go to slide {n}	{n}번 슬라이드로 이동
 	Grab bag	모음
 	Gradient Range - Accent 1	그라데이션 범위 - 강조 1
 	Gradient Range - Accent 2	그라데이션 범위 - 강조 2
@@ -808,6 +819,7 @@
 	Grow & Turn	커지면서 회전
 	Grow/Shrink	확대/축소
 	Guides	안내선
+	HD (330 ppi): good quality for high-definition displays	HD(330ppi): 고해상도 디스플레이에 적합한 좋은 품질
 	Half	절반
 	Half Circle Organization Chart	반원 조직도형
 	Half Frame	하프 프레임
@@ -823,6 +835,7 @@
 	Hanging	내어쓰기
 	Harbor	항구
 	Header	머리글
+	Header & Footer	머리글/ 바닥글
 	Header &\nFooter	머리글/\n바닥글
 	Header Row	머리글 행
 	Header and Footer	머리글/바닥글
@@ -879,9 +892,11 @@
 	Indentation	들여쓰기
 	Info	정보
 	Ink	잉크
+	Ink to Math	잉크를 수식으로
 	Ink to Math (coming soon)	잉크를 수식으로(준비 중)
 	Ink to Shape	잉크를 도형으로 변환
 	Ink to Shape: turn drawn lines, rectangles, ovals and triangles into shapes	잉크를 도형으로: 그린 선, 사각형, 원, 삼각형을 도형으로 바꿉니다
+	Ink to Text	잉크를 텍스트로
 	Ink to Text (coming soon)	잉크를 텍스트로(준비 중)
 	Ink to\nMath	잉크를\n수식으로
 	Ink to\nShape	잉크를\n도형으로
@@ -950,6 +965,7 @@
 	Layout	레이아웃
 	Layout Placeholders	레이아웃 개체 틀
 	Layouts	레이아웃
+	Learn More	자세히 알아보기
 	Learn\nMore	자세히\n알아보기
 	Leave the slide background out: only what is on the slide is drawn	슬라이드 배경을 제외합니다. 슬라이드 위의 내용만 그려집니다
 	Ledger Paper (11x17 in)	레저 용지(11x17인치)
@@ -1003,6 +1019,7 @@
 	Lock aspect ratio	가로 세로 비율 고정
 	Long Dash	긴 파선
 	Long Dash Dot	긴 파선 점선
+	Look up	찾아보기
 	Loop Until Next Sound	다음 소리까지 반복
 	Loop continuously until 'Esc'	'Esc'를 누를 때까지 계속 반복
 	Loop de Loop	루프
@@ -1018,7 +1035,7 @@
 	Master Layout	마스터 레이아웃
 	Master Views	마스터 보기
 	Match case	대/소문자 구분
-	Match {} of {} on slide {}{where_}.	슬라이드 {}번에서 {}/{}번째 일치{where_}.
+	Match {n} of {total} on slide {slide}{where}.	슬라이드 {slide}번에서 {n}/{total}번째 일치{where}.
 	Material	재질
 	Math	수식
 	Matrix	행렬
@@ -1049,7 +1066,7 @@
 	More presentations	프레젠테이션 더 보기
 	More templates	서식 파일 더 보기
 	More themes	테마 더 보기
-	Morph	모프
+	Morph	모핑
 	Motion	이동 경로
 	Motion Paths	이동 경로
 	Mouse Click	마우스 클릭
@@ -1077,7 +1094,7 @@
 	Nested Target	중첩 대상형
 	Neutron	중성자
 	New	새로 만들기
-	New Comment	새 댓글
+	New Comment	새 메모
 	New Photo Album…	새 포토 앨범…
 	New Presentation	새 프레젠테이션
 	New Slide	새 슬라이드
@@ -1085,13 +1102,12 @@
 	New Text Box	새 텍스트 상자
 	New Window	새 창
 	New Window needs a slide	새 창에는 슬라이드가 필요합니다
-	New Window needs an open presentation	새 창에는 열린 프레젠테이션이 필요합니다
 	New show name:	새 쇼 이름:
-	New\nComment	새\n댓글
+	New\nComment	새\n메모
 	New\nSlide	새\n슬라이드
 	New\nWindow	새\n창
 	Next	다음
-	Next Comment	다음 댓글
+	Next Comment	다음 메모
 	Next Page	다음 페이지
 	Next Slide	다음 슬라이드
 	Next Window	다음 창
@@ -1106,7 +1122,7 @@
 	No Soft Edges	부드러운 가장자리 없음
 	No Transform	변형 없음
 	No accessibility issues found. People with disabilities should not have difficulty reading this document.	접근성 문제가 없습니다. 장애가 있는 사용자도 이 문서를 읽는 데 어려움이 없습니다.
-	No comments.	설명이 없습니다.
+	No comments.	메모가 없습니다.
 	No contributor data was built into this copy.	이 빌드에는 기여자 정보가 포함되지 않았습니다.
 	No differences left.	남은 차이가 없습니다.
 	No fill	채우기 없음
@@ -1116,10 +1132,12 @@
 	No notes.	노트가 없습니다.
 	No pictures yet	아직 그림이 없습니다
 	No presentation is open.	열려 있는 프레젠테이션이 없습니다.
-	No recent presentations match “{}”.	“{}”와(과) 일치하는 최근 프레젠테이션이 없습니다.
+	No recent presentations match “{query}”.	“{query}”와(과) 일치하는 최근 프레젠테이션이 없습니다.
+	No slides.	슬라이드가 없습니다.
 	No sound: {err}	소리 없음: {err}
-	No themes or templates match “{}”.	“{}”와(과) 일치하는 테마나 서식 파일이 없습니다.
-	No {} dictionary is installed, so only common misspellings are found. Put a Hunspell .aff/.dic pair in {}.	{} 사전이 설치되어 있지 않아 흔한 오타만 찾습니다. Hunspell .aff/.dic 파일 쌍을 {}에 넣으세요.
+	No synonyms for "{word}".	"{word}"의 동의어가 없습니다.
+	No themes or templates match “{query}”.	“{query}”와(과) 일치하는 테마나 서식 파일이 없습니다.
+	No {lang} dictionary is installed, so only common misspellings are found. Put a Hunspell .aff/.dic pair in {folder}.	{lang} 사전이 설치되어 있지 않아 흔한 오타만 찾습니다. Hunspell .aff/.dic 파일 쌍을 {folder}에 넣으세요.
 	Nocturne	야상곡
 	None	없음
 	Normal	기본
@@ -1301,10 +1319,11 @@
 	Preview Animations	애니메이션 미리 보기
 	Previewing animations	애니메이션 미리 보는 중
 	Previous	이전
-	Previous Comment	이전 댓글
+	Previous Comment	이전 메모
 	Previous Page	이전 페이지
 	Previous Slide	이전 슬라이드
 	Print	인쇄
+	Print (220 ppi): excellent quality on most printers and screens	인쇄(220ppi): 대부분의 프린터와 화면에서 우수한 품질
 	Print All Slides	모든 슬라이드 인쇄
 	Print Current Slide	현재 슬라이드 인쇄
 	Print Hidden Slides	숨겨진 슬라이드 인쇄
@@ -1331,9 +1350,10 @@
 	Radial	방사형
 	Random	무작위
 	Random Bars	무작위 막대
-	Reading View	읽기 보기
+	Reading View	읽기용 보기
 	Reading the file: {secs:.0} s	파일 읽는 중: {secs:.0}초
-	Reading\nView	읽기\n보기
+	Reading the file: {secs} s	파일 읽는 중: {secs}초
+	Reading\nView	읽기용\n보기
 	Real name	실명
 	Recent	최근 항목
 	Recolor	다시 칠하기
@@ -1360,6 +1380,7 @@
 	Regroup	다시 그룹화
 	Regular	보통
 	Regular Pentagon	정오각형
+	Rehearse Timings	쇼 시간 리허설
 	Rehearse\nTimings	쇼 시간\n리허설
 	Relationship	관계
 	Remove	제거
@@ -1398,8 +1419,8 @@
 	Replace text as you type	입력할 때 텍스트 바꾸기
 	Replace with:	바꿀 내용:
 	Replace:	바꾸기:
-	Replaced {} occurrence(s).	{}개를 바꿨습니다.
-	Replaced “{from}” with “{}”.	“{from}”을(를) “{}”(으)로 바꿨습니다.
+	Replaced {n} occurrence(s).	{n}개를 바꿨습니다.
+	Replaced “{from}” with “{to}”.	“{from}”을(를) “{to}”(으)로 바꿨습니다.
 	Replace…	바꾸기…
 	Reply	답글
 	Reply…	답글…
@@ -1415,6 +1436,7 @@
 	Reset Style	스타일 원래대로
 	Reset to Defaults	기본값으로 원래대로
 	Resize shape to fit text	텍스트에 맞게 도형 크기 조정
+	Resolution	해상도
 	Resolve	해결
 	Resolve Thread	스레드 해결
 	Resume	다시 시작
@@ -1492,10 +1514,12 @@
 	Search commands (⇧⌘P)	명령 검색(⇧⌘P)
 	Search commands…	명령 검색…
 	Search for a file	파일 검색
+	Search for a word	단어 검색
 	Search for themes and templates	테마 및 서식 파일 검색
 	Search icons	아이콘 검색
 	Section	구역
 	Section Header	구역 머리글
+	Section Zoom	구역 확대/축소
 	Seek	탐색
 	Segmented Cycle	분할 순환형
 	Segmented Pyramid	분할 피라미드형
@@ -1512,6 +1536,7 @@
 	Select a chart first.	먼저 차트를 선택하세요.
 	Select a picture to rotate it or change brightness and contrast	그림을 선택하면 회전하거나 밝기와 대비를 바꿀 수 있습니다
 	Select a shape to format it.	서식을 지정하려면 도형을 선택하세요.
+	Select a word on the slide, or type one above.	슬라이드에서 단어를 선택하거나 위에 입력하세요.
 	Select an object on the slide and add an animation from the Animations tab.	슬라이드에서 개체를 선택하고 애니메이션 탭에서 애니메이션을 추가하세요.
 	Selection	선택 영역
 	Selection Pane	선택 창
@@ -1542,11 +1567,12 @@
 	Shape Gallery	도형 갤러리
 	Shape Outline	도형 윤곽선
 	Shape Styles	도형 스타일
-	Shape {}	도형 {}
+	Shape {n}	도형 {n}
 	Shape\nStyles	도형\n스타일
 	Shapes	도형
 	Show	표시
 	Show All	모두 표시
+	Show Comments	메모 표시
 	Show Media Controls	미디어 컨트롤 표시
 	Show Slide	슬라이드 표시
 	Show smart guides	스마트 가이드 표시
@@ -1577,27 +1603,27 @@
 	Slide Number Placeholder	슬라이드 번호 개체 틀
 	Slide Show	슬라이드 쇼
 	Slide Size	슬라이드 크기
-	Slide Sorter	슬라이드 정렬
+	Slide Sorter	여러 슬라이드
+	Slide Zoom	슬라이드 확대/축소
 	Slide inserted after {slide}	{slide} 뒤에 슬라이드를 삽입했습니다
 	Slide number	슬라이드 번호
 	Slide timings recorded.	슬라이드 시간을 기록했습니다.
-	Slide {:02}:{:04.1}   Total {:02}:{:02}	슬라이드 {:02}:{:04.1}   전체 {:02}:{:02}
 	Slide {n}	슬라이드 {n}
+	Slide {n} changed	슬라이드 {n}번 변경됨
+	Slide {n} deleted	슬라이드 {n}번 삭제됨
 	Slide {n} of {total}	슬라이드 {n}/{total}
+	Slide {n}: {issue}{name}	슬라이드 {n}: {issue}{name}
 	Slide {n}: “{word}”	슬라이드 {n}: “{word}”
-	Slide {}	슬라이드 {}
-	Slide {} changed	슬라이드 {}번 변경됨
-	Slide {} deleted	슬라이드 {}번 삭제됨
-	Slide {} of {}	슬라이드 {}/{}
-	Slide {}: {}{}	슬라이드 {}: {}{}
+	Slide {time}   Total {all}	슬라이드 {time}   전체 {all}
 	Slide\nMaster	슬라이드\n마스터
 	Slide\nNumber	슬라이드\n번호
 	Slide\nSize	슬라이드\n크기
-	Slide\nSorter	슬라이드\n정렬
+	Slide\nSorter	여러\n슬라이드
 	Slides	슬라이드
 	Slides (e.g. 1,3,5):	슬라이드(예: 1,3,5):
 	Slides From	슬라이드 가져오기
-	Slides Per\nPage: {}	페이지당\n슬라이드: {}
+	Slides Per Page: {n}	페이지당 슬라이드: {n}
+	Slides Per\nPage: {n}	페이지당\n슬라이드: {n}
 	Slides from Outline	개요에서 슬라이드
 	Slides from Outline…	개요에서 슬라이드…
 	Slides sized for:	슬라이드 크기 기준:
@@ -1650,7 +1676,7 @@
 	Spiral Left	왼쪽 나선
 	Spiral Right	오른쪽 나선
 	Split	나누기
-	Split Cells	셀 나누기
+	Split Cells	셀 분할
 	Split\nCells	셀\n분할
 	Spring	스프링
 	Square	정사각형
@@ -1705,6 +1731,7 @@
 	Subtle	은은한 효과
 	Subtle Effect	은은한 효과
 	Subtract	빼기
+	Summary Zoom	요약 확대/축소
 	Sun	해
 	Sunburst	선버스트
 	Superscript	위 첨자
@@ -1764,6 +1791,7 @@
 	The current slide as a compressed picture	현재 슬라이드를 압축된 그림으로
 	The current slide as a picture	현재 슬라이드를 그림으로
 	The picture list is invalid	그림 목록이 올바르지 않습니다
+	The presentation has no sections. Add one with Home › Section.	프레젠테이션에 구역이 없습니다. 홈 › 구역에서 추가하세요.
 	The presentation keeps its own file	프레젠테이션은 자체 파일을 유지합니다
 	The slide titles and bullet text as plain text	슬라이드 제목과 글머리 기호 텍스트를 일반 텍스트로
 	The spelling check is complete. No issues found.	맞춤법 검사가 끝났습니다. 문제가 없습니다.
@@ -1789,7 +1817,7 @@
 	Tight	좁게
 	Tile picture as texture	그림을 질감으로 바둑판식 배열
 	Timing	타이밍
-	Timing bar {}	타이밍 막대 {}
+	Timing bar {n}	타이밍 막대 {n}
 	Title	제목
 	Title Only	제목만
 	Title Slide	제목 슬라이드
@@ -1850,7 +1878,7 @@
 	Variant Gallery	변형 갤러리
 	Variants	변형
 	Version	버전
-	Version {}	버전 {}
+	Version {version}	버전 {version}
 	Vertical	세로
 	Vertical (in):	세로(인치):
 	Vertical Box List	세로 상자 목록형
@@ -1874,6 +1902,7 @@
 	Waterfall	폭포
 	Wave	물결
 	Wavy	물결
+	Web (150 ppi): good for web pages and projectors	웹(150ppi): 웹 페이지와 프로젝터에 적합
 	Web Page or File	웹 페이지 또는 파일
 	Wed	수
 	Wedge	쐐기
@@ -1905,7 +1934,7 @@
 	Y Rotation	Y 회전
 	Yellow	노랑
 	Your changes will be lost if you don't save them.	저장하지 않으면 변경 내용이 사라집니다.
-	Your name (comments):	이름(설명용):
+	Your name (comments):	이름(메모용):
 	Z Rotation	Z 회전
 	Zigzag	지그재그
 	Zoom	확대/축소
@@ -1917,19 +1946,23 @@
 	Zoom…	확대/축소…
 	[No Sound]	[소리 없음]
 	[Stop Previous Sound]	[이전 소리 중지]
+	size (pt)	크기(pt)
 	{cols}x{rows} Table	{cols}x{rows} 표
+	{font} (Body)	{font}(본문)
+	{font} (Headings)	{font}(제목)
 	{kind} (click to change)	{kind}(클릭하여 변경)
 	{name} ({n} slides)	{name}(슬라이드 {n}개)
 	{name} needs a colour like #RRGGBB.	{name}에는 #RRGGBB 형식의 색이 필요합니다.
 	{n} Columns	{n}열
 	{n} Slides	슬라이드 {n}개
 	{n} bytes	{n}바이트
+	{n} contributors · {commits} commits	기여자 {n}명 · 커밋 {commits}개
 	{n} of {total}	{n}/{total}
 	{n} presentations	프레젠테이션 {n}개
 	{n} slides per page	페이지당 슬라이드 {n}개
 	{path} — this file can't be found	{path} — 이 파일을 찾을 수 없습니다
 	{r} pt glow	네온 {r}pt
 	“{from}” isn't used explicitly.	“{from}”은(는) 명시적으로 사용되지 않습니다.
-	“{}” is not available yet.	“{}”은(는) 아직 사용할 수 없습니다.
+	“{id}” is not available yet.	“{id}”은(는) 아직 사용할 수 없습니다.
 	■ Stop	■ 중지
 	▶ Play All	▶ 모두 재생

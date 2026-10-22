@@ -506,9 +506,9 @@ fn font_group(app: &mut SlideApp, ui: &mut Ui, st: &Value) {
                 dropdown(ui, "font", &font, 150.0, en, |ui| {
                     for (k, f) in fams.iter().enumerate() {
                         let label = if k == 0 && theme_fonts.len() == 2 {
-                            format!("{f} (Headings)")
+                            i18n::fmt(tl!("{font} (Headings)"), &[("font", f)])
                         } else if k == 1 && theme_fonts.len() == 2 {
-                            format!("{f} (Body)")
+                            i18n::fmt(tl!("{font} (Body)"), &[("font", f)])
                         } else {
                             f.clone()
                         };
@@ -1412,7 +1412,7 @@ fn icon_cell(app: &mut SlideApp, ui: &mut Ui, icon: &deckcraft_engine::icons::Ic
         ui.painter().rect_filled(r, CornerRadius::same(4), hover);
     }
     paint_icon(ui.painter(), r.shrink(6.0), icon, color);
-    if resp.on_hover_text(icon.label).clicked() {
+    if resp.on_hover_text(tl!(icon.label)).clicked() {
         let _ = app.run("insert.icon", json!({"name": icon.name}));
         ui.close();
     }
@@ -3346,7 +3346,7 @@ fn notes_master(app: &mut SlideApp, ui: &mut Ui) {
 
 fn handout_master(app: &mut SlideApp, ui: &mut Ui) {
     group(ui, |ui| {
-        let r = big_button(ui, Icon::Layout, &format!("Slides Per\nPage: {}", app.ui.handout_per_page), true);
+        let r = big_button(ui, Icon::Layout, &i18n::fmt(tl!("Slides Per\nPage: {n}"), &[("n", &app.ui.handout_per_page.to_string())]), true);
         egui::Popup::menu(&r).show(|ui| {
             for n in [1u8, 2, 3, 4, 6, 9] {
                 if ui.selectable_label(app.ui.handout_per_page == n, if n == 1 { tl!("1 Slide").to_string() } else { i18n::fmt(tl!("{n} Slides"), &[("n", &n.to_string())]) }).clicked() {
@@ -3554,10 +3554,10 @@ fn smooth_corners_row(app: &mut SlideApp, ui: &mut egui::Ui) {
     }
     let usable = radius.is_some() || ui.data(|d| d.get_temp::<(f64, f64)>(key)).is_some();
     ui.horizontal(|ui| {
-        ui.label("Smooth Corners");
+        ui.label(tl!("Smooth Corners"));
         let mut pct = state.1;
         let resp = ui.add_enabled(usable, egui::Slider::new(&mut pct, 0.0..=100.0).suffix("%").integer());
-        let resp = if usable { resp } else { resp.on_disabled_hover_text("For rectangles and rounded rectangles") };
+        let resp = if usable { resp } else { resp.on_disabled_hover_text(tl!("For rectangles and rounded rectangles")) };
         if resp.changed() {
             state.1 = pct;
             ui.data_mut(|d| d.insert_temp(key, state));
@@ -3577,7 +3577,7 @@ fn zoom_menu(app: &mut SlideApp, ui: &mut Ui) {
     let (mut kind, mut picked): (u8, Vec<usize>) = ui.data_mut(|d| d.get_temp(id).unwrap_or((0, vec![])));
     ui.horizontal(|ui| {
         for (k, label) in [(0u8, "Slide Zoom"), (1, "Section Zoom"), (2, "Summary Zoom")] {
-            if ui.selectable_label(kind == k, label).clicked() && kind != k {
+            if ui.selectable_label(kind == k, tl!(label)).clicked() && kind != k {
                 kind = k;
                 picked.clear();
             }
@@ -3597,7 +3597,7 @@ fn zoom_menu(app: &mut SlideApp, ui: &mut Ui) {
             .collect()
     };
     if items.is_empty() {
-        ui.label(if kind == 1 { "The presentation has no sections. Add one with Home › Section." } else { "No slides." });
+        ui.label(if kind == 1 { tl!("The presentation has no sections. Add one with Home › Section.") } else { tl!("No slides.") });
     }
     egui::ScrollArea::vertical().max_height(260.0).show(ui, |ui| {
         for (i, label) in items.iter().enumerate() {
@@ -3613,7 +3613,7 @@ fn zoom_menu(app: &mut SlideApp, ui: &mut Ui) {
     });
     ui.data_mut(|d| d.insert_temp(id, (kind, picked.clone())));
     ui.separator();
-    if ui.add_enabled(!picked.is_empty(), egui::Button::new("Insert")).clicked() {
+    if ui.add_enabled(!picked.is_empty(), egui::Button::new(tl!("Insert"))).clicked() {
         let mut v = picked.clone();
         v.sort_unstable();
         let p = match kind {
@@ -3632,22 +3632,22 @@ fn zoom_menu(app: &mut SlideApp, ui: &mut Ui) {
 fn compress_menu(app: &mut SlideApp, ui: &mut Ui) {
     let id = egui::Id::new("compress_pictures_opts");
     let (mut ppi, mut only_selected, mut delete_cropped): (u32, bool, bool) = ui.data_mut(|d| d.get_temp(id).unwrap_or((220, true, true)));
-    ui.label(egui::RichText::new("Compression options").strong());
-    ui.checkbox(&mut only_selected, "Apply only to this picture");
-    ui.checkbox(&mut delete_cropped, "Delete cropped areas of pictures");
+    ui.label(egui::RichText::new(tl!("Compression options")).strong());
+    ui.checkbox(&mut only_selected, tl!("Apply only to this picture"));
+    ui.checkbox(&mut delete_cropped, tl!("Delete cropped areas of pictures"));
     ui.separator();
-    ui.label(egui::RichText::new("Resolution").strong());
+    ui.label(egui::RichText::new(tl!("Resolution")).strong());
     for (v, label) in [
         (330, "HD (330 ppi): good quality for high-definition displays"),
         (220, "Print (220 ppi): excellent quality on most printers and screens"),
         (150, "Web (150 ppi): good for web pages and projectors"),
         (96, "E-mail (96 ppi): minimise document size for sharing"),
     ] {
-        ui.radio_value(&mut ppi, v, label);
+        ui.radio_value(&mut ppi, v, tl!(label));
     }
     ui.data_mut(|d| d.insert_temp(id, (ppi, only_selected, delete_cropped)));
     ui.separator();
-    if ui.button("Compress").clicked() {
+    if ui.button(tl!("Compress")).clicked() {
         let p = json!({"ppi": ppi, "deleteCropped": delete_cropped, "all": !only_selected});
         match app.session.execute("picture.compress", &p) {
             Ok(r) => {

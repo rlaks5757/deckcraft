@@ -892,7 +892,7 @@ pub fn ui(app: &mut SlideApp, ui: &mut Ui) {
         painter.rect_filled(full, CornerRadius::ZERO, c);
     }
     if !show.goto.is_empty() {
-        let label = format!("Go to slide {}", show.goto);
+        let label = crate::i18n::fmt(tl!("Go to slide {n}"), &[("n", &show.goto.to_string())]);
         let w = (28.0 + label.len() as f32 * 10.0).clamp(160.0, full.width() - 32.0);
         let r = Rect::from_min_size(pos2(full.min.x + 16.0, full.max.y - 96.0), vec2(w, 36.0));
         painter.rect_filled(r, CornerRadius::same(6), Color32::from_black_alpha(190));
@@ -956,7 +956,7 @@ pub fn ui(app: &mut SlideApp, ui: &mut Ui) {
         painter.text(
             pos2(bar.min.x + 14.0, bar.center().y),
             Align2::LEFT_CENTER,
-            format!("Slide {} of {}", show.state.slide + 1, doc.slides.len()),
+            crate::i18n::fmt(tl!("Slide {n} of {total}"), &[("n", &(show.state.slide + 1).to_string()), ("total", &doc.slides.len().to_string())]),
             theme::font(12.0),
             Color32::from_gray(200),
         );
@@ -1028,7 +1028,10 @@ pub fn ui(app: &mut SlideApp, ui: &mut Ui) {
         painter.text(
             r.center(),
             Align2::CENTER_CENTER,
-            format!("Slide {:02}:{:04.1}   Total {:02}:{:02}", (t / 60.0) as u32, t % 60.0, (total / 60.0) as u32, (total % 60.0) as u32),
+            crate::i18n::fmt(
+                tl!("Slide {time}   Total {all}"),
+                &[("time", &format!("{:02}:{:04.1}", (t / 60.0) as u32, t % 60.0)), ("all", &format!("{:02}:{:02}", (total / 60.0) as u32, (total % 60.0) as u32))],
+            ),
             theme::font(13.0),
             Color32::WHITE,
         );
@@ -1835,7 +1838,7 @@ fn presenter_window(ctx: &egui::Context, show: &mut Show, doc: &Presentation, no
                     ui.painter().rect_filled(cr, CornerRadius::ZERO, c);
                 }
                 let nr = next_rect(right, doc);
-                ui.painter().text(right.min, Align2::LEFT_TOP, "Next", theme::font(13.0), Color32::from_gray(170));
+                ui.painter().text(right.min, Align2::LEFT_TOP, tl!("Next"), theme::font(13.0), Color32::from_gray(170));
                 match &next_tex {
                     Some(t) => {
                         ui.painter().image(t.id(), nr, Rect::from_min_max(pos2(0.0, 0.0), pos2(1.0, 1.0)), Color32::WHITE);

@@ -607,7 +607,7 @@
       },
       "id": "comment.add",
       "label": "New Comment",
-      "labelKo": "새 댓글",
+      "labelKo": "새 메모",
       "location": [
         "Review",
         "Comments"
@@ -619,7 +619,7 @@
       },
       "id": "comment.delete",
       "label": "Delete Comment",
-      "labelKo": "댓글 삭제",
+      "labelKo": "메모 삭제",
       "location": [
         "Review",
         "Comments"
@@ -631,7 +631,7 @@
       },
       "id": "comment.list",
       "label": "Comments",
-      "labelKo": "댓글",
+      "labelKo": "메모",
       "location": []
     },
     {
@@ -640,7 +640,7 @@
       },
       "id": "comment.next",
       "label": "Next Comment",
-      "labelKo": "다음 댓글",
+      "labelKo": "다음 메모",
       "location": [
         "Review",
         "Comments"
@@ -652,7 +652,7 @@
       },
       "id": "comment.prev",
       "label": "Previous Comment",
-      "labelKo": "이전 댓글",
+      "labelKo": "이전 메모",
       "location": [
         "Review",
         "Comments"
@@ -2227,7 +2227,7 @@
       },
       "id": "picture.artisticEffect",
       "label": "Artistic Effects",
-      "labelKo": "예술 효과",
+      "labelKo": "꾸밈 효과",
       "location": [
         "Picture Format",
         "Adjust"
@@ -3602,7 +3602,7 @@
       },
       "id": "table.split",
       "label": "Split Cells",
-      "labelKo": "셀 나누기",
+      "labelKo": "셀 분할",
       "location": [
         "Table Layout",
         "Merge"
@@ -4026,7 +4026,7 @@
       },
       "id": "view.reading",
       "label": "Reading View",
-      "labelKo": "읽기 보기",
+      "labelKo": "읽기용 보기",
       "location": [
         "View"
       ]
@@ -4060,7 +4060,7 @@
       },
       "id": "view.sorter",
       "label": "Slide Sorter",
-      "labelKo": "슬라이드 정렬",
+      "labelKo": "여러 슬라이드",
       "location": [
         "View"
       ]

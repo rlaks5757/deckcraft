@@ -943,7 +943,7 @@ fn zoom_dialog(app: &mut SlideApp, ui: &mut Ui, d: &mut Dialog) -> bool {
     let mut mode = d.get("mode", "percent");
     let mut percent = d.get("percent", "100");
     ui.label(tl!("Zoom to"));
-    if ui.radio(mode == "fit", "Fit").clicked() {
+    if ui.radio(mode == "fit", tl!("Fit")).clicked() {
         mode = "fit".into();
     }
     for pct in ZOOM_PRESETS {
@@ -1685,7 +1685,7 @@ fn body(app: &mut SlideApp, ui: &mut Ui, d: &mut Dialog) -> bool {
             if ok && !from.is_empty() && !to.trim().is_empty() {
                 let n = app.run("font.replace", json!({"from": from, "to": to.trim()})).ok().and_then(|v| v["replaced"].as_u64()).unwrap_or(0);
                 let msg =
-                    if n == 0 { format!("“{from}” isn't used explicitly.") } else { format!("Replaced “{from}” with “{}”.", to.trim()) };
+                    if n == 0 { i18n::fmt(tl!("“{from}” isn't used explicitly."), &[("from", &from)]) } else { i18n::fmt(tl!("Replaced “{from}” with “{to}”."), &[("from", &from), ("to", to.trim())]) };
                 d.fields.insert("result".into(), msg);
                 d.fields.remove("from");
                 // Stay open, like PowerPoint, so several fonts can be replaced in a row.
@@ -1774,14 +1774,19 @@ fn body(app: &mut SlideApp, ui: &mut Ui, d: &mut Dialog) -> bool {
                     ui.label(egui::RichText::new(i18n::fmt(tl!("Dictionary: {name}"), &[("name", info.get("lang").and_then(Value::as_str).unwrap_or(""))])).small().weak())
                 }
                 _ => ui.label(
-                    egui::RichText::new(format!(
-                        "No {} dictionary is installed, so only common misspellings are found. Put a Hunspell .aff/.dic pair in {}.",
-                        info.get("lang").and_then(Value::as_str).unwrap_or("en-US"),
-                        info.get("folders")
-                            .and_then(Value::as_array)
-                            .and_then(|a| a.get(1).or(a.first()))
-                            .and_then(Value::as_str)
-                            .unwrap_or("a dictionaries folder")
+                    egui::RichText::new(i18n::fmt(
+                        tl!("No {lang} dictionary is installed, so only common misspellings are found. Put a Hunspell .aff/.dic pair in {folder}."),
+                        &[
+                            ("lang", info.get("lang").and_then(Value::as_str).unwrap_or("en-US")),
+                            (
+                                "folder",
+                                info.get("folders")
+                                    .and_then(Value::as_array)
+                                    .and_then(|a| a.get(1).or(a.first()))
+                                    .and_then(Value::as_str)
+                                    .unwrap_or("a dictionaries folder"),
+                            ),
+                        ],
                     ))
                     .small()
                     .weak(),
@@ -1913,11 +1918,13 @@ fn body(app: &mut SlideApp, ui: &mut Ui, d: &mut Dialog) -> bool {
             egui::ScrollArea::vertical().max_height(300.0).show(ui, |ui| {
                 for item in &list {
                     ui.horizontal(|ui| {
-                        ui.label(format!(
-                            "Slide {}: {}{}",
-                            item.get("slide").and_then(Value::as_u64).unwrap_or(0) + 1,
-                            item.get("issue").and_then(Value::as_str).unwrap_or(""),
-                            item.get("name").and_then(Value::as_str).map(|n| format!(" — {n}")).unwrap_or_default()
+                        ui.label(i18n::fmt(
+                            tl!("Slide {n}: {issue}{name}"),
+                            &[
+                                ("n", &(item.get("slide").and_then(Value::as_u64).unwrap_or(0) + 1).to_string()),
+                                ("issue", item.get("issue").and_then(Value::as_str).unwrap_or("")),
+                                ("name", &item.get("name").and_then(Value::as_str).map(|n| format!(" — {n}")).unwrap_or_default()),
+                            ],
                         ));
                         if ui.small_button(tl!("Go to")).clicked() {
                             let _ = app.run("slide.go", json!({"index": item.get("slide").cloned().unwrap_or_default()}));
@@ -2171,7 +2178,7 @@ fn body(app: &mut SlideApp, ui: &mut Ui, d: &mut Dialog) -> bool {
             // on release, and at once from the keyboard.
             let pending = d.fields.get("uiScale").and_then(|v| v.parse::<f32>().ok());
             let mut scale = pending.unwrap_or(app.ui.ui_scale);
-            let r = ui.add(egui::Slider::new(&mut scale, 0.75..=1.75).text("Interface size"));
+            let r = ui.add(egui::Slider::new(&mut scale, 0.75..=1.75).text(tl!("Interface size")));
             if r.is_pointer_button_down_on() {
                 if r.changed() || pending.is_some() {
                     d.fields.insert("uiScale".into(), scale.to_string());
@@ -2210,7 +2217,7 @@ fn body(app: &mut SlideApp, ui: &mut Ui, d: &mut Dialog) -> bool {
         "themeFonts" => theme_fonts_dialog(app, ui, d),
         "dateTime" => date_time_dialog(app, ui, d),
         _ => {
-            ui.label(format!("“{}” is not available yet.", d.id));
+            ui.label(i18n::fmt(tl!("“{id}” is not available yet."), &[("id", &d.id)]));
             let (ok, cancel) = buttons(ui, "OK");
             ok || cancel
         }
@@ -2650,7 +2657,7 @@ pub fn about(_app: &mut SlideApp, ui: &mut Ui) {
 /// from `[workspace.package] version` (the single source of truth, `cargo xtask version`); the
 /// release workflow sets `DECKCRAFT_BUILD_SHA` / `DECKCRAFT_BUILD_DATE` at build time.
 pub fn version_line() -> String {
-    let mut s = format!("Version {}", env!("CARGO_PKG_VERSION"));
+    let mut s = i18n::fmt(tl!("Version {version}"), &[("version", env!("CARGO_PKG_VERSION"))]);
     let sha = option_env!("DECKCRAFT_BUILD_SHA").map(|s| s.get(..9).unwrap_or(s)).filter(|s| !s.is_empty());
     let date = option_env!("DECKCRAFT_BUILD_DATE").filter(|s| !s.is_empty());
     match (sha, date) {
@@ -3242,7 +3249,7 @@ fn find_dialog(app: &mut SlideApp, ui: &mut Ui, d: &mut Dialog) -> bool {
                 let mut p = q.clone();
                 p["with"] = json!(d.get("with", ""));
                 let msg = match app.session.execute("text.replace", &p) {
-                    Ok(v) => format!("Replaced {} occurrence(s).", v.get("replaced").and_then(Value::as_u64).unwrap_or(0)),
+                    Ok(v) => i18n::fmt(tl!("Replaced {n} occurrence(s)."), &[("n", &v.get("replaced").and_then(Value::as_u64).unwrap_or(0).to_string())]),
                     Err(_) => format!("DeckCraft can't find “{text}”."),
                 };
                 d.fields.insert("status".into(), msg);
@@ -3269,10 +3276,13 @@ fn find_dialog(app: &mut SlideApp, ui: &mut Ui, d: &mut Dialog) -> bool {
             }
             d.fields.insert("cur".into(), m.to_string());
             d.fields.insert("next".into(), (n + 1).to_string());
-            let where_ = if m.get("shape").is_some_and(Value::is_null) { " (notes)" } else { "" };
+            let where_ = if m.get("shape").is_some_and(Value::is_null) { tl!(" (notes)") } else { "" };
             d.fields.insert(
                 "status".into(),
-                format!("Match {} of {} on slide {}{where_}.", n + 1, list.len(), m.get("slide").and_then(Value::as_u64).unwrap_or(0) + 1),
+                i18n::fmt(
+                    tl!("Match {n} of {total} on slide {slide}{where}."),
+                    &[("n", &(n + 1).to_string()), ("total", &list.len().to_string()), ("slide", &(m.get("slide").and_then(Value::as_u64).unwrap_or(0) + 1).to_string()), ("where", where_)],
+                ),
             );
         }
     }

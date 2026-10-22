@@ -2,11 +2,14 @@
 //! so English is their default; Korean is switched on per thread.
 #![allow(clippy::unwrap_used, clippy::expect_used)]
 
-use egui_kittest::kittest::Queryable;
+use egui_kittest::kittest::{NodeT, Queryable};
 
 use super::catalog::Catalog;
 use super::*;
 use crate::SlideApp;
+
+/// Lowest edge a ribbon button may reach (the ribbon is 100 px tall under the tab strip).
+const RIBBON_BOTTOM: f32 = 175.0;
 use deckcraft_engine::Session;
 
 #[test]
@@ -54,8 +57,8 @@ fn ppm_commands_json_is_filled_in_korean() {
     assert!(!text.contains("\"labelKo\": null"));
 }
 
-fn korean_app() -> egui_kittest::Harness<'static, SlideApp> {
-    set_current(Lang::KO);
+fn app_in(lang: Lang) -> egui_kittest::Harness<'static, SlideApp> {
+    set_current(lang);
     let mut h = egui_kittest::Harness::builder().with_size(egui::vec2(1280.0, 800.0)).build_ui_state(
         |ui, app: &mut SlideApp| {
             app.logic(ui.ctx());
@@ -63,13 +66,24 @@ fn korean_app() -> egui_kittest::Harness<'static, SlideApp> {
         },
         SlideApp::new(Session::with_new(), Default::default()),
     );
+    h.run_steps(1);
+    // The test build embeds no craft fonts, so Hangul would be measured with a stand-in. Put the
+    // PPM build's NanumGothic first, as `theme::font_definitions` does with the embedded one.
+    let path = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../../ppm/fonts-ko/fonts/nanum-gothic/NanumGothic-Regular.ttf");
+    let bytes = std::fs::read(path).expect("NanumGothic in ppm/fonts-ko");
+    let mut defs = crate::theme::font_definitions(&[]);
+    defs.font_data.insert("nanum".into(), std::sync::Arc::new(egui::FontData::from_owned(bytes)));
+    for family in [egui::FontFamily::Proportional, egui::FontFamily::Name("bold".into())] {
+        defs.families.entry(family).or_default().insert(0, "nanum".into());
+    }
+    h.ctx.set_fonts(defs);
     h.run_steps(3);
     h
 }
 
 #[test]
 fn the_ribbon_tabs_read_in_korean() {
-    let h = korean_app();
+    let h = app_in(Lang::KO);
     for tab in ["홈", "삽입", "디자인", "전환", "애니메이션", "슬라이드 쇼", "검토", "보기"] {
         assert!(h.query_all_by_label(tab).next().is_some(), "no ribbon tab {tab:?}");
     }
@@ -78,23 +92,63 @@ fn the_ribbon_tabs_read_in_korean() {
 }
 
 #[test]
-fn korean_ribbon_buttons_keep_clear_of_each_other() {
-    let mut h = korean_app();
-    for tab in ["홈", "삽입", "전환", "애니메이션"] {
-        // The tab strip sits below the title bar, which has a Home button of its own.
-        h.query_all_by_label(tab).find(|n| n.rect().top() > 40.0).expect("ribbon tab").click();
-        h.run_steps(3);
-        let mut rects: Vec<egui::Rect> = h.query_all_by_role(egui::accesskit::Role::Button).map(|n| n.rect()).filter(|r| r.top() > 60.0 && r.bottom() < 160.0).collect();
-        rects.sort_by(|a, b| a.left().total_cmp(&b.left()));
-        for pair in rects.windows(2) {
-            // A split button's two halves sit inside the whole button.
-            if pair[0].contains_rect(pair[1]) || pair[1].contains_rect(pair[0]) {
-                continue;
-            }
-            let overlap = pair[0].intersect(pair[1]);
-            assert!(overlap.width() < 2.0 || overlap.height() < 2.0, "ribbon buttons overlap on {tab}: {:?} {:?}", pair[0], pair[1]);
-        }
-        assert!(rects.iter().all(|r| r.right() <= 1280.0 || tab == "홈"), "a button runs off the window on {tab}");
+fn the_status_bar_reads_in_korean() {
+    let h = app_in(Lang::KO);
+    for name in ["메모", "노트"] {
+        assert!(h.query_all_by_label(name).next().is_some(), "the status bar button {name:?} is not Korean");
     }
     set_current(Lang::EN);
+}
+
+const TABS: [(&str, &str); 8] = [("Home", "홈"), ("Insert", "삽입"), ("Design", "디자인"), ("Transitions", "전환"), ("Animations", "애니메이션"), ("Slide Show", "슬라이드 쇼"), ("Review", "검토"), ("View", "보기")];
+
+/// The rects of the buttons in the open ribbon tab (below the tab strip, above the canvas).
+fn ribbon_buttons(h: &mut egui_kittest::Harness<'static, SlideApp>, tab: &str, first: bool) -> Vec<egui::Rect> {
+    // Home is open to begin with, and a click on the open tab folds the ribbon away.
+    if !first {
+        h.query_all_by_label(tab).find(|n| n.rect().top() > 40.0).expect("ribbon tab").click();
+        h.run_steps(3);
+    }
+    h.query_all_by_role(egui::accesskit::Role::Button).map(|n| n.rect()).filter(|r| r.top() > 60.0 && r.top() < RIBBON_BOTTOM).collect()
+}
+
+/// With Hangul measured in NanumGothic, no ribbon button of any tab overlaps another or leaves the
+/// ribbon, and the buttons end no further right than the English ones do (the Home and Insert
+/// tabs are wider than the window in English too, and scroll).
+#[test]
+fn korean_ribbon_buttons_keep_clear_of_each_other() {
+    let mut en = app_in(Lang::EN);
+    let english: Vec<f32> = TABS.iter().enumerate().map(|(i, (name, _))| ribbon_buttons(&mut en, name, i == 0).iter().map(|r| r.right()).fold(0.0, f32::max)).collect();
+    let mut ko = app_in(Lang::KO);
+    for (i, (_, tab)) in TABS.iter().enumerate() {
+        let rects = ribbon_buttons(&mut ko, tab, i == 0);
+        assert!(rects.len() >= 4, "{tab}: found only {} ribbon buttons", rects.len());
+        let right = rects.iter().map(|r| r.right()).fold(0.0, f32::max);
+        assert!(right <= english[i].max(1280.0) + 8.0, "{tab}: the buttons reach x={right}, English reaches {}", english[i]);
+        for (j, a) in rects.iter().enumerate() {
+            assert!(a.bottom() <= RIBBON_BOTTOM, "a button runs out of the ribbon on {tab}: {a:?}");
+            for b in &rects[j + 1..] {
+                // A split button's two halves sit inside the whole button.
+                if a.contains_rect(*b) || b.contains_rect(*a) {
+                    continue;
+                }
+                let overlap = a.intersect(*b);
+                assert!(overlap.width() < 2.0 || overlap.height() < 2.0, "ribbon buttons overlap on {tab}: {a:?} {b:?}");
+            }
+        }
+    }
+    set_current(Lang::EN);
+}
+
+/// Ribbon buttons are listed by their spoken name (`\n` read as a space), which is how the quick
+/// access toolbar looks them up, so every two-line label needs the one-line form too.
+#[test]
+fn two_line_labels_have_a_one_line_form() {
+    for line in include_str!("ko.tsv").lines().filter(|l| !l.starts_with('#')) {
+        let key = line.split('\t').nth(1).unwrap_or("");
+        if key.contains("\\n") {
+            let flat = key.replace("\\n", " ");
+            assert!(has(Lang::KO, &flat), "no one-line form of {key:?}");
+        }
+    }
 }

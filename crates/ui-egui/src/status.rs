@@ -15,14 +15,14 @@ pub fn status_bar(app: &mut SlideApp, ui: &mut Ui) {
         let Some(st) = app.session.active() else { return };
         let n = st.doc.slides.len();
         let left = match st.selection.target {
-            deckcraft_engine::Target::Slides => format!("Slide {} of {}", (st.selection.slide + 1).min(n.max(1)), n),
-            _ => "Slide Master".to_string(),
+            deckcraft_engine::Target::Slides => crate::i18n::fmt(tl!("Slide {n} of {total}"), &[("n", &(st.selection.slide + 1).min(n.max(1)).to_string()), ("total", &n.to_string())]),
+            _ => tl!("Slide Master").to_string(),
         };
         let p = ui.painter();
         p.text(pos2(rect.min.x + 14.0, rect.center().y), Align2::LEFT_CENTER, &left, theme::font(12.0), t.text_dim);
         // The selection's proofing language; a click opens Review › Language.
         let (lang, no_proof) = crate::dialogs::selected_language(app);
-        let name = crate::squiggles::lang_name(&lang) + if no_proof { " (not checked)" } else { "" };
+        let name = crate::squiggles::lang_name(&lang) + if no_proof { tl!(" (not checked)") } else { "" };
         let lr = p.text(pos2(rect.min.x + 120.0, rect.center().y), Align2::LEFT_CENTER, &name, theme::font(12.0), t.text_dim);
         if ui.interact(lr.expand(3.0), ui.id().with("status_lang"), Sense::click()).on_hover_text(tl!("Language")).clicked() {
             app.dialog = Some(crate::dialogs::Dialog::new("language"));
@@ -99,6 +99,7 @@ fn small_icon(ui: &mut Ui, icon: Icon, tip: &str, on: bool) -> egui::Response {
 }
 
 fn labeled(ui: &mut Ui, icon: Icon, label: &str, on: bool) -> egui::Response {
+    let label = tl!(label);
     let t = Tokens::get(ui.ctx());
     let w = 22.0 + ui.fonts_mut(|f| f.layout_no_wrap(label.into(), theme::font(12.0), t.text).size().x) + 8.0;
     let (r, resp) = ui.allocate_exact_size(vec2(w, 20.0), Sense::click());
@@ -107,6 +108,7 @@ fn labeled(ui: &mut Ui, icon: Icon, label: &str, on: bool) -> egui::Response {
     }
     icons::paint(ui.painter(), Rect::from_center_size(pos2(r.min.x + 11.0, r.center().y), vec2(15.0, 15.0)), icon, t.text_dim, false);
     ui.painter().text(pos2(r.min.x + 22.0, r.center().y), Align2::LEFT_CENTER, label, theme::font(12.0), t.text_dim);
+    resp.widget_info(|| egui::WidgetInfo::labeled(egui::WidgetType::Button, true, label));
     resp
 }
 

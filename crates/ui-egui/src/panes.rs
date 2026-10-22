@@ -318,7 +318,7 @@ fn format_shape(app: &mut SlideApp, ui: &mut Ui) {
             }
             ui.label(egui::RichText::new(tl!("Soft Edges")).font(theme::bold(13.0)));
             let mut s = sh.effects.as_ref().and_then(|e| e.soft_edge).unwrap_or(0.0);
-            if ui.add(egui::Slider::new(&mut s, 0.0..=50.0).text("size (pt)")).drag_stopped() {
+            if ui.add(egui::Slider::new(&mut s, 0.0..=50.0).text(tl!("size (pt)"))).drag_stopped() {
                 run(app, "shape.effects", json!({"softEdges": s}));
             }
             let raw3d = sh.effects.as_ref().and_then(|e| e.raw3d.clone());
@@ -421,20 +421,20 @@ fn format_shape(app: &mut SlideApp, ui: &mut Ui) {
         "picture" => {
             let adj = if let ShapeKind::Picture { fill } = &sh.kind { fill.adjust.clone() } else { Default::default() };
             let mut b = adj.brightness as f32;
-            if ui.add(egui::Slider::new(&mut b, -1.0..=1.0).text("Brightness")).drag_stopped() {
+            if ui.add(egui::Slider::new(&mut b, -1.0..=1.0).text(tl!("Brightness"))).drag_stopped() {
                 run(app, "picture.adjust", json!({"brightness": b}));
             }
             let mut c = adj.contrast as f32;
-            if ui.add(egui::Slider::new(&mut c, -1.0..=1.0).text("Contrast")).drag_stopped() {
+            if ui.add(egui::Slider::new(&mut c, -1.0..=1.0).text(tl!("Contrast"))).drag_stopped() {
                 run(app, "picture.adjust", json!({"contrast": c}));
             }
             let mut s = adj.saturation.unwrap_or(1.0) as f32;
-            if ui.add(egui::Slider::new(&mut s, 0.0..=4.0).text("Saturation")).drag_stopped() {
+            if ui.add(egui::Slider::new(&mut s, 0.0..=4.0).text(tl!("Saturation"))).drag_stopped() {
                 run(app, "picture.adjust", json!({"saturation": s}));
             }
             let alpha = if let ShapeKind::Picture { fill } = &sh.kind { fill.alpha.unwrap_or(1.0) } else { 1.0 };
             let mut tr = (1.0 - alpha) as f32;
-            if ui.add(egui::Slider::new(&mut tr, 0.0..=1.0).text("Transparency")).drag_stopped() {
+            if ui.add(egui::Slider::new(&mut tr, 0.0..=1.0).text(tl!("Transparency"))).drag_stopped() {
                 run(app, "picture.adjust", json!({"transparency": tr}));
             }
             if ui.button(tl!("Reset Picture")).clicked() {
@@ -861,7 +861,7 @@ fn background(app: &mut SlideApp, ui: &mut Ui) {
                 });
             });
             let mut tr = ((1.0 - color.alpha()) * 100.0) as f32;
-            if ui.add(egui::Slider::new(&mut tr, 0.0..=100.0).text("Transparency").suffix("%")).drag_stopped() {
+            if ui.add(egui::Slider::new(&mut tr, 0.0..=100.0).text(tl!("Transparency")).suffix("%")).drag_stopped() {
                 run(app, "design.background", json!({"transparency": (f64::from(tr) / 100.0).clamp(0.0, 1.0)}));
             }
         }
@@ -932,7 +932,7 @@ fn picture_background_options(app: &mut SlideApp, ui: &mut Ui, pf: &deckcraft_mo
     use deckcraft_model::style::PictureMode;
     let alpha = pf.alpha.unwrap_or(1.0);
     let mut tr = ((1.0 - alpha) * 100.0) as f32;
-    if ui.add(egui::Slider::new(&mut tr, 0.0..=100.0).text("Transparency").suffix("%")).drag_stopped() {
+    if ui.add(egui::Slider::new(&mut tr, 0.0..=100.0).text(tl!("Transparency")).suffix("%")).drag_stopped() {
         run(app, "design.background", json!({"transparency": (f64::from(tr) / 100.0).clamp(0.0, 1.0)}));
     }
     let mut tile = matches!(pf.mode, PictureMode::Tile { .. });
@@ -1037,7 +1037,7 @@ fn animation(app: &mut SlideApp, ui: &mut Ui) {
         if a.start == AnimStart::OnClick {
             click += 1;
         }
-        let name = names.iter().find(|(id, _)| *id == a.shape.0).map(|(_, n)| n.clone()).unwrap_or_else(|| format!("Shape {}", a.shape));
+        let name = names.iter().find(|(id, _)| *id == a.shape.0).map(|(_, n)| n.clone()).unwrap_or_else(|| i18n::fmt(tl!("Shape {n}"), &[("n", &a.shape.to_string())]));
         let (r, resp) = ui.allocate_exact_size(vec2(ui.available_width(), 30.0), Sense::click());
         let sel = selected.contains(&a.shape.0);
         if sel || resp.hovered() {
@@ -1075,9 +1075,9 @@ fn animation(app: &mut SlideApp, ui: &mut Ui) {
             );
             let edge = Rect::from_min_max(pos2(bar.max.x - 3.0, bar.min.y - 3.0), pos2(bar.max.x + 4.0, bar.max.y + 3.0));
             let body_resp = ui.interact(bar, ui.id().with(("anim_bar", i)), Sense::drag()).on_hover_text(animtimeline::label(b));
-            body_resp.widget_info(|| egui::WidgetInfo::labeled(egui::WidgetType::Other, true, format!("Timing bar {}", i + 1)));
+            body_resp.widget_info(|| egui::WidgetInfo::labeled(egui::WidgetType::Other, true, i18n::fmt(tl!("Timing bar {n}"), &[("n", &(i + 1).to_string())])));
             let edge_resp = ui.interact(edge, ui.id().with(("anim_edge", i)), Sense::drag());
-            edge_resp.widget_info(|| egui::WidgetInfo::labeled(egui::WidgetType::Other, true, format!("Duration handle {}", i + 1)));
+            edge_resp.widget_info(|| egui::WidgetInfo::labeled(egui::WidgetType::Other, true, i18n::fmt(tl!("Duration handle {n}"), &[("n", &(i + 1).to_string())])));
             if edge_resp.hovered() || edge_resp.dragged() {
                 ui.ctx().set_cursor_icon(egui::CursorIcon::ResizeHorizontal);
             } else if body_resp.hovered() || body_resp.dragged() {
@@ -1193,9 +1193,9 @@ fn revisions(app: &mut SlideApp, ui: &mut Ui) {
     for (i, c) in changes.iter().enumerate() {
         let slide = c["slide"].as_u64().unwrap_or(0);
         let (head, col) = match c["kind"].as_str().unwrap_or("") {
-            "inserted" => (format!("Slide inserted after {slide}"), Color32::from_rgb(0x2E, 0xA3, 0x6F)),
-            "deleted" => (format!("Slide {} deleted", slide.saturating_add(1)), Color32::from_rgb(0xD8, 0x3F, 0x6B)),
-            _ => (format!("Slide {} changed", slide.saturating_add(1)), Color32::from_rgb(0x2E, 0x6F, 0xD8)),
+            "inserted" => (i18n::fmt(tl!("Slide inserted after {slide}"), &[("slide", &slide.to_string())]), Color32::from_rgb(0x2E, 0xA3, 0x6F)),
+            "deleted" => (i18n::fmt(tl!("Slide {n} deleted"), &[("n", &slide.saturating_add(1).to_string())]), Color32::from_rgb(0xD8, 0x3F, 0x6B)),
+            _ => (i18n::fmt(tl!("Slide {n} changed"), &[("n", &slide.saturating_add(1).to_string())]), Color32::from_rgb(0x2E, 0x6F, 0xD8)),
         };
         egui::Frame::NONE.fill(t.chrome).corner_radius(CornerRadius::same(6)).inner_margin(egui::Margin::same(8)).show(ui, |ui| {
             ui.set_width(ui.available_width());
@@ -1540,25 +1540,25 @@ mod tests {
 fn thesaurus(app: &mut SlideApp, ui: &mut Ui) {
     let t = Tokens::get(ui.ctx());
     let mut q = app.thesaurus_query.clone();
-    let edit = ui.add(egui::TextEdit::singleline(&mut q).hint_text("Search for a word").desired_width(f32::INFINITY));
+    let edit = ui.add(egui::TextEdit::singleline(&mut q).hint_text(tl!("Search for a word")).desired_width(f32::INFINITY));
     if edit.changed() {
         app.thesaurus_query = q.clone();
     }
     ui.add_space(6.0);
     let senses = deckcraft_engine::thesaurus::lookup(&q);
     if q.trim().is_empty() {
-        ui.label(egui::RichText::new("Select a word on the slide, or type one above.").color(t.text_dim));
+        ui.label(egui::RichText::new(tl!("Select a word on the slide, or type one above.")).color(t.text_dim));
         return;
     }
     if senses.is_empty() {
-        ui.label(egui::RichText::new(format!("No synonyms for \"{}\".", q.trim())).color(t.text_dim));
+        ui.label(egui::RichText::new(i18n::fmt(tl!("No synonyms for \"{word}\"."), &[("word", q.trim())])).color(t.text_dim));
         return;
     }
     let editing = app.session.active().is_some_and(|d| d.selection.text.is_some());
     for sense in senses {
         ui.label(egui::RichText::new(&sense.word).font(theme::bold(13.0)));
         for syn in sense.synonyms {
-            let r = ui.add(egui::Button::new(&syn).frame(false)).on_hover_text(if editing { "Insert" } else { "Look up" });
+            let r = ui.add(egui::Button::new(&syn).frame(false)).on_hover_text(if editing { tl!("Insert") } else { tl!("Look up") });
             if r.clicked() {
                 if editing {
                     run(app, "review.replaceWord", json!({"with": syn}));
