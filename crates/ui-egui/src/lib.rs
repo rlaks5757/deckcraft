@@ -850,7 +850,7 @@ impl SlideApp {
             "deckcraft" => ("deckcraft", "deckcraft", false),
             "gif" => ("gif", "gif", false),
             other => {
-                self.set_status(i18n::fmt(tl!("DeckCraft can't export “{name}”"), &[("name", &other)]));
+                self.set_status(i18n::fmt(tl!("DeckCraft can't export “{name}”"), &[("name", other)]));
                 return false;
             }
         };
