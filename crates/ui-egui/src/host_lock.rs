@@ -164,10 +164,12 @@ fn location(id: &str) -> Vec<&'static str> {
 
 /// The command list the administrator's screen shows (`ppm/commands.json`, copied to `dist/web`
 /// by `ppm/build-web.sh`): `{ app, schema, commands }` with `{ id, label, labelKo, location,
-/// grades }` for every command and feature, by id. DeckCraft has no Korean command names.
+/// grades }` for every command and feature, by id. `labelKo` comes from the Korean catalog and is
+/// `null` only for a label it lacks (a test keeps that from happening).
 pub fn commands_json() -> String {
     let entry = |id: &str, label: &str, location: &[&str], grade: &str| {
-        serde_json::json!({"id": id, "label": label, "labelKo": null, "location": location, "grades": {"builder": grade}})
+        let ko = crate::i18n::has(crate::i18n::Lang::KO, label).then(|| crate::i18n::tr(crate::i18n::Lang::KO, label));
+        serde_json::json!({"id": id, "label": label, "labelKo": ko, "location": location, "grades": {"builder": grade}})
     };
     let mut rows: Vec<(String, serde_json::Value)> = Vec::new();
     for c in deckcraft_engine::cmd::command_specs() {
@@ -264,6 +266,7 @@ mod tests {
         let path = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../../ppm/commands.json");
         let want = commands_json();
         assert!(!want.contains("unclassified"), "a command has no grade");
+        assert!(!want.contains("\"labelKo\": null"), "a command label has no Korean translation in i18n/ko.tsv");
         if std::env::var_os("UPDATE_COMMANDS_JSON").is_some() {
             std::fs::write(&path, &want).unwrap();
         }
