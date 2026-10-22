@@ -93,7 +93,8 @@
       "label": "Preview Animations",
       "labelKo": null,
       "location": [
-        "Animation"
+        "Animations",
+        "Preview"
       ]
     },
     {
@@ -139,7 +140,8 @@
       "label": "About DeckCraft",
       "labelKo": null,
       "location": [
-        "App"
+        "File",
+        "Help"
       ]
     },
     {
@@ -150,7 +152,7 @@
       "label": "File",
       "labelKo": null,
       "location": [
-        "App"
+        "File"
       ]
     },
     {
@@ -161,7 +163,8 @@
       "label": "Browse for Themes…",
       "labelKo": null,
       "location": [
-        "App"
+        "Design",
+        "Themes"
       ]
     },
     {
@@ -172,7 +175,8 @@
       "label": "Change Picture…",
       "labelKo": null,
       "location": [
-        "App"
+        "Picture Format",
+        "Adjust"
       ]
     },
     {
@@ -183,7 +187,8 @@
       "label": "Close",
       "labelKo": null,
       "location": [
-        "App"
+        "File",
+        "Close"
       ]
     },
     {
@@ -194,7 +199,8 @@
       "label": "Compare…",
       "labelKo": null,
       "location": [
-        "App"
+        "Review",
+        "Compare"
       ]
     },
     {
@@ -204,20 +210,7 @@
       "id": "app.dialog",
       "label": "Open Dialog",
       "labelKo": null,
-      "location": [
-        "App"
-      ]
-    },
-    {
-      "grades": {
-        "builder": "off"
-      },
-      "id": "app.exportDialog",
-      "label": "Export…",
-      "labelKo": null,
-      "location": [
-        "App"
-      ]
+      "location": []
     },
     {
       "grades": {
@@ -239,7 +232,8 @@
       "label": "Find…",
       "labelKo": null,
       "location": [
-        "App"
+        "Home",
+        "Editing"
       ]
     },
     {
@@ -250,7 +244,8 @@
       "label": "Home",
       "labelKo": null,
       "location": [
-        "App"
+        "File",
+        "Home"
       ]
     },
     {
@@ -261,7 +256,8 @@
       "label": "Audio from File…",
       "labelKo": null,
       "location": [
-        "App"
+        "Insert",
+        "Media"
       ]
     },
     {
@@ -272,7 +268,8 @@
       "label": "Picture from File…",
       "labelKo": null,
       "location": [
-        "App"
+        "Insert",
+        "Images"
       ]
     },
     {
@@ -283,18 +280,8 @@
       "label": "Video from File…",
       "labelKo": null,
       "location": [
-        "App"
-      ]
-    },
-    {
-      "grades": {
-        "builder": "on"
-      },
-      "id": "app.links",
-      "label": "Community Links",
-      "labelKo": null,
-      "location": [
-        "App"
+        "Insert",
+        "Media"
       ]
     },
     {
@@ -305,7 +292,8 @@
       "label": "Open…",
       "labelKo": null,
       "location": [
-        "App"
+        "File",
+        "Open"
       ]
     },
     {
@@ -316,7 +304,7 @@
       "label": "Command Palette",
       "labelKo": null,
       "location": [
-        "App"
+        "View"
       ]
     },
     {
@@ -327,7 +315,8 @@
       "label": "Paste Special…",
       "labelKo": null,
       "location": [
-        "App"
+        "Home",
+        "Clipboard"
       ]
     },
     {
@@ -338,7 +327,8 @@
       "label": "Preferences…",
       "labelKo": null,
       "location": [
-        "App"
+        "File",
+        "Options"
       ]
     },
     {
@@ -349,7 +339,8 @@
       "label": "Print",
       "labelKo": null,
       "location": [
-        "App"
+        "File",
+        "Print"
       ]
     },
     {
@@ -359,9 +350,7 @@
       "id": "app.qat",
       "label": "Quick Access Toolbar",
       "labelKo": null,
-      "location": [
-        "App"
-      ]
+      "location": []
     },
     {
       "grades": {
@@ -371,7 +360,8 @@
       "label": "Replace…",
       "labelKo": null,
       "location": [
-        "App"
+        "Home",
+        "Editing"
       ]
     },
     {
@@ -382,18 +372,8 @@
       "label": "Reuse Slides…",
       "labelKo": null,
       "location": [
-        "App"
-      ]
-    },
-    {
-      "grades": {
-        "builder": "off"
-      },
-      "id": "app.saveAsDialog",
-      "label": "Save As…",
-      "labelKo": null,
-      "location": [
-        "App"
+        "Home",
+        "Slides"
       ]
     },
     {
@@ -404,7 +384,7 @@
       "label": "Insert Picture in SmartArt…",
       "labelKo": null,
       "location": [
-        "App"
+        "SmartArt Design"
       ]
     },
     {
@@ -2503,7 +2483,8 @@
       "label": "Thesaurus",
       "labelKo": null,
       "location": [
-        "Review"
+        "Review",
+        "Proofing"
       ]
     },
     {
@@ -2977,7 +2958,7 @@
       "label": "End Show",
       "labelKo": null,
       "location": [
-        "Show"
+        "Slide Show"
       ]
     },
     {
@@ -3012,7 +2993,7 @@
       "label": "Presenter View",
       "labelKo": null,
       "location": [
-        "Show"
+        "Slide Show"
       ]
     },
     {
@@ -3035,7 +3016,7 @@
       "label": "Slide Show",
       "labelKo": null,
       "location": [
-        "Show"
+        "Slide Show"
       ]
     },
     {

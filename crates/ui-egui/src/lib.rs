@@ -231,7 +231,7 @@ pub struct Services {
 impl Services {
     /// What a presentation locked to its PPM host keeps (see `deckcraft_engine::hostlock`): no
     /// file pickers or paths, no picker for a presentation to open, and a download that hands
-    /// the parent only what Save (a `.pptx`) and the switched-on groups of `policy` allow. The
+    /// the parent only what Save (a `.pptx`) and the commands `policy` switched on allow. The
     /// parent's own file arrives through `inbox`, the clipboard stays.
     pub fn lock_for_host(&mut self, policy: Policy) {
         self.pick_open = None;
@@ -562,7 +562,7 @@ pub struct SlideApp {
     next_file_id: u64,
     /// Picks and drops whose bytes have not arrived yet.
     pending_files: Vec<PendingFile>,
-    /// The groups the PPM host switched on, when the session is locked to its host.
+    /// The policy the PPM host sent (overrides of the default grades), when the session is locked to its host.
     host: Option<Policy>,
 }
 
@@ -1905,8 +1905,14 @@ impl SlideApp {
         ctx.copy_text(system_clipboard_text(&text));
     }
 
-    /// Lay out the whole window.
+    /// Lay out the whole window. Whatever a locked app must not hand to the browser is dropped
+    /// on the way out, whichever path `ui_inner` returned by (the slide show included).
     pub fn ui(&mut self, ui: &mut egui::Ui) {
+        self.ui_inner(ui);
+        self.strip_host_output(&ui.ctx().clone());
+    }
+
+    fn ui_inner(&mut self, ui: &mut egui::Ui) {
         let ctx = ui.ctx().clone();
         if !self.fonts_ready {
             ctx.request_repaint();
@@ -1978,7 +1984,6 @@ impl SlideApp {
         }
         self.drain_requests();
         doc_window::show(self, &ctx);
-        self.strip_host_output(&ctx);
         self.perf.frame_ms = now_ms() - t0;
     }
 
@@ -2006,6 +2011,14 @@ impl SlideApp {
             }
         }
         self.media.tick(ctx, &mut self.session);
+    }
+
+    /// Opens `url` in a new tab right now (the slide show has no frame end to queue it for), if
+    /// the policy lets links out. Every link the app opens goes through here or `open_url`.
+    pub(crate) fn open_url_now(&self, ctx: &egui::Context, url: impl ToString) {
+        if self.allowed("app.externalLinks") {
+            ctx.open_url(egui::OpenUrl::new_tab(url.to_string()));
+        }
     }
 
     pub fn open_url(&mut self, url: &str) {

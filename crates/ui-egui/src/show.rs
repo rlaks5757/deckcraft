@@ -572,7 +572,7 @@ pub fn ui(app: &mut SlideApp, ui: &mut Ui) {
         let last = show.last_viewed;
         match show.state.follow_link(&doc, &l, last) {
             LinkJump::Show(a) => actions.push(a),
-            LinkJump::Open(url) => ctx.open_url(egui::OpenUrl::new_tab(url)),
+            LinkJump::Open(url) => app.open_url_now(&ctx, url),
             LinkJump::Exit => keep = false,
             LinkJump::None => {}
         }
@@ -607,7 +607,7 @@ pub fn ui(app: &mut SlideApp, ui: &mut Ui) {
             let none = Under::default();
             match show.click_slide(&doc, under.as_ref().unwrap_or(&none), now) {
                 Click::Show(a) => actions.push(a),
-                Click::Open(url) => ctx.open_url(egui::OpenUrl::new_tab(url)),
+                Click::Open(url) => app.open_url_now(&ctx, url),
                 Click::Exit => keep = false,
                 Click::Animated | Click::None => {}
             }

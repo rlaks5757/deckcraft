@@ -205,6 +205,37 @@ fn external_links_are_stripped_unless_the_group_is_on() {
     }
 }
 
+/// The slide show returns early from `ui`; a link opened there must still not reach the browser.
+#[test]
+fn slide_show_links_follow_the_link_policy() {
+    for (allow, kept) in [(&[][..], 0), (&["app.externalLinks"][..], 2)] {
+        let mut session = Session::with_new();
+        session.lock_host();
+        session.set_policy(&allow.iter().map(|id| (id.to_string(), true)).collect::<Vec<_>>());
+        let seen = Arc::new(AtomicUsize::new(0));
+        let counted = seen.clone();
+        let mut h = egui_kittest::Harness::builder().with_size(egui::vec2(1280.0, 800.0)).build_ui_state(
+            move |ui, app: &mut SlideApp| {
+                app.logic(ui.ctx());
+                // What a click on a link or action button does in the show.
+                if app.show.is_some() {
+                    app.open_url_now(ui.ctx(), "https://example.com");
+                    ui.ctx().open_url(egui::OpenUrl::new_tab("https://example.org"));
+                }
+                app.ui(ui);
+                let n = ui.ctx().output(|o| o.commands.iter().filter(|c| matches!(c, egui::OutputCommand::OpenUrl(_))).count());
+                counted.store(n, Ordering::SeqCst);
+            },
+            SlideApp::new(session, Services::default()),
+        );
+        h.run_steps(3);
+        h.state_mut().start_show(0, false);
+        h.run_steps(2);
+        assert!(h.state().show.is_some(), "the show runs");
+        assert_eq!(seen.load(Ordering::SeqCst), kept, "{allow:?}");
+    }
+}
+
 #[test]
 fn the_host_opens_its_presentation_and_nothing_else_does() {
     let (mut h, _, _, inbox) = locked(&[]);

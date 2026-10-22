@@ -133,7 +133,7 @@ pub fn entries(has_doc: bool) -> (Vec<Nav>, Vec<Nav>) {
 }
 
 /// [`entries`] a host-locked app keeps: no start screen, Save As, Export, Print or Close unless
-/// the host's policy switched the group on.
+/// the host's policy switched the command on.
 pub fn entries_for(app: &SlideApp, has_doc: bool) -> (Vec<Nav>, Vec<Nav>) {
     let (mut top, mut bottom) = entries(has_doc);
     let keep = |n: &Nav| match n {

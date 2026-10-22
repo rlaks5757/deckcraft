@@ -24,7 +24,6 @@ pub const UI_ALLOWED: &[&str] = &[
     "app.insertAudioDialog",
     "app.insertPictureDialog",
     "app.insertVideoDialog",
-    "app.links",
     "app.palette",
     "app.pasteSpecial",
     "app.preferences",
@@ -69,9 +68,20 @@ pub const UI_BLOCKED: &[&str] = &[
 /// App commands that are off until the policy turns them on.
 pub const UI_OFF: &[&str] = &[
     "app.exportDialog",
+    "app.links",
     "app.print",
     "app.saveAsDialog",
 ];
+
+/// Commands that are only another way in to a switch of their own, so the administrator has one
+/// switch per feature: `(command, switch)`. The command follows the switch, page and all.
+const ALIASES: &[(&str, &str)] =
+    &[("app.exportDialog", "file.export"), ("app.links", "app.externalLinks"), ("app.saveAsDialog", "file.saveAs")];
+
+/// The switch that decides `id`: itself, unless it is an alias.
+fn switch(id: &str) -> &str {
+    ALIASES.iter().find(|a| a.0 == id).map_or(id, |a| a.1)
+}
 
 /// Features that are no command but have a grade of their own: `(id, label, menu)`. Links the
 /// app opens in a new tab (Help, About, a link in a slide) are `Off`.
@@ -96,6 +106,7 @@ pub fn grade(id: &str) -> Option<Grade> {
 
 /// Is `id` on for a session locked with `policy` (`None`: not locked)?
 pub fn enabled(policy: Option<&Policy>, id: &str) -> bool {
+    let id = switch(id);
     match policy {
         None => true,
         Some(p) => grade(id).is_some_and(|g| p.enabled(id, g)),
@@ -117,9 +128,37 @@ pub fn page_permits(policy: Option<&Policy>, page: Page) -> bool {
     match page {
         Page::Info | Page::Account => true,
         Page::Home | Page::New | Page::Open => policy.is_none(),
-        Page::SaveAs => enabled(policy, "app.saveAsDialog"),
-        Page::Export => enabled(policy, "app.exportDialog"),
+        Page::SaveAs => enabled(policy, "file.saveAs"),
+        Page::Export => enabled(policy, "file.export"),
         Page::Print => enabled(policy, "app.print"),
+    }
+}
+
+/// Where an app command is in the menus (tab, then group); `[]` for one nobody can reach there.
+fn location(id: &str) -> Vec<&'static str> {
+    match id {
+        "app.about" => vec!["File", "Help"],
+        "app.backstage" => vec!["File"],
+        "app.browseThemeDialog" => vec!["Design", "Themes"],
+        "app.changePictureDialog" => vec!["Picture Format", "Adjust"],
+        "app.closePresentation" => vec!["File", "Close"],
+        "app.compareDialog" => vec!["Review", "Compare"],
+        "app.find" | "app.replace" => vec!["Home", "Editing"],
+        "app.home" => vec!["File", "Home"],
+        "app.insertAudioDialog" | "app.insertVideoDialog" => vec!["Insert", "Media"],
+        "app.insertPictureDialog" => vec!["Insert", "Images"],
+        "app.openDialog" => vec!["File", "Open"],
+        "app.palette" => vec!["View"],
+        "app.pasteSpecial" => vec!["Home", "Clipboard"],
+        "app.preferences" => vec!["File", "Options"],
+        "app.print" => vec!["File", "Print"],
+        "app.reuseSlidesDialog" => vec!["Home", "Slides"],
+        "app.smartArtPictureDialog" => vec!["SmartArt Design"],
+        "animation.preview" => vec!["Animations", "Preview"],
+        "review.thesaurusPane" => vec!["Review", "Proofing"],
+        _ if id.starts_with("view.") => vec!["View"],
+        _ if id.starts_with("show.") => vec!["Slide Show"],
+        _ => vec![],
     }
 }
 
@@ -135,15 +174,10 @@ pub fn commands_json() -> String {
         let grade = deckcraft_engine::hostlock::grade(c.id).map_or("unclassified", Grade::name);
         rows.push((c.id.to_string(), entry(c.id, c.label, c.menu, grade)));
     }
-    // An app command is listed under the tab or menu its id starts with (`view.zoom` → View).
-    let area = |id: &str| {
-        let head = id.split('.').next().unwrap_or(id);
-        head[..1].to_uppercase() + &head[1..]
-    };
     for (id, label, ..) in crate::UI_COMMANDS {
-        if rows.iter().all(|r| r.0 != *id) {
+        if rows.iter().all(|r| r.0 != *id) && switch(id) == *id {
             let grade = grade(id).map_or("unclassified", Grade::name);
-            rows.push((id.to_string(), entry(id, label, &[area(id).as_str()], grade)));
+            rows.push((id.to_string(), entry(id, label, &location(id), grade)));
         }
     }
     for (id, label, menu, g) in UI_FEATURES {
@@ -176,6 +210,36 @@ mod tests {
     }
 
     #[test]
+    fn one_switch_decides_a_feature_and_its_aliases() {
+        let mut s = Session::new();
+        s.lock_host();
+        let p = s.host_policy();
+        for (alias, target) in ALIASES {
+            assert!(!enabled(p.as_ref(), alias) && !enabled(p.as_ref(), target), "{alias} starts off");
+            s.set_policy(&[(target.to_string(), true)]);
+            assert!(enabled(p.as_ref(), alias) && enabled(p.as_ref(), target), "{target} turns {alias} on");
+            s.set_policy(&[(alias.to_string(), true)]);
+            assert!(!enabled(p.as_ref(), alias), "{alias} has no switch of its own");
+            s.set_policy(&[]);
+        }
+        assert!(dialog_permits(p.as_ref(), "about"));
+        assert!(!dialog_permits(p.as_ref(), "export"));
+        s.set_policy(&[("file.export".to_string(), true)]);
+        assert!(dialog_permits(p.as_ref(), "export"));
+    }
+
+    #[test]
+    fn aliases_name_real_switches_and_have_no_row() {
+        let json = commands_json();
+        for (alias, target) in ALIASES {
+            assert!(grade(target).is_some(), "{alias} follows the unclassified `{target}`");
+            assert!(crate::UI_COMMANDS.iter().any(|c| c.0 == *alias), "`{alias}` is no app command");
+            assert!(!json.contains(&format!("\"id\": \"{alias}\"")), "{alias} must not be a switch of its own");
+        }
+        assert!(!json.contains("\"App\""), "an app command has a menu location");
+    }
+
+    #[test]
     fn gated_dialogs_name_known_commands() {
         for (dialog, id) in DIALOGS_GATED {
             assert!(grade(id).is_some(), "dialog `{dialog}` names the unclassified command `{id}`");
@@ -189,7 +253,7 @@ mod tests {
         let p = s.host_policy();
         let shown = |p: Option<&Policy>| Page::ALL.into_iter().filter(|pg| page_permits(p, *pg)).map(Page::id).collect::<Vec<_>>();
         assert_eq!(shown(p.as_ref()), ["info", "account"]);
-        s.set_policy(&[("app.print".to_string(), true), ("app.exportDialog".to_string(), true), ("app.saveAsDialog".to_string(), true), ("app.openDialog".to_string(), true)]);
+        s.set_policy(&[("app.print".to_string(), true), ("file.export".to_string(), true), ("file.saveAs".to_string(), true), ("app.openDialog".to_string(), true)]);
         assert_eq!(shown(p.as_ref()), ["info", "saveAs", "print", "export", "account"], "an open page stays locked");
         assert_eq!(Page::ALL.len(), shown(None).len());
     }

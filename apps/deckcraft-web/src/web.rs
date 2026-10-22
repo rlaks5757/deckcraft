@@ -30,9 +30,9 @@ pub fn start() {
         }
         // `?host=parent`: a same-origin page framing DeckCraft opens presentations in it and
         // stores what it saves (`host`).
-        let bridge = if query_param("host").as_deref() == Some("parent") { crate::host::Bridge::new() } else { None };
-        // The PPM build runs only inside the PPM page: opened any other way it opens nothing.
         let host_param = query_param("host");
+        let bridge = if host_param.as_deref() == Some("parent") { crate::host::Bridge::new() } else { None };
+        // The PPM build runs only inside the PPM page: opened any other way it opens nothing.
         if crate::gate::decide(deckcraft_engine::hostlock::HOST_BUILD, host_param.as_deref(), bridge.is_some()) == crate::gate::Start::OpenFromPpm {
             if let Some(el) = document.get_element_by_id(LOADING_ID) {
                 el.set_inner_html(crate::gate::OPEN_FROM_PPM);

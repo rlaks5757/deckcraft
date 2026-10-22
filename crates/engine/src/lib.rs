@@ -482,8 +482,8 @@ pub struct Session {
     /// Presentations a host read off the UI thread, waiting for `file.adopt` (by token).
     loaded: Vec<(u64, cmd::file::LoadedFile)>,
     next_loaded: u64,
-    /// The PPM host lock: `Some` once locked (always in the `ppm-host` build), holding the groups
-    /// the parent switched on. Locking is one way.
+    /// The PPM host lock: `Some` once locked (always in the `ppm-host` build), holding the parent's
+    /// overrides of the default grades. Locking is one way.
     host: Option<hostlock::Policy>,
     /// The next outermost command skips the host lock (the parent's own file, see
     /// [`Session::open_host_file`]).
