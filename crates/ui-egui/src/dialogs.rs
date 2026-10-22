@@ -77,6 +77,9 @@ fn title(id: &str) -> &'static str {
 
 pub fn show(app: &mut SlideApp, ctx: &egui::Context) {
     let Some(mut d) = app.dialog.take() else { return };
+    if !crate::host_lock::dialog_permits(app.host_policy().as_ref(), &d.id) {
+        return;
+    }
     let mut open = true;
     let mut close = false;
     let mut window = egui::Window::new(title(&d.id))

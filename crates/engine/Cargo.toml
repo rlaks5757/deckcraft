@@ -8,6 +8,10 @@ description = "DeckCraft engine: sessions, undo history, selection, the command 
 [lints]
 workspace = true
 
+# ppm-host: every session starts locked to its PPM host (see src/hostlock.rs); ppm/build-web.sh turns it on.
+[features]
+ppm-host = []
+
 [dependencies]
 deckcraft-geom = { workspace = true }
 deckcraft-color = { workspace = true }

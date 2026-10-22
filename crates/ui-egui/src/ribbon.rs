@@ -250,7 +250,18 @@ pub fn show(app: &mut SlideApp, ui: &mut Ui) {
     });
 }
 
+/// Does a locked app keep the entry that runs `id` with `p`? `app.dialog` follows the dialog it opens.
+fn shown(app: &SlideApp, id: &str, p: &Value) -> bool {
+    if id == "app.dialog" {
+        return crate::host_lock::dialog_permits(app.host_policy().as_ref(), p.get("id").and_then(Value::as_str).unwrap_or(""));
+    }
+    app.allowed(id)
+}
+
 fn big(app: &mut SlideApp, ui: &mut Ui, icon: Icon, label: &str, id: &str, p: Value) {
+    if !shown(app, id, &p) {
+        return;
+    }
     let en = enabled(app, id);
     let r = big_button(ui, icon, label, en);
     if id == "insert.dateTime" {
@@ -286,6 +297,9 @@ fn photo_album_button(app: &mut SlideApp, ui: &mut Ui) {
 }
 
 fn small(app: &mut SlideApp, ui: &mut Ui, icon: Icon, label: &str, id: &str, p: Value) {
+    if !shown(app, id, &p) {
+        return;
+    }
     let en = enabled(app, id);
     let r = small_button(ui, icon, label, en, false).on_hover_text(tip(id, label));
     if r.clicked() {
@@ -295,6 +309,9 @@ fn small(app: &mut SlideApp, ui: &mut Ui, icon: Icon, label: &str, id: &str, p: 
 }
 
 fn toggle(app: &mut SlideApp, ui: &mut Ui, icon: Icon, label: &str, id: &str, on: bool) {
+    if !app.allowed(id) {
+        return;
+    }
     let en = enabled(app, id);
     if icon_toggle(ui, icon, &tip(id, label), en, on).clicked() {
         run(app, id, json!({}));
@@ -1170,6 +1187,9 @@ fn align_to_slide(choice: Option<&(Vec<ShapeId>, bool)>, selection: &[ShapeId]) 
 }
 
 pub fn menu_item(app: &mut SlideApp, ui: &mut Ui, icon: Icon, label: &str, id: &str, p: Value) {
+    if !shown(app, id, &p) {
+        return;
+    }
     let en = enabled(app, id);
     let r = small_button(ui, icon, label, en, false);
     if r.clicked() {
@@ -2134,7 +2154,7 @@ fn record(app: &mut SlideApp, ui: &mut Ui) {
         }
     });
     group(ui, |ui| {
-        if big_button(ui, Icon::Help, "Learn\nMore", true).clicked() {
+        if app.allowed("app.externalLinks") && big_button(ui, Icon::Help, "Learn\nMore", true).clicked() {
             app.open_url(deckcraft_engine::links::APP_PAGE);
         }
     });

@@ -13,6 +13,9 @@ workspace = true
 name = "deckcraft-web"
 path = "src/main.rs"
 
+[features]
+ppm-host = ["deckcraft-engine/ppm-host"]
+
 [dependencies]
 deckcraft-engine = { workspace = true }
 deckcraft-ui-egui = { workspace = true }

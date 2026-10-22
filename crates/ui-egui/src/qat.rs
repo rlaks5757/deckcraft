@@ -114,6 +114,9 @@ fn tip(q: &QatItem) -> String {
 pub fn show(app: &mut SlideApp, ui: &mut Ui) {
     let items = app.ui.qat.clone();
     for q in &items {
+        if !app.allowed(&q.id) {
+            continue;
+        }
         let on = q.id == "app.home" && app.backstage_open();
         let en = match q.id.as_str() {
             "app.home" => true,
@@ -134,7 +137,8 @@ pub fn show(app: &mut SlideApp, ui: &mut Ui) {
     let r = crate::widgets::icon_toggle(ui, Icon::ChevronDown, "Customize Quick Access Toolbar", true, false);
     egui::Popup::menu(&r).show(|ui| {
         ui.label(egui::RichText::new("Customize Quick Access Toolbar").strong());
-        for c in common() {
+        let shown: Vec<_> = common().into_iter().filter(|c| app.allowed(&c.id)).collect();
+        for c in shown {
             let mut on = app.ui.qat.iter().any(|q| q.same(&c.id, &Value::Null));
             if ui.checkbox(&mut on, &c.label).changed() {
                 let key = if on { "add" } else { "remove" };

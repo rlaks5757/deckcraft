@@ -132,6 +132,20 @@ pub fn entries(has_doc: bool) -> (Vec<Nav>, Vec<Nav>) {
     (top, vec![Nav::Page(Page::Account), Nav::Options])
 }
 
+/// [`entries`] a host-locked app keeps: no start screen, Save As, Export, Print or Close unless
+/// the host's policy switched the group on.
+pub fn entries_for(app: &SlideApp, has_doc: bool) -> (Vec<Nav>, Vec<Nav>) {
+    let (mut top, mut bottom) = entries(has_doc);
+    let keep = |n: &Nav| match n {
+        Nav::Page(p) => app.page_allowed(*p),
+        Nav::Close => app.allowed("app.closePresentation"),
+        Nav::Save | Nav::Options => true,
+    };
+    top.retain(keep);
+    bottom.retain(keep);
+    (top, bottom)
+}
+
 /// Print page: which slides.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum PrintScope {
@@ -282,7 +296,7 @@ pub fn key(app: &mut SlideApp, key: Key, mods: deckcraft_engine::Mods) -> bool {
         return false;
     }
     let has_doc = app.session.active().is_some();
-    let (top, bottom) = entries(has_doc);
+    let (top, bottom) = entries_for(app, has_doc);
     let all: Vec<Nav> = top.into_iter().chain(bottom).collect();
     let Some(bs) = app.backstage.as_mut() else { return false };
     match key {
@@ -329,9 +343,12 @@ pub fn show(app: &mut SlideApp, ui: &mut Ui) {
     if !has_doc && bs.page.needs_doc() {
         bs.page = Page::Home;
     }
+    if !app.page_allowed(bs.page) {
+        bs.page = Page::Info;
+    }
     let (nav_bg, page_bg) = colours(&t);
     let mut out = Outcome::default();
-    let (top, bottom) = entries(has_doc);
+    let (top, bottom) = entries_for(app, has_doc);
     egui::Panel::left("backstage_nav").exact_size(NAV_W).resizable(false).frame(egui::Frame::NONE.fill(nav_bg)).show(ui, |ui| {
         ui.spacing_mut().item_spacing.y = 0.0;
         if has_doc {
@@ -853,7 +870,7 @@ fn info(app: &mut SlideApp, ui: &mut Ui, bs: &mut Backstage) {
                 (true, true) => ("This presentation has unsaved changes. Revert goes back to the saved file.", true),
                 (true, false) => ("This presentation has never been saved.", false),
             };
-            if task(ui, Icon::ResetSlide, "Revert", "Manage Presentation", detail, can_revert) {
+            if app.allowed("file.revert") && task(ui, Icon::ResetSlide, "Revert", "Manage Presentation", detail, can_revert) {
                 let _ = app.run("file.revert", json!({}));
             }
         });

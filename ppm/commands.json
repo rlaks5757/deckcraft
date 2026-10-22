@@ -1,0 +1,4155 @@
+{
+  "app": "deck",
+  "commands": [
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "animation.add",
+      "label": "Add Animation",
+      "labelKo": null,
+      "location": [
+        "Animations",
+        "Advanced Animation"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "animation.clear",
+      "label": "Remove All Animations",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "animation.get",
+      "label": "Animations on Slide",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "animation.list",
+      "label": "Animation Gallery",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "animation.move",
+      "label": "Reorder Animation",
+      "labelKo": null,
+      "location": [
+        "Animations",
+        "Timing"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "animation.options",
+      "label": "Effect Options",
+      "labelKo": null,
+      "location": [
+        "Animations",
+        "Animation"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "animation.painter",
+      "label": "Animation Painter",
+      "labelKo": null,
+      "location": [
+        "Animations",
+        "Advanced Animation"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "animation.painterApply",
+      "label": "Apply Animation",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "animation.preview",
+      "label": "Preview Animations",
+      "labelKo": null,
+      "location": [
+        "Animation"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "animation.remove",
+      "label": "Remove Animation",
+      "labelKo": null,
+      "location": [
+        "Animation Pane"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "animation.set",
+      "label": "Animation Styles",
+      "labelKo": null,
+      "location": [
+        "Animations",
+        "Animation"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "animation.timing",
+      "label": "Timing",
+      "labelKo": null,
+      "location": [
+        "Animations",
+        "Timing"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "app.about",
+      "label": "About DeckCraft",
+      "labelKo": null,
+      "location": [
+        "App"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "app.backstage",
+      "label": "File",
+      "labelKo": null,
+      "location": [
+        "App"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "app.browseThemeDialog",
+      "label": "Browse for Themes…",
+      "labelKo": null,
+      "location": [
+        "App"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "app.changePictureDialog",
+      "label": "Change Picture…",
+      "labelKo": null,
+      "location": [
+        "App"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "locked"
+      },
+      "id": "app.closePresentation",
+      "label": "Close",
+      "labelKo": null,
+      "location": [
+        "App"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "app.compareDialog",
+      "label": "Compare…",
+      "labelKo": null,
+      "location": [
+        "App"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "app.dialog",
+      "label": "Open Dialog",
+      "labelKo": null,
+      "location": [
+        "App"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "off"
+      },
+      "id": "app.exportDialog",
+      "label": "Export…",
+      "labelKo": null,
+      "location": [
+        "App"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "off"
+      },
+      "id": "app.externalLinks",
+      "label": "Open links in a new tab",
+      "labelKo": null,
+      "location": [
+        "File",
+        "Help"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "app.find",
+      "label": "Find…",
+      "labelKo": null,
+      "location": [
+        "App"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "locked"
+      },
+      "id": "app.home",
+      "label": "Home",
+      "labelKo": null,
+      "location": [
+        "App"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "app.insertAudioDialog",
+      "label": "Audio from File…",
+      "labelKo": null,
+      "location": [
+        "App"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "app.insertPictureDialog",
+      "label": "Picture from File…",
+      "labelKo": null,
+      "location": [
+        "App"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "app.insertVideoDialog",
+      "label": "Video from File…",
+      "labelKo": null,
+      "location": [
+        "App"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "app.links",
+      "label": "Community Links",
+      "labelKo": null,
+      "location": [
+        "App"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "locked"
+      },
+      "id": "app.openDialog",
+      "label": "Open…",
+      "labelKo": null,
+      "location": [
+        "App"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "app.palette",
+      "label": "Command Palette",
+      "labelKo": null,
+      "location": [
+        "App"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "app.pasteSpecial",
+      "label": "Paste Special…",
+      "labelKo": null,
+      "location": [
+        "App"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "app.preferences",
+      "label": "Preferences…",
+      "labelKo": null,
+      "location": [
+        "App"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "off"
+      },
+      "id": "app.print",
+      "label": "Print",
+      "labelKo": null,
+      "location": [
+        "App"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "app.qat",
+      "label": "Quick Access Toolbar",
+      "labelKo": null,
+      "location": [
+        "App"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "app.replace",
+      "label": "Replace…",
+      "labelKo": null,
+      "location": [
+        "App"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "app.reuseSlidesDialog",
+      "label": "Reuse Slides…",
+      "labelKo": null,
+      "location": [
+        "App"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "off"
+      },
+      "id": "app.saveAsDialog",
+      "label": "Save As…",
+      "labelKo": null,
+      "location": [
+        "App"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "app.smartArtPictureDialog",
+      "label": "Insert Picture in SmartArt…",
+      "labelKo": null,
+      "location": [
+        "App"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "arrange.align",
+      "label": "Align",
+      "labelKo": null,
+      "location": [
+        "Arrange",
+        "Align or Distribute"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "arrange.bringForward",
+      "label": "Bring Forward",
+      "labelKo": null,
+      "location": [
+        "Arrange"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "arrange.bringToFront",
+      "label": "Bring to Front",
+      "labelKo": null,
+      "location": [
+        "Arrange"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "arrange.distribute",
+      "label": "Distribute",
+      "labelKo": null,
+      "location": [
+        "Arrange",
+        "Align or Distribute"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "arrange.flipHorizontal",
+      "label": "Flip Horizontal",
+      "labelKo": null,
+      "location": [
+        "Arrange",
+        "Rotate or Flip"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "arrange.flipVertical",
+      "label": "Flip Vertical",
+      "labelKo": null,
+      "location": [
+        "Arrange",
+        "Rotate or Flip"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "arrange.group",
+      "label": "Group",
+      "labelKo": null,
+      "location": [
+        "Arrange"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "arrange.nudge",
+      "label": "Nudge",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "arrange.regroup",
+      "label": "Regroup",
+      "labelKo": null,
+      "location": [
+        "Arrange"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "arrange.reorder",
+      "label": "Reorder Objects",
+      "labelKo": null,
+      "location": [
+        "Arrange"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "arrange.rotateLeft",
+      "label": "Rotate Left 90°",
+      "labelKo": null,
+      "location": [
+        "Arrange",
+        "Rotate or Flip"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "arrange.rotateRight",
+      "label": "Rotate Right 90°",
+      "labelKo": null,
+      "location": [
+        "Arrange",
+        "Rotate or Flip"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "arrange.sendBackward",
+      "label": "Send Backward",
+      "labelKo": null,
+      "location": [
+        "Arrange"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "arrange.sendToBack",
+      "label": "Send to Back",
+      "labelKo": null,
+      "location": [
+        "Arrange"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "arrange.ungroup",
+      "label": "Ungroup",
+      "labelKo": null,
+      "location": [
+        "Arrange"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "chart.data",
+      "label": "Edit Data",
+      "labelKo": null,
+      "location": [
+        "Chart Design",
+        "Data"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "chart.options",
+      "label": "Chart Elements",
+      "labelKo": null,
+      "location": [
+        "Chart Design",
+        "Chart Layouts"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "chart.type",
+      "label": "Change Chart Type",
+      "labelKo": null,
+      "location": [
+        "Chart Design",
+        "Type"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "commands.list",
+      "label": "List Commands",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "comment.add",
+      "label": "New Comment",
+      "labelKo": null,
+      "location": [
+        "Review",
+        "Comments"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "comment.delete",
+      "label": "Delete Comment",
+      "labelKo": null,
+      "location": [
+        "Review",
+        "Comments"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "comment.list",
+      "label": "Comments",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "comment.next",
+      "label": "Next Comment",
+      "labelKo": null,
+      "location": [
+        "Review",
+        "Comments"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "comment.prev",
+      "label": "Previous Comment",
+      "labelKo": null,
+      "location": [
+        "Review",
+        "Comments"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "comment.reply",
+      "label": "Reply",
+      "labelKo": null,
+      "location": [
+        "Comments"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "comment.resolve",
+      "label": "Resolve Thread",
+      "labelKo": null,
+      "location": [
+        "Comments"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "design.applyIdea",
+      "label": "Apply Design Idea",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Designer"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "design.background",
+      "label": "Format Background",
+      "labelKo": null,
+      "location": [
+        "Design",
+        "Customize"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "design.browseTheme",
+      "label": "Browse for Themes…",
+      "labelKo": null,
+      "location": [
+        "Design",
+        "Themes"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "design.colors",
+      "label": "Colors",
+      "labelKo": null,
+      "location": [
+        "Design",
+        "Variants"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "design.effects",
+      "label": "Effects",
+      "labelKo": null,
+      "location": [
+        "Design",
+        "Variants"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "design.fonts",
+      "label": "Fonts",
+      "labelKo": null,
+      "location": [
+        "Design",
+        "Variants"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "design.headerFooter",
+      "label": "Header and Footer…",
+      "labelKo": null,
+      "location": [
+        "Insert",
+        "Text"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "design.hideBackgroundGraphics",
+      "label": "Hide Background Graphics",
+      "labelKo": null,
+      "location": [
+        "Format Background"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "design.ideas",
+      "label": "Design Ideas",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "design.slideSize",
+      "label": "Slide Size",
+      "labelKo": null,
+      "location": [
+        "Design",
+        "Customize"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "design.theme",
+      "label": "Themes",
+      "labelKo": null,
+      "location": [
+        "Design",
+        "Themes"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "design.themes",
+      "label": "Theme Gallery",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "design.variant",
+      "label": "Variants",
+      "labelKo": null,
+      "location": [
+        "Design",
+        "Variants"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "design.variants",
+      "label": "Variant Gallery",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "document.inspect",
+      "label": "Inspect Presentation",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "draw.inkToShape",
+      "label": "Ink to Shape",
+      "labelKo": null,
+      "location": [
+        "Draw",
+        "Convert"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "edit.copy",
+      "label": "Copy",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Clipboard"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "edit.cut",
+      "label": "Cut",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Clipboard"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "edit.delete",
+      "label": "Delete",
+      "labelKo": null,
+      "location": [
+        "Edit"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "edit.deselect",
+      "label": "Deselect",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "edit.duplicate",
+      "label": "Duplicate",
+      "labelKo": null,
+      "location": [
+        "Edit"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "edit.paste",
+      "label": "Paste",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Clipboard"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "edit.pasteSpecial",
+      "label": "Paste Special",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Clipboard"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "edit.pasteText",
+      "label": "Paste and Match Formatting",
+      "labelKo": null,
+      "location": [
+        "Edit"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "edit.redo",
+      "label": "Redo",
+      "labelKo": null,
+      "location": [
+        "Edit"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "edit.select",
+      "label": "Select Objects",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "edit.selectAll",
+      "label": "Select All",
+      "labelKo": null,
+      "location": [
+        "Edit"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "edit.undo",
+      "label": "Undo",
+      "labelKo": null,
+      "location": [
+        "Edit"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "locked"
+      },
+      "id": "file.adopt",
+      "label": "Open",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "locked"
+      },
+      "id": "file.close",
+      "label": "Close",
+      "labelKo": null,
+      "location": [
+        "File"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "off"
+      },
+      "id": "file.export",
+      "label": "Export…",
+      "labelKo": null,
+      "location": [
+        "File"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "file.info",
+      "label": "Info",
+      "labelKo": null,
+      "location": [
+        "File"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "locked"
+      },
+      "id": "file.new",
+      "label": "New Presentation",
+      "labelKo": null,
+      "location": [
+        "File"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "locked"
+      },
+      "id": "file.open",
+      "label": "Open…",
+      "labelKo": null,
+      "location": [
+        "File"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "locked"
+      },
+      "id": "file.openBytes",
+      "label": "Open Data",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "file.properties",
+      "label": "Properties",
+      "labelKo": null,
+      "location": [
+        "File"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "locked"
+      },
+      "id": "file.recovery.discard",
+      "label": "Discard Recovered Presentations",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "locked"
+      },
+      "id": "file.recovery.list",
+      "label": "Recovered Presentations",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "locked"
+      },
+      "id": "file.recovery.open",
+      "label": "Open Recovered Presentations",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "locked"
+      },
+      "id": "file.recovery.save",
+      "label": "Save AutoRecover Information",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "file.render",
+      "label": "Render Slide",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "locked"
+      },
+      "id": "file.revert",
+      "label": "Revert",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "file.save",
+      "label": "Save",
+      "labelKo": null,
+      "location": [
+        "File"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "off"
+      },
+      "id": "file.saveAs",
+      "label": "Save As…",
+      "labelKo": null,
+      "location": [
+        "File"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "file.saveBytes",
+      "label": "Save to Data",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "off"
+      },
+      "id": "file.saveTemplate",
+      "label": "Save as Template…",
+      "labelKo": null,
+      "location": [
+        "File"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "locked"
+      },
+      "id": "file.templates",
+      "label": "Starter Templates",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "font.add",
+      "label": "Add Font",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "font.replace",
+      "label": "Replace Fonts",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Editing",
+        "Replace"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "font.rescan",
+      "label": "Rescan Installed Fonts",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Font"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "font.used",
+      "label": "Fonts in Presentation",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.align",
+      "label": "Align",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Paragraph"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.alignCenter",
+      "label": "Center",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Paragraph"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.alignLeft",
+      "label": "Align Left",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Paragraph"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.alignRight",
+      "label": "Align Right",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Paragraph"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.anchor",
+      "label": "Align Text",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Paragraph"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.autofit",
+      "label": "Autofit",
+      "labelKo": null,
+      "location": [
+        "Format Shape",
+        "Text Box"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.bold",
+      "label": "Bold",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Font"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.bullets",
+      "label": "Bullets",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Paragraph"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.caps",
+      "label": "Caps",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.case",
+      "label": "Change Case",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Font"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.clear",
+      "label": "Clear All Formatting",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Font"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.color",
+      "label": "Font Color",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Font"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.columns",
+      "label": "Columns",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Paragraph"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.direction",
+      "label": "Text Direction",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Paragraph"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.font",
+      "label": "Font",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Font"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.fontDialog",
+      "label": "Font…",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Font"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.grow",
+      "label": "Increase Font Size",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Font"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.highlight",
+      "label": "Text Highlight Color",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Font"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.indent",
+      "label": "Increase List Level",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Paragraph"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.italic",
+      "label": "Italic",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Font"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.justify",
+      "label": "Justify",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Paragraph"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.language",
+      "label": "Language",
+      "labelKo": null,
+      "location": [
+        "Review",
+        "Language"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.lineSpacing",
+      "label": "Line Spacing",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Paragraph"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.margins",
+      "label": "Text Box Margins",
+      "labelKo": null,
+      "location": [
+        "Format Shape",
+        "Text Box"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.numbering",
+      "label": "Numbering",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Paragraph"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.outdent",
+      "label": "Decrease List Level",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Paragraph"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.painter",
+      "label": "Format Painter",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Clipboard"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.painterApply",
+      "label": "Paste Formatting",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.paragraph",
+      "label": "Paragraph…",
+      "labelKo": null,
+      "location": [
+        "Format"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.paragraphDialog",
+      "label": "Paragraph…",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Paragraph"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.rtl",
+      "label": "Right-to-Left Text Direction",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Paragraph"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.ruler",
+      "label": "Ruler",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.shrink",
+      "label": "Decrease Font Size",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Font"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.size",
+      "label": "Font Size",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Font"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.spacing",
+      "label": "Character Spacing",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Font"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.state",
+      "label": "Formatting State",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.strikethrough",
+      "label": "Strikethrough",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Font"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.subscript",
+      "label": "Subscript",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Font"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.superscript",
+      "label": "Superscript",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Font"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.tabs",
+      "label": "Tabs…",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Paragraph"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.textOutline",
+      "label": "Text Outline",
+      "labelKo": null,
+      "location": [
+        "Shape Format",
+        "WordArt Styles"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.textShadow",
+      "label": "Text Shadow",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Font"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.textTransparency",
+      "label": "Text Transparency",
+      "labelKo": null,
+      "location": [
+        "Shape Format",
+        "WordArt Styles"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.textWarp",
+      "label": "Text Transform",
+      "labelKo": null,
+      "location": [
+        "Shape Format",
+        "WordArt Styles"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.underline",
+      "label": "Underline",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Font"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.wrap",
+      "label": "Wrap Text in Shape",
+      "labelKo": null,
+      "location": [
+        "Format Shape",
+        "Text Box"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "guide.add",
+      "label": "Add Guide",
+      "labelKo": null,
+      "location": [
+        "View",
+        "Show",
+        "Guides"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "guide.delete",
+      "label": "Delete Guide",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "guide.list",
+      "label": "Guides",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "guide.move",
+      "label": "Move Guide",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "handout.placeholders",
+      "label": "Handout Placeholders",
+      "labelKo": null,
+      "location": [
+        "Handout Master",
+        "Placeholders"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "insert.actionButton",
+      "label": "Action Buttons",
+      "labelKo": null,
+      "location": [
+        "Insert",
+        "Illustrations"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "insert.audio",
+      "label": "Audio from File…",
+      "labelKo": null,
+      "location": [
+        "Insert",
+        "Media",
+        "Audio"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "insert.chart",
+      "label": "Chart…",
+      "labelKo": null,
+      "location": [
+        "Insert",
+        "Illustrations"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "insert.dateTime",
+      "label": "Date & Time",
+      "labelKo": null,
+      "location": [
+        "Insert",
+        "Text"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "insert.hyperlink",
+      "label": "Link",
+      "labelKo": null,
+      "location": [
+        "Insert",
+        "Links"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "insert.icon",
+      "label": "Icons",
+      "labelKo": null,
+      "location": [
+        "Insert",
+        "Illustrations"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "insert.icons",
+      "label": "Icon Gallery",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "insert.photoAlbum",
+      "label": "Photo Album…",
+      "labelKo": null,
+      "location": [
+        "Insert",
+        "Images"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "insert.photoAlbumEdit",
+      "label": "Edit Photo Album…",
+      "labelKo": null,
+      "location": [
+        "Insert",
+        "Images"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "insert.picture",
+      "label": "Picture from File…",
+      "labelKo": null,
+      "location": [
+        "Insert",
+        "Images",
+        "Pictures"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "insert.slideNumber",
+      "label": "Slide Number",
+      "labelKo": null,
+      "location": [
+        "Insert",
+        "Text"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "insert.smartArt",
+      "label": "SmartArt",
+      "labelKo": null,
+      "location": [
+        "Insert",
+        "Illustrations"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "insert.symbol",
+      "label": "Symbol",
+      "labelKo": null,
+      "location": [
+        "Insert",
+        "Symbols"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "insert.table",
+      "label": "Table…",
+      "labelKo": null,
+      "location": [
+        "Insert",
+        "Tables"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "insert.textBox",
+      "label": "Text Box",
+      "labelKo": null,
+      "location": [
+        "Insert",
+        "Text"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "insert.video",
+      "label": "Video from File…",
+      "labelKo": null,
+      "location": [
+        "Insert",
+        "Media",
+        "Video"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "insert.wordArt",
+      "label": "WordArt",
+      "labelKo": null,
+      "location": [
+        "Insert",
+        "Text"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "insert.zoom",
+      "label": "Zoom",
+      "labelKo": null,
+      "location": [
+        "Insert",
+        "Links"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "master.deleteLayout",
+      "label": "Delete Layout",
+      "labelKo": null,
+      "location": [
+        "Slide Master",
+        "Edit Master"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "master.insertLayout",
+      "label": "Insert Layout",
+      "labelKo": null,
+      "location": [
+        "Slide Master",
+        "Edit Master"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "master.insertPlaceholder",
+      "label": "Insert Placeholder",
+      "labelKo": null,
+      "location": [
+        "Slide Master",
+        "Master Layout"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "master.placeholders",
+      "label": "Layout Placeholders",
+      "labelKo": null,
+      "location": [
+        "Slide Master",
+        "Edit Master"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "master.preserve",
+      "label": "Preserve",
+      "labelKo": null,
+      "location": [
+        "Slide Master",
+        "Edit Master"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "master.renameLayout",
+      "label": "Rename Layout",
+      "labelKo": null,
+      "location": [
+        "Slide Master",
+        "Edit Master"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "media.gifPlay",
+      "label": "Play/Pause GIF",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "media.info",
+      "label": "Media Info",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "media.options",
+      "label": "Playback",
+      "labelKo": null,
+      "location": [
+        "Playback"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "media.pause",
+      "label": "Pause",
+      "labelKo": null,
+      "location": [
+        "Playback",
+        "Preview"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "media.play",
+      "label": "Play",
+      "labelKo": null,
+      "location": [
+        "Playback",
+        "Preview"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "media.posterFrame",
+      "label": "Poster Frame",
+      "labelKo": null,
+      "location": [
+        "Video Format",
+        "Adjust"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "media.seek",
+      "label": "Seek",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "media.stop",
+      "label": "Stop",
+      "labelKo": null,
+      "location": [
+        "Playback",
+        "Preview"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "media.toggle",
+      "label": "Play/Pause",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "notes.placeholders",
+      "label": "Notes Placeholders",
+      "labelKo": null,
+      "location": [
+        "Notes Master",
+        "Placeholders"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "picture.adjust",
+      "label": "Corrections",
+      "labelKo": null,
+      "location": [
+        "Picture Format",
+        "Adjust"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "picture.artisticEffect",
+      "label": "Artistic Effects",
+      "labelKo": null,
+      "location": [
+        "Picture Format",
+        "Adjust"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "picture.change",
+      "label": "Change Picture",
+      "labelKo": null,
+      "location": [
+        "Picture Format",
+        "Adjust"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "picture.compress",
+      "label": "Compress Pictures",
+      "labelKo": null,
+      "location": [
+        "Picture Format",
+        "Adjust"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "picture.crop",
+      "label": "Crop",
+      "labelKo": null,
+      "location": [
+        "Picture Format",
+        "Size"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "picture.recolor",
+      "label": "Recolor",
+      "labelKo": null,
+      "location": [
+        "Picture Format",
+        "Adjust",
+        "Color"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "picture.recolors",
+      "label": "Recolor Gallery",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "picture.removeBackground",
+      "label": "Remove Background",
+      "labelKo": null,
+      "location": [
+        "Picture Format",
+        "Adjust"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "picture.reset",
+      "label": "Reset Picture",
+      "labelKo": null,
+      "location": [
+        "Picture Format",
+        "Adjust"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "picture.style",
+      "label": "Picture Styles",
+      "labelKo": null,
+      "location": [
+        "Picture Format",
+        "Picture Styles"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "picture.styles",
+      "label": "Picture Style Gallery",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "picture.transparentColor",
+      "label": "Set Transparent Color",
+      "labelKo": null,
+      "location": [
+        "Picture Format",
+        "Adjust",
+        "Color"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "review.accept",
+      "label": "Accept Revision",
+      "labelKo": null,
+      "location": [
+        "Review",
+        "Compare"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "review.accessibility",
+      "label": "Check Accessibility",
+      "labelKo": null,
+      "location": [
+        "Review",
+        "Accessibility"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "review.addToDictionary",
+      "label": "Add to Dictionary",
+      "labelKo": null,
+      "location": [
+        "Review",
+        "Proofing"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "review.compare",
+      "label": "Compare",
+      "labelKo": null,
+      "location": [
+        "Review",
+        "Compare"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "review.dictionary",
+      "label": "Spelling Dictionary",
+      "labelKo": null,
+      "location": [
+        "Review",
+        "Proofing"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "review.endCompare",
+      "label": "End Review",
+      "labelKo": null,
+      "location": [
+        "Review",
+        "Compare"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "review.replaceWord",
+      "label": "Insert Synonym",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "review.revisions",
+      "label": "Revisions",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "review.spelling",
+      "label": "Spelling",
+      "labelKo": null,
+      "location": [
+        "Review",
+        "Proofing"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "review.spellingChange",
+      "label": "Change Spelling",
+      "labelKo": null,
+      "location": [
+        "Review",
+        "Proofing"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "review.thesaurus",
+      "label": "Thesaurus",
+      "labelKo": null,
+      "location": [
+        "Review",
+        "Proofing"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "review.thesaurusPane",
+      "label": "Thesaurus",
+      "labelKo": null,
+      "location": [
+        "Review"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "section.add",
+      "label": "Add Section",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Slides",
+        "Section"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "section.move",
+      "label": "Move Section",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "section.remove",
+      "label": "Remove Section",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Slides",
+        "Section"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "section.removeAll",
+      "label": "Remove All Sections",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Slides",
+        "Section"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "section.rename",
+      "label": "Rename Section",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Slides",
+        "Section"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "selection.hideAll",
+      "label": "Hide All",
+      "labelKo": null,
+      "location": [
+        "Selection Pane"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "selection.select",
+      "label": "Select",
+      "labelKo": null,
+      "location": [
+        "Selection Pane"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "selection.showAll",
+      "label": "Show All",
+      "labelKo": null,
+      "location": [
+        "Selection Pane"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.action",
+      "label": "Action Settings",
+      "labelKo": null,
+      "location": [
+        "Insert",
+        "Links"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.addPoint",
+      "label": "Add Point",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.adjust",
+      "label": "Adjust Shape",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.altText",
+      "label": "Alt Text",
+      "labelKo": null,
+      "location": [
+        "Shape Format",
+        "Accessibility"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.change",
+      "label": "Change Shape",
+      "labelKo": null,
+      "location": [
+        "Shape Format",
+        "Insert Shapes",
+        "Edit Shape"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.connect",
+      "label": "Connect Shapes",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.deletePoint",
+      "label": "Delete Point",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.editPoints",
+      "label": "Edit Points",
+      "labelKo": null,
+      "location": [
+        "Shape Format",
+        "Insert Shapes",
+        "Edit Shape"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.effects",
+      "label": "Shape Effects",
+      "labelKo": null,
+      "location": [
+        "Shape Format",
+        "Shape Styles"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.fill",
+      "label": "Shape Fill",
+      "labelKo": null,
+      "location": [
+        "Shape Format",
+        "Shape Styles"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.flip",
+      "label": "Flip",
+      "labelKo": null,
+      "location": [
+        "Shape Format",
+        "Arrange",
+        "Rotate"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.freeform",
+      "label": "Freeform",
+      "labelKo": null,
+      "location": [
+        "Insert",
+        "Shapes"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.insert",
+      "label": "Shapes",
+      "labelKo": null,
+      "location": [
+        "Insert",
+        "Illustrations"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.inspect",
+      "label": "Inspect Shape",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.line",
+      "label": "Shape Outline",
+      "labelKo": null,
+      "location": [
+        "Shape Format",
+        "Shape Styles"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.lock",
+      "label": "Lock",
+      "labelKo": null,
+      "location": [
+        "Selection Pane"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.merge",
+      "label": "Merge Shapes",
+      "labelKo": null,
+      "location": [
+        "Shape Format",
+        "Insert Shapes",
+        "Merge Shapes"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.move",
+      "label": "Move",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.moveHandle",
+      "label": "Move Handle",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.movePoint",
+      "label": "Move Point",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.pointType",
+      "label": "Point Type",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.points",
+      "label": "Points",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.presets",
+      "label": "Shape Gallery",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.quickStyle",
+      "label": "Quick Styles",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Drawing"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.rename",
+      "label": "Rename",
+      "labelKo": null,
+      "location": [
+        "Selection Pane"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.resize",
+      "label": "Size",
+      "labelKo": null,
+      "location": [
+        "Shape Format",
+        "Size"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.rotate",
+      "label": "Rotation",
+      "labelKo": null,
+      "location": [
+        "Shape Format",
+        "Arrange",
+        "Rotate"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.setBounds",
+      "label": "Position and Size",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.setDefault",
+      "label": "Set as Default Shape",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.sites",
+      "label": "Connection Sites",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.sizePosition",
+      "label": "Size and Position…",
+      "labelKo": null,
+      "location": [
+        "Shape Format",
+        "Size"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.smoothCorners",
+      "label": "Smooth Corners",
+      "labelKo": null,
+      "location": [
+        "Shape Format",
+        "Insert Shapes",
+        "Edit Shape"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.visible",
+      "label": "Show/Hide",
+      "labelKo": null,
+      "location": [
+        "Selection Pane"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "show.customShow",
+      "label": "Custom Slide Show",
+      "labelKo": null,
+      "location": [
+        "Slide Show",
+        "Start Slide Show"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "show.end",
+      "label": "End Show",
+      "labelKo": null,
+      "location": [
+        "Show"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "show.fromCurrent",
+      "label": "Play from Current Slide",
+      "labelKo": null,
+      "location": [
+        "Slide Show",
+        "Start Slide Show"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "show.fromStart",
+      "label": "Play from Start",
+      "labelKo": null,
+      "location": [
+        "Slide Show",
+        "Start Slide Show"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "show.presenter",
+      "label": "Presenter View",
+      "labelKo": null,
+      "location": [
+        "Show"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "show.setup",
+      "label": "Set Up Slide Show…",
+      "labelKo": null,
+      "location": [
+        "Slide Show",
+        "Set Up"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "show.start",
+      "label": "Slide Show",
+      "labelKo": null,
+      "location": [
+        "Show"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "slide.colorAt",
+      "label": "Color At",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "slide.delete",
+      "label": "Delete Slide",
+      "labelKo": null,
+      "location": [
+        "Edit"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "slide.duplicate",
+      "label": "Duplicate Slide",
+      "labelKo": null,
+      "location": [
+        "Insert"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "slide.first",
+      "label": "First Slide",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "slide.fromOutline",
+      "label": "Slides from Outline…",
+      "labelKo": null,
+      "location": [
+        "Insert",
+        "Slides From"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "slide.go",
+      "label": "Go to Slide",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "slide.hide",
+      "label": "Hide Slide",
+      "labelKo": null,
+      "location": [
+        "Slide Show",
+        "Set Up"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "slide.inspect",
+      "label": "Inspect Slide",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "slide.last",
+      "label": "Last Slide",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "slide.layout",
+      "label": "Layout",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Slides"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "slide.move",
+      "label": "Move Slide",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "slide.new",
+      "label": "New Slide",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Slides"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "slide.next",
+      "label": "Next Slide",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "slide.notes",
+      "label": "Notes",
+      "labelKo": null,
+      "location": [
+        "View"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "slide.previous",
+      "label": "Previous Slide",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "slide.rename",
+      "label": "Rename Slide",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "slide.reset",
+      "label": "Reset",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Slides"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "slide.reuse",
+      "label": "Reuse Slides…",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Slides",
+        "New Slide"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "slide.selectSlides",
+      "label": "Select Slides",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "smartArt.addNode",
+      "label": "Add Shape",
+      "labelKo": null,
+      "location": [
+        "SmartArt Design",
+        "Create Graphic"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "smartArt.colors",
+      "label": "Change Colors",
+      "labelKo": null,
+      "location": [
+        "SmartArt Design",
+        "SmartArt Styles"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "smartArt.demote",
+      "label": "Demote",
+      "labelKo": null,
+      "location": [
+        "SmartArt Design",
+        "Create Graphic"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "smartArt.fromText",
+      "label": "Convert to SmartArt",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Paragraph"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "smartArt.layout",
+      "label": "Change Layout",
+      "labelKo": null,
+      "location": [
+        "SmartArt Design",
+        "Layouts"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "smartArt.nodes",
+      "label": "Text Pane",
+      "labelKo": null,
+      "location": [
+        "SmartArt Design",
+        "Create Graphic"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "smartArt.picture",
+      "label": "Insert Picture in SmartArt",
+      "labelKo": null,
+      "location": [
+        "SmartArt Design",
+        "Create Graphic"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "smartArt.promote",
+      "label": "Promote",
+      "labelKo": null,
+      "location": [
+        "SmartArt Design",
+        "Create Graphic"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "smartArt.removeNode",
+      "label": "Remove Shape",
+      "labelKo": null,
+      "location": [
+        "SmartArt Design",
+        "Create Graphic"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "smartArt.setNodes",
+      "label": "Edit SmartArt Text",
+      "labelKo": null,
+      "location": [
+        "SmartArt Design",
+        "Create Graphic"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "smartArt.style",
+      "label": "SmartArt Styles",
+      "labelKo": null,
+      "location": [
+        "SmartArt Design",
+        "SmartArt Styles"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "smartArt.toShapes",
+      "label": "Convert to Shapes",
+      "labelKo": null,
+      "location": [
+        "SmartArt Design",
+        "Reset"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "smartArt.toText",
+      "label": "Convert to Text",
+      "labelKo": null,
+      "location": [
+        "SmartArt Design",
+        "Reset"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "table.borders",
+      "label": "Borders",
+      "labelKo": null,
+      "location": [
+        "Table Design",
+        "Draw Borders"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "table.cellAlign",
+      "label": "Align Cell Text",
+      "labelKo": null,
+      "location": [
+        "Table Layout",
+        "Alignment"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "table.cellFill",
+      "label": "Shading",
+      "labelKo": null,
+      "location": [
+        "Table Design",
+        "Table Styles"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "table.cellMargins",
+      "label": "Cell Margins",
+      "labelKo": null,
+      "location": [
+        "Table Layout",
+        "Alignment"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "table.columnWidth",
+      "label": "Width",
+      "labelKo": null,
+      "location": [
+        "Table Layout",
+        "Cell Size"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "table.deleteColumn",
+      "label": "Delete Columns",
+      "labelKo": null,
+      "location": [
+        "Table Layout",
+        "Rows & Columns"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "table.deleteRow",
+      "label": "Delete Rows",
+      "labelKo": null,
+      "location": [
+        "Table Layout",
+        "Rows & Columns"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "table.distributeColumns",
+      "label": "Distribute Columns",
+      "labelKo": null,
+      "location": [
+        "Table Layout",
+        "Cell Size"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "table.distributeRows",
+      "label": "Distribute Rows",
+      "labelKo": null,
+      "location": [
+        "Table Layout",
+        "Cell Size"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "table.drawLine",
+      "label": "Draw Table",
+      "labelKo": null,
+      "location": [
+        "Table Design",
+        "Draw Borders"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "table.eraseLine",
+      "label": "Table Eraser",
+      "labelKo": null,
+      "location": [
+        "Table Design",
+        "Draw Borders"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "table.insertColumnLeft",
+      "label": "Insert Left",
+      "labelKo": null,
+      "location": [
+        "Table Layout",
+        "Rows & Columns"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "table.insertColumnRight",
+      "label": "Insert Right",
+      "labelKo": null,
+      "location": [
+        "Table Layout",
+        "Rows & Columns"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "table.insertRowAbove",
+      "label": "Insert Above",
+      "labelKo": null,
+      "location": [
+        "Table Layout",
+        "Rows & Columns"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "table.insertRowBelow",
+      "label": "Insert Below",
+      "labelKo": null,
+      "location": [
+        "Table Layout",
+        "Rows & Columns"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "table.merge",
+      "label": "Merge Cells",
+      "labelKo": null,
+      "location": [
+        "Table Layout",
+        "Merge"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "table.options",
+      "label": "Table Style Options",
+      "labelKo": null,
+      "location": [
+        "Table Design",
+        "Table Style Options"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "table.rowHeight",
+      "label": "Height",
+      "labelKo": null,
+      "location": [
+        "Table Layout",
+        "Cell Size"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "table.selectCells",
+      "label": "Select Cells",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "table.split",
+      "label": "Split Cells",
+      "labelKo": null,
+      "location": [
+        "Table Layout",
+        "Merge"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "table.style",
+      "label": "Table Styles",
+      "labelKo": null,
+      "location": [
+        "Table Design",
+        "Table Styles"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "text.autocorrect",
+      "label": "AutoCorrect Options",
+      "labelKo": null,
+      "location": [
+        "Tools"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "text.commit",
+      "label": "Commit Composition",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "text.compose",
+      "label": "Compose Text",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "text.delete",
+      "label": "Delete Text",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "text.edit",
+      "label": "Edit Text",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "text.exit",
+      "label": "Stop Editing Text",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "text.find",
+      "label": "Find",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Editing"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "text.get",
+      "label": "Get Text",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "text.insert",
+      "label": "Type Text",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "text.move",
+      "label": "Move Insertion Point",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "text.replace",
+      "label": "Replace",
+      "labelKo": null,
+      "location": [
+        "Home",
+        "Editing"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "text.select",
+      "label": "Select Text",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "text.selectAll",
+      "label": "Select All Text",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "text.selectParagraph",
+      "label": "Select Paragraph",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "text.selectWord",
+      "label": "Select Word",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "text.set",
+      "label": "Set Text",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "transition.applyAll",
+      "label": "Apply To All",
+      "labelKo": null,
+      "location": [
+        "Transitions",
+        "Timing"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "transition.list",
+      "label": "Transition Gallery",
+      "labelKo": null,
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "transition.options",
+      "label": "Effect Options",
+      "labelKo": null,
+      "location": [
+        "Transitions",
+        "Transition to This Slide"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "transition.set",
+      "label": "Transition",
+      "labelKo": null,
+      "location": [
+        "Transitions",
+        "Transition to This Slide"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "transition.sound",
+      "label": "Sound",
+      "labelKo": null,
+      "location": [
+        "Transitions",
+        "Timing"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "transition.timing",
+      "label": "Timing",
+      "labelKo": null,
+      "location": [
+        "Transitions",
+        "Timing"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.closeMaster",
+      "label": "Close Master View",
+      "labelKo": null,
+      "location": [
+        "Slide Master",
+        "Close"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.collapseRibbon",
+      "label": "Collapse the Ribbon",
+      "labelKo": null,
+      "location": [
+        "View"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.dark",
+      "label": "Dark Mode",
+      "labelKo": null,
+      "location": [
+        "View"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.fit",
+      "label": "Fit to Window",
+      "labelKo": null,
+      "location": [
+        "View"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.grayscale",
+      "label": "Grayscale",
+      "labelKo": null,
+      "location": [
+        "View"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.gridOptions",
+      "label": "Grid Options…",
+      "labelKo": null,
+      "location": [
+        "View"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.gridlines",
+      "label": "Gridlines",
+      "labelKo": null,
+      "location": [
+        "View"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.guides",
+      "label": "Guides",
+      "labelKo": null,
+      "location": [
+        "View"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.handoutMaster",
+      "label": "Handout Master",
+      "labelKo": null,
+      "location": [
+        "View",
+        "Master Views"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.newWindow",
+      "label": "New Window",
+      "labelKo": null,
+      "location": [
+        "View"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.normal",
+      "label": "Normal",
+      "labelKo": null,
+      "location": [
+        "View"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.notes",
+      "label": "Notes",
+      "labelKo": null,
+      "location": [
+        "View"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.notesMaster",
+      "label": "Notes Master",
+      "labelKo": null,
+      "location": [
+        "View",
+        "Master Views"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.notesPage",
+      "label": "Notes Page",
+      "labelKo": null,
+      "location": [
+        "View"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.outline",
+      "label": "Outline View",
+      "labelKo": null,
+      "location": [
+        "View"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.pane",
+      "label": "Task Pane",
+      "labelKo": null,
+      "location": [
+        "View"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.reading",
+      "label": "Reading View",
+      "labelKo": null,
+      "location": [
+        "View"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.ruler",
+      "label": "Ruler",
+      "labelKo": null,
+      "location": [
+        "View"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.slideMaster",
+      "label": "Slide Master",
+      "labelKo": null,
+      "location": [
+        "View",
+        "Master Views"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.sorter",
+      "label": "Slide Sorter",
+      "labelKo": null,
+      "location": [
+        "View"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.tab",
+      "label": "Ribbon Tab",
+      "labelKo": null,
+      "location": [
+        "View"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.zoom",
+      "label": "Set Zoom",
+      "labelKo": null,
+      "location": [
+        "View"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.zoomDialog",
+      "label": "Zoom…",
+      "labelKo": null,
+      "location": [
+        "View"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.zoomIn",
+      "label": "Zoom In",
+      "labelKo": null,
+      "location": [
+        "View"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.zoomOut",
+      "label": "Zoom Out",
+      "labelKo": null,
+      "location": [
+        "View"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "window.next",
+      "label": "Next Window",
+      "labelKo": null,
+      "location": [
+        "Window"
+      ]
+    }
+  ],
+  "schema": 1
+}
