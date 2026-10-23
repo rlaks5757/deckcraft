@@ -880,6 +880,9 @@ fn show_links_with_format_characters_are_not_opened() {
         "https://exa\u{200B}mple.com",
         "mailto:a@b.example\u{FEFF}",
         "https://a.example/\u{00AD}",
+        "https://a.example/\u{E0041}",
+        "https://a.example/\u{0600}",
+        "https://a.example/\u{206F}",
         "https://a.example/\u{061C}",
     ] {
         assert!(!safe_url(bad), "{bad:?}");
