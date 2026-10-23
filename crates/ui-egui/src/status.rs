@@ -15,7 +15,10 @@ pub fn status_bar(app: &mut SlideApp, ui: &mut Ui) {
         let Some(st) = app.session.active() else { return };
         let n = st.doc.slides.len();
         let left = match st.selection.target {
-            deckcraft_engine::Target::Slides => crate::i18n::fmt(tl!("Slide {n} of {total}"), &[("n", &(st.selection.slide + 1).min(n.max(1)).to_string()), ("total", &n.to_string())]),
+            deckcraft_engine::Target::Slides => crate::i18n::fmt(
+                tl!("Slide {n} of {total}"),
+                &[("n", &(st.selection.slide + 1).min(n.max(1)).to_string()), ("total", &n.to_string())],
+            ),
             _ => tl!("Slide Master").to_string(),
         };
         let p = ui.painter();

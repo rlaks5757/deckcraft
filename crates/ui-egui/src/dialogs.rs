@@ -1205,7 +1205,11 @@ fn body(app: &mut SlideApp, ui: &mut Ui, d: &mut Dialog) -> bool {
                 ui.ctx().send_viewport_cmd(egui::ViewportCommand::Close);
                 return true;
             }
-            let what = if names.len() == 1 { format!("“{}”", names[0]) } else { i18n::fmt(tl!("{n} presentations"), &[("n", &names.len().to_string())]) };
+            let what = if names.len() == 1 {
+                format!("“{}”", names[0])
+            } else {
+                i18n::fmt(tl!("{n} presentations"), &[("n", &names.len().to_string())])
+            };
             ui.label(egui::RichText::new(i18n::fmt(tl!("Do you want to save the changes you made to {what}?"), &[("what", &what)])).strong());
             ui.label(tl!("Your changes will be lost if you don't save them."));
             ui.add_space(8.0);
@@ -1219,7 +1223,8 @@ fn body(app: &mut SlideApp, ui: &mut Ui, d: &mut Dialog) -> bool {
                     done = true;
                 }
                 ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
-                    let save = ui.add(egui::Button::new(egui::RichText::new(tl!("Save")).color(t.accent_text)).fill(t.accent).min_size(vec2(72.0, 24.0)));
+                    let save =
+                        ui.add(egui::Button::new(egui::RichText::new(tl!("Save")).color(t.accent_text)).fill(t.accent).min_size(vec2(72.0, 24.0)));
                     if save.clicked() || ui.input(|i| i.key_pressed(egui::Key::Enter)) {
                         if app.save_all() {
                             app.quit_confirmed = true;
@@ -1248,7 +1253,8 @@ fn body(app: &mut SlideApp, ui: &mut Ui, d: &mut Dialog) -> bool {
                     done = true;
                 }
                 ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
-                    let save = ui.add(egui::Button::new(egui::RichText::new(tl!("Save")).color(t.accent_text)).fill(t.accent).min_size(vec2(72.0, 24.0)));
+                    let save =
+                        ui.add(egui::Button::new(egui::RichText::new(tl!("Save")).color(t.accent_text)).fill(t.accent).min_size(vec2(72.0, 24.0)));
                     if save.clicked() || ui.input(|i| i.key_pressed(egui::Key::Enter)) {
                         app.save();
                         // In the browser a save is a download: the presentation stays "unsaved".
@@ -1684,8 +1690,11 @@ fn body(app: &mut SlideApp, ui: &mut Ui, d: &mut Dialog) -> bool {
             let (ok, cancel) = buttons(ui, "Replace");
             if ok && !from.is_empty() && !to.trim().is_empty() {
                 let n = app.run("font.replace", json!({"from": from, "to": to.trim()})).ok().and_then(|v| v["replaced"].as_u64()).unwrap_or(0);
-                let msg =
-                    if n == 0 { i18n::fmt(tl!("“{from}” isn't used explicitly."), &[("from", &from)]) } else { i18n::fmt(tl!("Replaced “{from}” with “{to}”."), &[("from", &from), ("to", to.trim())]) };
+                let msg = if n == 0 {
+                    i18n::fmt(tl!("“{from}” isn't used explicitly."), &[("from", &from)])
+                } else {
+                    i18n::fmt(tl!("Replaced “{from}” with “{to}”."), &[("from", &from), ("to", to.trim())])
+                };
                 d.fields.insert("result".into(), msg);
                 d.fields.remove("from");
                 // Stay open, like PowerPoint, so several fonts can be replaced in a row.
@@ -1767,12 +1776,14 @@ fn body(app: &mut SlideApp, ui: &mut Ui, d: &mut Dialog) -> bool {
             let info = app.session.execute("review.dictionary", &json!({})).unwrap_or_default();
             let available = info.get("available").and_then(Value::as_bool).unwrap_or(false);
             match info.get("found").and_then(Value::as_str) {
-                Some(f) if available => {
-                    ui.label(egui::RichText::new(i18n::fmt(tl!("Dictionary: {name}"), &[("name", f.rsplit(['/', '\\']).next().unwrap_or(f))])).small().weak())
-                }
-                _ if available => {
-                    ui.label(egui::RichText::new(i18n::fmt(tl!("Dictionary: {name}"), &[("name", info.get("lang").and_then(Value::as_str).unwrap_or(""))])).small().weak())
-                }
+                Some(f) if available => ui.label(
+                    egui::RichText::new(i18n::fmt(tl!("Dictionary: {name}"), &[("name", f.rsplit(['/', '\\']).next().unwrap_or(f))])).small().weak(),
+                ),
+                _ if available => ui.label(
+                    egui::RichText::new(i18n::fmt(tl!("Dictionary: {name}"), &[("name", info.get("lang").and_then(Value::as_str).unwrap_or(""))]))
+                        .small()
+                        .weak(),
+                ),
                 _ => ui.label(
                     egui::RichText::new(i18n::fmt(
                         tl!("No {lang} dictionary is installed, so only common misspellings are found. Put a Hunspell .aff/.dic pair in {folder}."),
@@ -3249,7 +3260,9 @@ fn find_dialog(app: &mut SlideApp, ui: &mut Ui, d: &mut Dialog) -> bool {
                 let mut p = q.clone();
                 p["with"] = json!(d.get("with", ""));
                 let msg = match app.session.execute("text.replace", &p) {
-                    Ok(v) => i18n::fmt(tl!("Replaced {n} occurrence(s)."), &[("n", &v.get("replaced").and_then(Value::as_u64).unwrap_or(0).to_string())]),
+                    Ok(v) => {
+                        i18n::fmt(tl!("Replaced {n} occurrence(s)."), &[("n", &v.get("replaced").and_then(Value::as_u64).unwrap_or(0).to_string())])
+                    }
                     Err(_) => i18n::fmt(tl!("DeckCraft can't find “{text}”."), &[("text", &text)]),
                 };
                 d.fields.insert("status".into(), msg);
@@ -3281,7 +3294,12 @@ fn find_dialog(app: &mut SlideApp, ui: &mut Ui, d: &mut Dialog) -> bool {
                 "status".into(),
                 i18n::fmt(
                     tl!("Match {n} of {total} on slide {slide}{where}."),
-                    &[("n", &(n + 1).to_string()), ("total", &list.len().to_string()), ("slide", &(m.get("slide").and_then(Value::as_u64).unwrap_or(0) + 1).to_string()), ("where", where_)],
+                    &[
+                        ("n", &(n + 1).to_string()),
+                        ("total", &list.len().to_string()),
+                        ("slide", &(m.get("slide").and_then(Value::as_u64).unwrap_or(0) + 1).to_string()),
+                        ("where", where_),
+                    ],
                 ),
             );
         }

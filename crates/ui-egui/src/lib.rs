@@ -21,10 +21,10 @@ pub mod credits;
 pub mod dialogs;
 pub mod doc_window;
 pub mod eyedropper;
-pub mod i18n;
 pub mod fillui;
-pub mod host_table;
 pub mod host_lock;
+pub mod host_table;
+pub mod i18n;
 pub mod icons;
 pub mod media;
 pub mod menus;
@@ -1695,7 +1695,10 @@ impl SlideApp {
             }
         }
         // AutoRecover: unsaved presentations are written to the recovery folder periodically.
-        if !self.host_locked() && self.session.recovery_dir.is_some() && now - self.last_recovery > (self.session.prefs.recovery_minutes * 60.0).max(10.0) {
+        if !self.host_locked()
+            && self.session.recovery_dir.is_some()
+            && now - self.last_recovery > (self.session.prefs.recovery_minutes * 60.0).max(10.0)
+        {
             self.last_recovery = now;
             if self.session.documents().iter().any(|d| d.is_dirty())
                 && let Err(e) = self.session.execute("file.recovery.save", &json!({}))

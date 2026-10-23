@@ -645,7 +645,11 @@ fn recent_list(app: &mut SlideApp, ui: &mut Ui, query: &str, limit: usize) {
                 p.text(pos2(visible_right - 82.0, rect.center().y), Align2::RIGHT_CENTER, "(missing)", theme::font(11.0), t.text_dim);
             }
         }
-        let resp = if missing { resp.on_hover_text(i18n::fmt(tl!("{path} — this file can't be found"), &[("path", &path)])) } else { resp.on_hover_text(&path) };
+        let resp = if missing {
+            resp.on_hover_text(i18n::fmt(tl!("{path} — this file can't be found"), &[("path", &path)]))
+        } else {
+            resp.on_hover_text(&path)
+        };
         // Remove from the list: a real labelled widget on top of the row, with a code-drawn icon
         // (a text glyph would need a font that has it).
         let x = ui.allocate_rect(
@@ -1314,7 +1318,10 @@ fn export(app: &mut SlideApp, ui: &mut Ui, bs: &mut Backstage) {
                         .selected_text(i18n::fmt(tl!("{n} slides per page"), &[("n", &bs.handouts_per_page.to_string())]))
                         .show_ui(ui, |ui| {
                             for n in [1u8, 2, 3, 4, 6, 9] {
-                                if ui.selectable_label(bs.handouts_per_page == n, i18n::fmt(tl!("{n} slides per page"), &[("n", &n.to_string())])).clicked() {
+                                if ui
+                                    .selectable_label(bs.handouts_per_page == n, i18n::fmt(tl!("{n} slides per page"), &[("n", &n.to_string())]))
+                                    .clicked()
+                                {
                                     bs.handouts_per_page = n;
                                 }
                             }
@@ -1380,13 +1387,16 @@ fn account(app: &mut SlideApp, ui: &mut Ui) {
             ui.set_width(340.0);
             heading(ui, "Appearance");
             let dark = app.ui.brightness == theme::Brightness::Dark;
-            egui::ComboBox::from_id_salt("backstage_appearance").width(260.0).selected_text(if dark { tl!("Dark") } else { tl!("Light") }).show_ui(ui, |ui| {
-                for (on, label) in [(false, "Light"), (true, "Dark")] {
-                    if ui.selectable_label(dark == on, tl!(label)).clicked() {
-                        let _ = app.run("view.dark", json!({"on": on}));
+            egui::ComboBox::from_id_salt("backstage_appearance").width(260.0).selected_text(if dark { tl!("Dark") } else { tl!("Light") }).show_ui(
+                ui,
+                |ui| {
+                    for (on, label) in [(false, "Light"), (true, "Dark")] {
+                        if ui.selectable_label(dark == on, tl!(label)).clicked() {
+                            let _ = app.run("view.dark", json!({"on": on}));
+                        }
                     }
-                }
-            });
+                },
+            );
             ui.add_space(16.0);
             heading(ui, "User Information");
             dim(ui, "DeckCraft has no accounts: there is nothing to sign in to, and your presentations stay on your device.");

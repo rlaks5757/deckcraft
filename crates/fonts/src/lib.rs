@@ -15,7 +15,8 @@ mod shape;
 
 pub use fallback::{bundled_families, covers_cluster, is_emoji_cluster, ligature_carets};
 pub use fontdb::{
-    FALLBACK_FAMILY, FaceRef, FontDb, FontFace, LAST_RESORT_FAMILY, MISSING_FONT_FAMILY, base_style, bundled, is_ppm_mapped, substitutes, system_font_dirs,
+    FALLBACK_FAMILY, FaceRef, FontDb, FontFace, LAST_RESORT_FAMILY, MISSING_FONT_FAMILY, base_style, bundled, is_ppm_mapped, substitutes,
+    system_font_dirs,
 };
 pub use harfrust::Feature;
 use harfrust::Tag;
@@ -386,7 +387,22 @@ mod tests {
     /// The team's canonical mapping (target family, document font names).
     #[cfg(feature = "ppm")]
     const PPM_MAPPING: &[(&str, &[&str])] = &[
-        ("Carlito", &["Calibri", "Calibri Light", "Aptos", "Aptos Display", "Aptos Narrow", "Aptos Light", "Aptos SemiBold", "Segoe UI", "Segoe UI Light", "Segoe UI Semibold", "Segoe UI Semilight"]),
+        (
+            "Carlito",
+            &[
+                "Calibri",
+                "Calibri Light",
+                "Aptos",
+                "Aptos Display",
+                "Aptos Narrow",
+                "Aptos Light",
+                "Aptos SemiBold",
+                "Segoe UI",
+                "Segoe UI Light",
+                "Segoe UI Semibold",
+                "Segoe UI Semilight",
+            ],
+        ),
         ("Caladea", &["Cambria", "Constantia", "Palatino", "Palatino Linotype", "Book Antiqua", "Georgia", "Garamond"]),
         ("Liberation Sans", &["Arial", "Arial Narrow", "Helvetica", "Helvetica Neue"]),
         ("Liberation Serif", &["Times", "Times New Roman"]),
@@ -394,9 +410,38 @@ mod tests {
         (
             "NanumGothic",
             &[
-                "맑은 고딕", "Malgun Gothic", "굴림", "Gulim", "굴림체", "GulimChe", "새굴림", "New Gulim", "돋움", "Dotum", "돋움체", "DotumChe", "바탕", "Batang", "바탕체",
-                "BatangChe", "궁서", "Gungsuh", "궁서체", "GungsuhChe", "함초롬바탕", "HCR Batang", "함초롬돋움", "HCR Dotum", "나눔고딕", "NanumGothic", "나눔명조",
-                "NanumMyeongjo", "Noto Sans KR", "Noto Sans CJK KR", "Noto Serif KR", "Apple SD Gothic Neo",
+                "맑은 고딕",
+                "Malgun Gothic",
+                "굴림",
+                "Gulim",
+                "굴림체",
+                "GulimChe",
+                "새굴림",
+                "New Gulim",
+                "돋움",
+                "Dotum",
+                "돋움체",
+                "DotumChe",
+                "바탕",
+                "Batang",
+                "바탕체",
+                "BatangChe",
+                "궁서",
+                "Gungsuh",
+                "궁서체",
+                "GungsuhChe",
+                "함초롬바탕",
+                "HCR Batang",
+                "함초롬돋움",
+                "HCR Dotum",
+                "나눔고딕",
+                "NanumGothic",
+                "나눔명조",
+                "NanumMyeongjo",
+                "Noto Sans KR",
+                "Noto Sans CJK KR",
+                "Noto Serif KR",
+                "Apple SD Gothic Neo",
             ],
         ),
     ];

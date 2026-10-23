@@ -32,8 +32,10 @@ pub struct LangInfo {
 }
 
 /// The registry. English first: it is the fallback and the source language.
-static LANGUAGES: [LangInfo; 2] =
-    [LangInfo { code: "en", source: "", catalog: OnceLock::new() }, LangInfo { code: "ko", source: include_str!("ko.tsv"), catalog: OnceLock::new() }];
+static LANGUAGES: [LangInfo; 2] = [
+    LangInfo { code: "en", source: "", catalog: OnceLock::new() },
+    LangInfo { code: "ko", source: include_str!("ko.tsv"), catalog: OnceLock::new() },
+];
 
 impl LangInfo {
     fn catalog(&self) -> &Catalog {

@@ -1030,7 +1030,10 @@ pub fn ui(app: &mut SlideApp, ui: &mut Ui) {
             Align2::CENTER_CENTER,
             crate::i18n::fmt(
                 tl!("Slide {time}   Total {all}"),
-                &[("time", &format!("{:02}:{:04.1}", (t / 60.0) as u32, t % 60.0)), ("all", &format!("{:02}:{:02}", (total / 60.0) as u32, (total % 60.0) as u32))],
+                &[
+                    ("time", &format!("{:02}:{:04.1}", (t / 60.0) as u32, t % 60.0)),
+                    ("all", &format!("{:02}:{:02}", (total / 60.0) as u32, (total % 60.0) as u32)),
+                ],
             ),
             theme::font(13.0),
             Color32::WHITE,
@@ -1777,7 +1780,14 @@ fn presenter_window(ctx: &egui::Context, show: &mut Show, doc: &Presentation, no
                     ui.add_space(12.0);
                     ui.label(egui::RichText::new(clock.clone()).size(16.0).color(Color32::from_gray(200)));
                     ui.add_space(20.0);
-                    ui.label(egui::RichText::new(crate::i18n::fmt(tl!("Slide {n} of {total}"), &[("n", &(cur + 1).to_string()), ("total", &doc.slides.len().to_string())])).size(16.0).color(Color32::from_gray(200)));
+                    ui.label(
+                        egui::RichText::new(crate::i18n::fmt(
+                            tl!("Slide {n} of {total}"),
+                            &[("n", &(cur + 1).to_string()), ("total", &doc.slides.len().to_string())],
+                        ))
+                        .size(16.0)
+                        .color(Color32::from_gray(200)),
+                    );
                     ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
                         if button(ui, "End Show").clicked() {
                             *keep = false;
@@ -1864,7 +1874,9 @@ fn presenter_window(ctx: &egui::Context, show: &mut Show, doc: &Presentation, no
                 let mut child = ui.new_child(egui::UiBuilder::new().max_rect(notes_rect));
                 egui::ScrollArea::vertical().show(&mut child, |ui| {
                     ui.label(
-                        egui::RichText::new(if notes.is_empty() { tl!("No notes.") } else { &notes }).size(show.notes_px).color(Color32::from_gray(230)),
+                        egui::RichText::new(if notes.is_empty() { tl!("No notes.") } else { &notes })
+                            .size(show.notes_px)
+                            .color(Color32::from_gray(230)),
                     );
                 });
             });

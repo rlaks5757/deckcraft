@@ -388,16 +388,10 @@ pub const BLOCKED: &[&str] = &[
 ];
 
 /// Commands that are off until the policy turns them on.
-pub const OFF: &[&str] = &[
-    "file.export",
-    "file.saveAs",
-    "file.saveTemplate",
-];
+pub const OFF: &[&str] = &["file.export", "file.saveAs", "file.saveTemplate"];
 
 /// Commands whose parameters decide, see [`permits`].
-pub const CONDITIONAL: &[&str] = &[
-    "file.save",
-];
+pub const CONDITIONAL: &[&str] = &["file.save"];
 
 /// The grade of the engine command `id`; `None` for an id nobody classified.
 pub fn grade(id: &str) -> Option<Grade> {
@@ -453,7 +447,8 @@ mod tests {
     #[test]
     fn every_command_is_classified_exactly_once() {
         for c in crate::cmd::command_specs() {
-            let n = [ALLOWED.contains(&c.id), BLOCKED.contains(&c.id), OFF.contains(&c.id), CONDITIONAL.contains(&c.id)].iter().filter(|b| **b).count();
+            let n =
+                [ALLOWED.contains(&c.id), BLOCKED.contains(&c.id), OFF.contains(&c.id), CONDITIONAL.contains(&c.id)].iter().filter(|b| **b).count();
             assert_eq!(n, 1, "command `{}` must be in exactly one of ALLOWED / BLOCKED / OFF / CONDITIONAL (host lock)", c.id);
         }
     }

@@ -145,7 +145,7 @@ fn backstage_has_no_blocked_pages() {
 
 #[test]
 fn backstage_without_info_opens_on_the_first_kept_page() {
-    use crate::backstage::{entries_for, Nav, Page};
+    use crate::backstage::{Nav, Page, entries_for};
     let (mut h, ..) = locked(&[("file.saveAs", true)]);
     let (top, bottom) = entries_for(h.state(), true);
     assert!(!top.iter().chain(&bottom).any(|n| *n == Nav::Page(Page::Info)), "Info is in the side menu");

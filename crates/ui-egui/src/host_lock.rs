@@ -59,24 +59,14 @@ pub const UI_ALLOWED: &[&str] = &[
 ];
 
 /// App commands a locked app never runs.
-pub const UI_BLOCKED: &[&str] = &[
-    "app.closePresentation",
-    "app.home",
-    "app.openDialog",
-];
+pub const UI_BLOCKED: &[&str] = &["app.closePresentation", "app.home", "app.openDialog"];
 
 /// App commands that are off until the policy turns them on.
-pub const UI_OFF: &[&str] = &[
-    "app.exportDialog",
-    "app.links",
-    "app.print",
-    "app.saveAsDialog",
-];
+pub const UI_OFF: &[&str] = &["app.exportDialog", "app.links", "app.print", "app.saveAsDialog"];
 
 /// Commands that are only another way in to a switch of their own, so the administrator has one
 /// switch per feature: `(command, switch)`. The command follows the switch, page and all.
-const ALIASES: &[(&str, &str)] =
-    &[("app.exportDialog", "file.export"), ("app.links", "app.externalLinks"), ("app.saveAsDialog", "file.saveAs")];
+const ALIASES: &[(&str, &str)] = &[("app.exportDialog", "file.export"), ("app.links", "app.externalLinks"), ("app.saveAsDialog", "file.saveAs")];
 
 /// The switch that decides `id`: itself, unless it is an alias.
 fn switch(id: &str) -> &str {
@@ -256,7 +246,12 @@ mod tests {
         let p = s.host_policy();
         let shown = |p: Option<&Policy>| Page::ALL.into_iter().filter(|pg| page_permits(p, *pg)).map(Page::id).collect::<Vec<_>>();
         assert_eq!(shown(p.as_ref()), ["account"], "Info is hidden");
-        s.set_policy(&[("app.print".to_string(), true), ("file.export".to_string(), true), ("file.saveAs".to_string(), true), ("app.openDialog".to_string(), true)]);
+        s.set_policy(&[
+            ("app.print".to_string(), true),
+            ("file.export".to_string(), true),
+            ("file.saveAs".to_string(), true),
+            ("app.openDialog".to_string(), true),
+        ]);
         assert_eq!(shown(p.as_ref()), ["saveAs", "print", "export", "account"], "an open page stays locked");
         assert_eq!(Page::ALL.len(), shown(None).len());
     }

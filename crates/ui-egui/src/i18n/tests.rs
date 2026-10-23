@@ -102,7 +102,16 @@ fn the_status_bar_reads_in_korean() {
     set_current(Lang::EN);
 }
 
-const TABS: [(&str, &str); 8] = [("Home", "홈"), ("Insert", "삽입"), ("Design", "디자인"), ("Transitions", "전환"), ("Animations", "애니메이션"), ("Slide Show", "슬라이드 쇼"), ("Review", "검토"), ("View", "보기")];
+const TABS: [(&str, &str); 8] = [
+    ("Home", "홈"),
+    ("Insert", "삽입"),
+    ("Design", "디자인"),
+    ("Transitions", "전환"),
+    ("Animations", "애니메이션"),
+    ("Slide Show", "슬라이드 쇼"),
+    ("Review", "검토"),
+    ("View", "보기"),
+];
 
 /// The rects of the buttons in the open ribbon tab (below the tab strip, above the canvas).
 fn ribbon_buttons(h: &mut egui_kittest::Harness<'static, SlideApp>, tab: &str, first: bool) -> Vec<egui::Rect> {
@@ -120,7 +129,8 @@ fn ribbon_buttons(h: &mut egui_kittest::Harness<'static, SlideApp>, tab: &str, f
 #[test]
 fn korean_ribbon_buttons_keep_clear_of_each_other() {
     let mut en = app_in(Lang::EN);
-    let english: Vec<f32> = TABS.iter().enumerate().map(|(i, (name, _))| ribbon_buttons(&mut en, name, i == 0).iter().map(|r| r.right()).fold(0.0, f32::max)).collect();
+    let english: Vec<f32> =
+        TABS.iter().enumerate().map(|(i, (name, _))| ribbon_buttons(&mut en, name, i == 0).iter().map(|r| r.right()).fold(0.0, f32::max)).collect();
     let mut ko = app_in(Lang::KO);
     for (i, (_, tab)) in TABS.iter().enumerate() {
         let rects = ribbon_buttons(&mut ko, tab, i == 0);

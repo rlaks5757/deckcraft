@@ -782,7 +782,10 @@ fn paragraph_group(app: &mut SlideApp, ui: &mut Ui, st: &Value) {
                 let r = icon_toggle(ui, Icon::Columns, "Columns", en, false);
                 egui::Popup::menu(&r).show(|ui| {
                     for n in 1..=3 {
-                        if ui.button(if n > 1 { i18n::fmt(tl!("{n} Columns"), &[("n", &n.to_string())]) } else { tl!("1 Column").to_string() }).clicked() {
+                        if ui
+                            .button(if n > 1 { i18n::fmt(tl!("{n} Columns"), &[("n", &n.to_string())]) } else { tl!("1 Column").to_string() })
+                            .clicked()
+                        {
                             run(app, "format.columns", json!({"count": n, "spacing": 18}));
                         }
                     }
@@ -1338,7 +1341,11 @@ pub fn table_grid_picker(ui: &mut Ui) -> Option<(usize, usize)> {
     let id = ui.id().with("tgrid");
     let mut hover: (usize, usize) = ui.data_mut(|d| d.get_temp(id).unwrap_or((0, 0)));
     let cell = 16.0;
-    let label = if hover.0 > 0 { i18n::fmt(tl!("{cols}x{rows} Table"), &[("cols", &hover.1.to_string()), ("rows", &hover.0.to_string())]) } else { tl!("Insert Table").into() };
+    let label = if hover.0 > 0 {
+        i18n::fmt(tl!("{cols}x{rows} Table"), &[("cols", &hover.1.to_string()), ("rows", &hover.0.to_string())])
+    } else {
+        tl!("Insert Table").into()
+    };
     ui.label(label);
     let (rect, resp) = ui.allocate_exact_size(vec2(10.0 * (cell + 2.0), 8.0 * (cell + 2.0)), Sense::click());
     if let Some(p) = resp.hover_pos() {
@@ -3060,7 +3067,11 @@ fn table_layout(app: &mut SlideApp, ui: &mut Ui) {
             });
             ui.horizontal(|ui| {
                 for (l, a) in [("Top", "top"), ("Center", "middle"), ("Bottom", "bottom")] {
-                    if ui.small_button(tl!(l)).on_hover_text(i18n::fmt(tl!("Align text to the {side} of the cell"), &[("side", &tl!(l).to_lowercase())])).clicked() {
+                    if ui
+                        .small_button(tl!(l))
+                        .on_hover_text(i18n::fmt(tl!("Align text to the {side} of the cell"), &[("side", &tl!(l).to_lowercase())]))
+                        .clicked()
+                    {
                         run(app, "table.cellAlign", json!({"anchor": a}));
                     }
                 }
@@ -3349,7 +3360,13 @@ fn handout_master(app: &mut SlideApp, ui: &mut Ui) {
         let r = big_button(ui, Icon::Layout, &i18n::fmt(tl!("Slides Per\nPage: {n}"), &[("n", &app.ui.handout_per_page.to_string())]), true);
         egui::Popup::menu(&r).show(|ui| {
             for n in [1u8, 2, 3, 4, 6, 9] {
-                if ui.selectable_label(app.ui.handout_per_page == n, if n == 1 { tl!("1 Slide").to_string() } else { i18n::fmt(tl!("{n} Slides"), &[("n", &n.to_string())]) }).clicked() {
+                if ui
+                    .selectable_label(
+                        app.ui.handout_per_page == n,
+                        if n == 1 { tl!("1 Slide").to_string() } else { i18n::fmt(tl!("{n} Slides"), &[("n", &n.to_string())]) },
+                    )
+                    .clicked()
+                {
                     app.ui.handout_per_page = n;
                 }
             }

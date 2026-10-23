@@ -88,7 +88,16 @@ impl Bridge {
         if parent.location().origin().ok()? != origin {
             return None;
         }
-        Some(Self { window, parent, origin, opened: Rc::default(), tables: Rc::default(), saved: Rc::default(), reported: Rc::default(), failures: Rc::default() })
+        Some(Self {
+            window,
+            parent,
+            origin,
+            opened: Rc::default(),
+            tables: Rc::default(),
+            saved: Rc::default(),
+            reported: Rc::default(),
+            failures: Rc::default(),
+        })
     }
 
     /// Send saved and exported files to the parent instead of downloading them, and hear files

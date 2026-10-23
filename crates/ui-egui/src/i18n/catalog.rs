@@ -120,5 +120,4 @@ impl Catalog {
     pub fn plain(&self, s: &str) -> Option<&str> {
         self.plain.get(s).map(String::as_str)
     }
-
 }
