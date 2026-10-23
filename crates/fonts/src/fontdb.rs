@@ -30,6 +30,11 @@ pub fn bundled() -> Vec<&'static [u8]> {
 /// The PPM build's Office-compatible set: the bundled family a document font name draws in
 /// (exact name, case-insensitive, so every variant is listed). `None` outside the PPM build and
 /// for names not on the list.
+/// Does the PPM build map this document font name to a bundled family? Always false elsewhere.
+pub fn is_ppm_mapped(family: &str) -> bool {
+    ppm_target(family).is_some()
+}
+
 fn ppm_target(family: &str) -> Option<&'static str> {
     if !cfg!(feature = "ppm") {
         return None;

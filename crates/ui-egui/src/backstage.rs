@@ -1392,7 +1392,10 @@ fn account(app: &mut SlideApp, ui: &mut Ui) {
             dim(ui, "DeckCraft has no accounts: there is nothing to sign in to, and your presentations stay on your device.");
         });
         ui.add_space(40.0);
+        // Fit the column to what is left of the page so its lines wrap instead of running off the right edge.
+        let right_w = (ui.clip_rect().right() - ui.cursor().left() - 16.0).max(220.0);
         ui.vertical(|ui| {
+            ui.set_width(right_w);
             heading(ui, "Product Information");
             ui.horizontal(|ui| {
                 let (r, _) = ui.allocate_exact_size(vec2(40.0, 40.0), Sense::hover());
