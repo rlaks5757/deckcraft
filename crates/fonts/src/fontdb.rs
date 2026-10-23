@@ -27,19 +27,46 @@ pub fn bundled() -> Vec<&'static [u8]> {
     v
 }
 
+/// The PPM build's Office-compatible set: the bundled family a document font name draws in
+/// (exact name, case-insensitive, so every variant is listed). `None` outside the PPM build and
+/// for names not on the list.
+fn ppm_target(family: &str) -> Option<&'static str> {
+    if !cfg!(feature = "ppm") {
+        return None;
+    }
+    Some(match family.to_lowercase().as_str() {
+        "calibri" | "calibri light" | "aptos" | "aptos display" | "aptos narrow" | "aptos light" | "aptos semibold" | "segoe ui" | "segoe ui light"
+        | "segoe ui semibold" | "segoe ui semilight" => "Carlito",
+        "cambria" | "constantia" | "palatino" | "palatino linotype" | "book antiqua" | "georgia" | "garamond" => "Caladea",
+        "arial" | "arial narrow" | "helvetica" | "helvetica neue" => "Liberation Sans",
+        "times" | "times new roman" => "Liberation Serif",
+        "courier" | "courier new" | "consolas" | "lucida console" => "Liberation Mono",
+        "맑은 고딕" | "malgun gothic" | "굴림" | "gulim" | "굴림체" | "gulimche" | "새굴림" | "new gulim" | "돋움" | "dotum" | "돋움체" | "dotumche" | "바탕" | "batang"
+        | "바탕체" | "batangche" | "궁서" | "gungsuh" | "궁서체" | "gungsuhche" | "함초롬바탕" | "hcr batang" | "함초롬돋움" | "hcr dotum" | "나눔고딕" | "nanumgothic"
+        | "나눔명조" | "nanummyeongjo" | "noto sans kr" | "noto sans cjk kr" | "noto serif kr" | "apple sd gothic neo" => "NanumGothic",
+        _ => return None,
+    })
+}
+
 /// Open substitutes for families documents often ask for but we can't ship (metric-compatible
 /// where one exists), tried in order after the family itself.
 pub fn substitutes(family: &str) -> &'static [&'static str] {
+    if let Some(target) = ppm_target(family) {
+        return match target {
+            "Carlito" => &["Carlito", "Liberation Sans", "Arial", "Inter"],
+            "Caladea" => &["Caladea", "Liberation Serif", "Times New Roman", "Merriweather"],
+            "Liberation Sans" => &["Liberation Sans", "Arial", "Helvetica Neue", "Helvetica", "Inter"],
+            "Liberation Serif" => &["Liberation Serif", "Times New Roman", "Times", "Merriweather"],
+            "Liberation Mono" => &["Liberation Mono", "Courier New", "Menlo", "Courier"],
+            _ => &["NanumGothic"],
+        };
+    }
     match family.to_ascii_lowercase().as_str() {
         "calibri" | "calibri light" => &["Carlito", "Liberation Sans", "Arial", "Inter"],
         "cambria" | "cambria math" => &["Caladea", "Liberation Serif", "Times New Roman", "Merriweather"],
         "arial" | "helvetica" | "helvetica neue" | "arial nova" => &["Liberation Sans", "Arial", "Helvetica Neue", "Helvetica", "Inter"],
         "times new roman" | "times" => &["Liberation Serif", "Times New Roman", "Times", "Merriweather"],
         "courier new" | "courier" | "consolas" | "menlo" => &["Liberation Mono", "Courier New", "Menlo", "Courier"],
-        "aptos" | "aptos display" | "aptos narrow" | "segoe ui" | "segoe ui light" | "segoe ui semibold" if cfg!(feature = "ppm") => {
-            &["Carlito", "Inter", "Helvetica Neue", "Arial", "Liberation Sans"]
-        }
-        "맑은 고딕" | "malgun gothic" | "굴림" | "gulim" | "돋움" | "dotum" | "바탕" | "batang" | "궁서" | "gungsuh" if cfg!(feature = "ppm") => &["NanumGothic"],
         "aptos" | "aptos display" | "aptos narrow" | "segoe ui" | "segoe ui light" | "segoe ui semibold" | "tahoma" | "verdana" => {
             &["Inter", "Helvetica Neue", "Arial", "Liberation Sans"]
         }
@@ -1037,7 +1064,7 @@ impl FontDb {
     /// see `office_twin`); any other missing family is drawn in Calibri (or Carlito).
     /// DeckCraft's own default family keeps [`FontDb::face`]'s fallbacks.
     pub fn document_face(&self, family: &str, style: &str) -> Arc<FontFace> {
-        if family.eq_ignore_ascii_case(FALLBACK_FAMILY) || has_metric_twin(family) || is_office_cloud_font(family) || self.has_family(family) {
+        if family.eq_ignore_ascii_case(FALLBACK_FAMILY) || has_metric_twin(family) || ppm_target(family).is_some() || is_office_cloud_font(family) || self.has_family(family) {
             return self.face(family, style);
         }
         if let Some(twin) = office_twin(family) {

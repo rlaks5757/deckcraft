@@ -383,15 +383,34 @@ mod tests {
         assert!(substitutes("zzz").is_empty());
     }
 
+    /// The team's canonical mapping (target family, document font names).
+    #[cfg(feature = "ppm")]
+    const PPM_MAPPING: &[(&str, &[&str])] = &[
+        ("Carlito", &["Calibri", "Calibri Light", "Aptos", "Aptos Display", "Aptos Narrow", "Aptos Light", "Aptos SemiBold", "Segoe UI", "Segoe UI Light", "Segoe UI Semibold", "Segoe UI Semilight"]),
+        ("Caladea", &["Cambria", "Constantia", "Palatino", "Palatino Linotype", "Book Antiqua", "Georgia", "Garamond"]),
+        ("Liberation Sans", &["Arial", "Arial Narrow", "Helvetica", "Helvetica Neue"]),
+        ("Liberation Serif", &["Times", "Times New Roman"]),
+        ("Liberation Mono", &["Courier", "Courier New", "Consolas", "Lucida Console"]),
+        (
+            "NanumGothic",
+            &[
+                "맑은 고딕", "Malgun Gothic", "굴림", "Gulim", "굴림체", "GulimChe", "새굴림", "New Gulim", "돋움", "Dotum", "돋움체", "DotumChe", "바탕", "Batang", "바탕체",
+                "BatangChe", "궁서", "Gungsuh", "궁서체", "GungsuhChe", "함초롬바탕", "HCR Batang", "함초롬돋움", "HCR Dotum", "나눔고딕", "NanumGothic", "나눔명조",
+                "NanumMyeongjo", "Noto Sans KR", "Noto Sans CJK KR", "Noto Serif KR", "Apple SD Gothic Neo",
+            ],
+        ),
+    ];
+
     #[cfg(feature = "ppm")]
     #[test]
     fn ppm_names_map_to_the_office_set() {
-        for f in ["Aptos", "Aptos Display", "Aptos Narrow", "Calibri Light", "Segoe UI"] {
-            assert_eq!(substitutes(f)[0], "Carlito", "{f}");
+        for (target, names) in PPM_MAPPING {
+            for n in *names {
+                assert_eq!(substitutes(n)[0], *target, "{n}");
+                assert_eq!(substitutes(&n.to_uppercase())[0], *target, "{n} upper");
+            }
         }
-        for f in ["맑은 고딕", "Malgun Gothic", "굴림", "Gulim", "돋움", "Dotum", "바탕", "Batang", "궁서", "Gungsuh"] {
-            assert_eq!(substitutes(f), ["NanumGothic"], "{f}");
-        }
+        assert!(substitutes("zzz").is_empty());
     }
 
     #[test]
@@ -450,35 +469,15 @@ mod tests {
         }
         let db = FontDb::with_font_dirs(Vec::new());
         db.set_system_fallback(false);
-        for (name, want) in [
-            ("Calibri", "Carlito"),
-            ("Calibri Light", "Carlito"),
-            ("Aptos", "Carlito"),
-            ("Aptos Display", "Carlito"),
-            ("Aptos Narrow", "Carlito"),
-            ("Segoe UI", "Carlito"),
-            ("Cambria", "Caladea"),
-            ("Arial", "Liberation Sans"),
-            ("Helvetica", "Liberation Sans"),
-            ("Times New Roman", "Liberation Serif"),
-            ("Times", "Liberation Serif"),
-            ("Courier New", "Liberation Mono"),
-            ("Consolas", "Liberation Mono"),
-            ("Courier", "Liberation Mono"),
-            ("Inter", "Inter"),
-            ("맑은 고딕", "NanumGothic"),
-            ("Malgun Gothic", "NanumGothic"),
-            ("굴림", "NanumGothic"),
-            ("Gulim", "NanumGothic"),
-            ("돋움", "NanumGothic"),
-            ("Dotum", "NanumGothic"),
-            ("바탕", "NanumGothic"),
-            ("Batang", "NanumGothic"),
-            ("궁서", "NanumGothic"),
-            ("Gungsuh", "NanumGothic"),
-            ("No Such Family", "Carlito"),
-        ] {
+        for (target, names) in PPM_MAPPING {
+            for name in *names {
+                assert_eq!(db.face(name, "Regular").family, *target, "{name}");
+                assert_eq!(db.document_face(name, "Regular").family, *target, "document {name}");
+            }
+        }
+        for (name, want) in [("Inter", "Inter"), ("No Such Family", "Carlito")] {
             assert_eq!(db.face(name, "Regular").family, want, "{name}");
+            assert_eq!(db.document_face(name, "Regular").family, want, "document {name}");
         }
         for style in ["Bold", "Italic", "Bold Italic"] {
             let f = db.face("Calibri", style);
