@@ -36,9 +36,11 @@ pub fn substitutes(family: &str) -> &'static [&'static str] {
         "arial" | "helvetica" | "helvetica neue" | "arial nova" => &["Liberation Sans", "Arial", "Helvetica Neue", "Helvetica", "Inter"],
         "times new roman" | "times" => &["Liberation Serif", "Times New Roman", "Times", "Merriweather"],
         "courier new" | "courier" | "consolas" | "menlo" => &["Liberation Mono", "Courier New", "Menlo", "Courier"],
-        "aptos" | "aptos display" | "aptos narrow" | "segoe ui" | "segoe ui light" | "segoe ui semibold" | "tahoma" | "verdana" => {
-            &["Inter", "Helvetica Neue", "Arial", "Liberation Sans"]
+        "aptos" | "aptos display" | "aptos narrow" | "segoe ui" | "segoe ui light" | "segoe ui semibold" => {
+            &["Carlito", "Inter", "Helvetica Neue", "Arial", "Liberation Sans"]
         }
+        "tahoma" | "verdana" => &["Inter", "Helvetica Neue", "Arial", "Liberation Sans"],
+        "맑은 고딕" | "malgun gothic" | "굴림" | "gulim" | "돋움" | "dotum" | "바탕" | "batang" | "궁서" | "gungsuh" => &["NanumGothic"],
         "georgia" | "garamond" | "book antiqua" | "palatino" | "palatino linotype" | "constantia" => &["Merriweather", "Liberation Serif", "Georgia"],
         "century gothic" | "avenir" | "avenir next" | "futura" | "gill sans" | "gill sans mt" | "trebuchet ms" | "corbel" | "candara" => {
             &["Montserrat", "Poppins", "Avenir Next", "Inter"]
@@ -89,7 +91,7 @@ fn office_twin(family: &str) -> Option<&'static str> {
 
 /// Office's downloadable (cloud) families: PowerPoint fetches them when a document uses them, so
 /// they draw as themselves there, not as Calibri. Without them DeckCraft keeps their closest open
-/// substitute ([`substitutes`]; Aptos as Inter).
+/// substitute ([`substitutes`]; Aptos as Carlito).
 fn is_office_cloud_font(family: &str) -> bool {
     let f = family.to_ascii_lowercase();
     f.starts_with("aptos") || ["bierstadt", "grandview", "seaford", "skeena", "tenorite"].iter().any(|c| f.starts_with(c))
@@ -1004,7 +1006,7 @@ impl FontDb {
     }
 
     /// Resolve a family + style to a face, falling back to the closest style of the family, then to
-    /// an open substitute ([`substitutes`]), then to Inter. Installed system fonts are found by name
+    /// an open substitute ([`substitutes`]), then to Carlito and Inter. Installed system fonts are found by name
     /// whatever ran before.
     pub fn face(&self, family: &str, style: &str) -> Arc<FontFace> {
         if let Some(f) = self.try_family(family, style) {
@@ -1015,7 +1017,7 @@ impl FontDb {
                 return f;
             }
         }
-        for sub in [FALLBACK_FAMILY, "Helvetica Neue", "Arial", "Liberation Sans", "DejaVu Sans", "Segoe UI"] {
+        for sub in ["Carlito", FALLBACK_FAMILY, "Helvetica Neue", "Arial", "Liberation Sans", "DejaVu Sans", "Segoe UI"] {
             if let Some(f) = self.try_family(sub, style) {
                 return f;
             }

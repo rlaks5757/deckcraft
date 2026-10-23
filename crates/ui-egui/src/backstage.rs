@@ -147,6 +147,12 @@ pub fn entries_for(app: &SlideApp, has_doc: bool) -> (Vec<Nav>, Vec<Nav>) {
     (top, bottom)
 }
 
+/// The page a locked app shows for one it doesn't have: the first side-menu page it keeps.
+pub fn fallback_page(app: &SlideApp) -> Page {
+    let (top, bottom) = entries_for(app, app.session.active().is_some());
+    top.into_iter().chain(bottom).find_map(|n| if let Nav::Page(p) = n { Some(p) } else { None }).unwrap_or(Page::Account)
+}
+
 /// Print page: which slides.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum PrintScope {
@@ -345,7 +351,7 @@ pub fn show(app: &mut SlideApp, ui: &mut Ui) {
         bs.page = Page::Home;
     }
     if !app.page_allowed(bs.page) {
-        bs.page = Page::Info;
+        bs.page = fallback_page(app);
     }
     let (nav_bg, page_bg) = colours(&t);
     let mut out = Outcome::default();

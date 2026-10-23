@@ -378,6 +378,13 @@ mod tests {
         assert!(substitutes("Cambria").contains(&"Caladea"));
         assert!(substitutes("Times New Roman").contains(&"Liberation Serif"));
         assert!(substitutes("Aptos").contains(&"Inter"));
+        for f in ["Aptos", "Aptos Display", "Aptos Narrow", "Calibri Light", "Segoe UI"] {
+            assert_eq!(substitutes(f)[0], "Carlito", "{f}");
+        }
+        for f in ["맑은 고딕", "Malgun Gothic", "굴림", "Gulim", "돋움", "Dotum", "바탕", "Batang", "궁서", "Gungsuh"] {
+            assert_eq!(substitutes(f), ["NanumGothic"], "{f}");
+        }
+        assert_eq!(substitutes("Consolas")[0], "Liberation Mono");
         assert!(substitutes("zzz").is_empty());
     }
 
@@ -418,9 +425,58 @@ mod tests {
         let db = FontDb::with_font_dirs(Vec::new());
         db.set_system_fallback(false);
         assert_eq!(db.face("Inter", "Regular").family, "Inter");
-        assert_eq!(db.face("Aptos", "Regular").family, "Inter");
         if CRAFT_FONTS.iter().any(|f| f.family == "Carlito") {
             assert_eq!(db.face("Calibri", "Bold").family, "Carlito");
+            assert_eq!(db.face("Aptos", "Regular").family, "Carlito");
+        } else {
+            assert_eq!(db.face("Aptos", "Regular").family, "Inter");
+        }
+    }
+
+    /// The PPM set (`ppm/fonts-ko`): every document font name draws in its Office-compatible twin,
+    /// Korean names in NanumGothic, an unknown name in Carlito.
+    #[test]
+    fn office_compatible_set_when_present() {
+        if !CRAFT_FONTS.iter().any(|f| f.family == "Liberation Mono") {
+            eprintln!("skipped: built without the PPM font set (CRAFT_FONTS_DIR=ppm/fonts-ko)");
+            return;
+        }
+        let db = FontDb::with_font_dirs(Vec::new());
+        db.set_system_fallback(false);
+        for (name, want) in [
+            ("Calibri", "Carlito"),
+            ("Calibri Light", "Carlito"),
+            ("Aptos", "Carlito"),
+            ("Aptos Display", "Carlito"),
+            ("Aptos Narrow", "Carlito"),
+            ("Segoe UI", "Carlito"),
+            ("Cambria", "Caladea"),
+            ("Arial", "Liberation Sans"),
+            ("Helvetica", "Liberation Sans"),
+            ("Times New Roman", "Liberation Serif"),
+            ("Times", "Liberation Serif"),
+            ("Courier New", "Liberation Mono"),
+            ("Consolas", "Liberation Mono"),
+            ("Courier", "Liberation Mono"),
+            ("Inter", "Inter"),
+            ("맑은 고딕", "NanumGothic"),
+            ("Malgun Gothic", "NanumGothic"),
+            ("굴림", "NanumGothic"),
+            ("Gulim", "NanumGothic"),
+            ("돋움", "NanumGothic"),
+            ("Dotum", "NanumGothic"),
+            ("바탕", "NanumGothic"),
+            ("Batang", "NanumGothic"),
+            ("궁서", "NanumGothic"),
+            ("Gungsuh", "NanumGothic"),
+            ("No Such Family", "Carlito"),
+        ] {
+            assert_eq!(db.face(name, "Regular").family, want, "{name}");
+        }
+        for style in ["Bold", "Italic", "Bold Italic"] {
+            let f = db.face("Calibri", style);
+            assert_eq!(f.family, "Carlito", "{style}");
+            assert_eq!((f.weight >= 700.0, f.italic), (style.starts_with("Bold"), style.ends_with("Italic")), "{style}");
         }
     }
 

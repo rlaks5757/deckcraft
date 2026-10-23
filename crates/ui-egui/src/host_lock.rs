@@ -123,11 +123,12 @@ pub fn dialog_permits(policy: Option<&Policy>, name: &str) -> bool {
     DIALOGS_GATED.iter().all(|(d, c)| *d != name || enabled(policy, c))
 }
 
-/// May the File tab show `page`? Info and Account stay; Home, New and Open are the start screen.
+/// May the File tab show `page`? Account stays; Home, New and Open are the start screen, and Info
+/// (file properties, the file's location) is hidden whatever the policy says.
 pub fn page_permits(policy: Option<&Policy>, page: Page) -> bool {
     match page {
-        Page::Info | Page::Account => true,
-        Page::Home | Page::New | Page::Open => policy.is_none(),
+        Page::Account => true,
+        Page::Home | Page::New | Page::Open | Page::Info => policy.is_none(),
         Page::SaveAs => enabled(policy, "file.saveAs"),
         Page::Export => enabled(policy, "file.export"),
         Page::Print => enabled(policy, "app.print"),
@@ -254,9 +255,9 @@ mod tests {
         s.lock_host();
         let p = s.host_policy();
         let shown = |p: Option<&Policy>| Page::ALL.into_iter().filter(|pg| page_permits(p, *pg)).map(Page::id).collect::<Vec<_>>();
-        assert_eq!(shown(p.as_ref()), ["info", "account"]);
+        assert_eq!(shown(p.as_ref()), ["account"], "Info is hidden");
         s.set_policy(&[("app.print".to_string(), true), ("file.export".to_string(), true), ("file.saveAs".to_string(), true), ("app.openDialog".to_string(), true)]);
-        assert_eq!(shown(p.as_ref()), ["info", "saveAs", "print", "export", "account"], "an open page stays locked");
+        assert_eq!(shown(p.as_ref()), ["saveAs", "print", "export", "account"], "an open page stays locked");
         assert_eq!(Page::ALL.len(), shown(None).len());
     }
 

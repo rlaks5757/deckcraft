@@ -135,12 +135,23 @@ fn locked_app_still_edits() {
 fn backstage_has_no_blocked_pages() {
     use crate::backstage::Page;
     let (mut h, ..) = locked(&[]);
-    for page in [Page::Open, Page::New, Page::Home, Page::SaveAs, Page::Export, Page::Print] {
+    for page in [Page::Open, Page::New, Page::Home, Page::Info, Page::SaveAs, Page::Export, Page::Print] {
         h.state_mut().open_backstage(page);
         h.run_steps(2);
         assert!(!h.state().page_allowed(page));
-        assert!(h.state().backstage.as_ref().is_some_and(|b| b.page == Page::Info), "{page:?} opened");
+        assert!(h.state().backstage.as_ref().is_some_and(|b| b.page == Page::Account), "{page:?} opened");
     }
+}
+
+#[test]
+fn backstage_without_info_opens_on_the_first_kept_page() {
+    use crate::backstage::{entries_for, Nav, Page};
+    let (mut h, ..) = locked(&[("file.saveAs", true)]);
+    let (top, bottom) = entries_for(h.state(), true);
+    assert!(!top.iter().chain(&bottom).any(|n| *n == Nav::Page(Page::Info)), "Info is in the side menu");
+    h.state_mut().open_backstage(Page::Info);
+    h.run_steps(2);
+    assert!(h.state().backstage.as_ref().is_some_and(|b| b.page == Page::SaveAs));
 }
 
 #[test]

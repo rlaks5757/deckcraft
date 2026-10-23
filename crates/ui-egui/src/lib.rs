@@ -780,8 +780,8 @@ impl SlideApp {
 
     /// Opens the File tab's view on `page` (keeping its state when it is already open).
     pub fn open_backstage(&mut self, page: backstage::Page) {
-        // A locked app shows Info for a page it doesn't have (there is always a presentation).
-        let page = if self.page_allowed(page) { page } else { backstage::Page::Info };
+        // A locked app shows its first page for one it doesn't have (there is always a presentation).
+        let page = if self.page_allowed(page) { page } else { backstage::fallback_page(self) };
         let key = self.docs_key();
         match &mut self.backstage {
             Some(b) => b.go(page),
