@@ -29,11 +29,20 @@ pub enum ShowAction {
     Exit,
 }
 
+/// Unicode format characters (category Cf) that reorder or hide text: soft hyphen, Arabic letter
+/// mark, zero-width and bidi marks/overrides/isolates, invisible operators, BOM.
+fn is_format_char(c: char) -> bool {
+    matches!(c, '\u{00AD}' | '\u{061C}' | '\u{200B}'..='\u{200F}' | '\u{202A}'..='\u{202E}' | '\u{2060}'..='\u{2064}' | '\u{2066}'..='\u{2069}' | '\u{FEFF}')
+}
+
 /// Can a link from a (possibly untrusted) deck be opened outside the show? Only web pages and
 /// mail: `file:`, `javascript:`, relative paths and other schemes (OS protocol handlers) are not
 /// opened on a click.
 pub fn safe_url(url: &str) -> bool {
     let u = url.trim();
+    if u.chars().any(|c| c.is_control() || is_format_char(c)) {
+        return false;
+    }
     let Some((scheme, rest)) = u.split_once(':') else { return false };
     match scheme.to_ascii_lowercase().as_str() {
         "http" | "https" => rest.starts_with("//") && rest.len() > 2,
