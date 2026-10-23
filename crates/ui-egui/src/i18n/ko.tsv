@@ -1950,8 +1950,8 @@
 	{a} and {b}	{a} 및 {b}
 	{a}, {b} and {c}	{a}, {b} 및 {c}
 	{a}, {b}, {c} and {n} more	{a}, {b}, {c} 외 {n}개
-	{names} aren't installed on this computer. Text that uses them is shown in a similar font.	{names}이(가) 이 컴퓨터에 설치되어 있지 않습니다. 해당 글꼴을 쓰는 텍스트는 비슷한 글꼴로 표시됩니다.
-	{names} isn't installed on this computer. Text that uses it is shown in a similar font.	{names}이(가) 이 컴퓨터에 설치되어 있지 않습니다. 해당 글꼴을 쓰는 텍스트는 비슷한 글꼴로 표시됩니다.
+	{names} aren't installed on this computer. Text that uses them is shown in a similar font.	설치되어 있지 않은 글꼴: {names}. 해당 글꼴을 쓰는 텍스트는 비슷한 글꼴로 표시됩니다.
+	{names} isn't installed on this computer. Text that uses it is shown in a similar font.	설치되어 있지 않은 글꼴: {names}. 해당 글꼴을 쓰는 텍스트는 비슷한 글꼴로 표시됩니다.
 	{cols}x{rows} Table	{cols}x{rows} 표
 	{font} (Body)	{font}(본문)
 	{font} (Headings)	{font}(제목)

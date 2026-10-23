@@ -105,7 +105,7 @@ mod tests {
         let one = f(&["Sora"]).unwrap();
         let many = f(&["A", "B", "C", "D", "E"]).unwrap();
         i18n::set_current(i18n::Lang::EN);
-        assert!(one.starts_with("Sora이(가) 이 컴퓨터에"), "{one}");
-        assert!(many.starts_with("A, B, C 외 2개이(가)"), "{many}");
+        assert!(one.starts_with("설치되어 있지 않은 글꼴: Sora."), "{one}");
+        assert!(many.starts_with("설치되어 있지 않은 글꼴: A, B, C 외 2개."), "{many}");
     }
 }
