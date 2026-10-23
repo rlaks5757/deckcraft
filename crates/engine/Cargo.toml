@@ -10,7 +10,7 @@ workspace = true
 
 # ppm-host: every session starts locked to its PPM host (see src/hostlock.rs); ppm/build-web.sh turns it on.
 [features]
-ppm-host = []
+ppm-host = ["deckcraft-fonts/ppm"]
 
 [dependencies]
 deckcraft-geom = { workspace = true }

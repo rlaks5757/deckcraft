@@ -12,11 +12,12 @@ use std::path::PathBuf;
 const EXCLUDED_FAMILIES: &[&str] = &["Source Sans 3", "Source Serif 4", "Source Han Sans", "Source Han Serif", "Noto Sans CJK SC"];
 
 /// Office-compatible families (metric twins of Calibri, Cambria, Arial, Times New Roman, Courier
-/// New) the PPM build embeds in every style, web build included.
+/// New) the PPM build (`ppm` feature) embeds in every style, web build included.
 const OFFICE_FAMILIES: &[&str] = &["Carlito", "Caladea", "Liberation Sans", "Liberation Serif", "Liberation Mono"];
 
 fn main() {
     println!("cargo::rerun-if-env-changed=CRAFT_FONTS_DIR");
+    println!("cargo::rerun-if-env-changed=CARGO_FEATURE_PPM");
     println!("cargo::rerun-if-env-changed=CRAFT_FONTS_REQUIRED");
     let mut src = String::from("pub static CRAFT_FONTS: &[CraftFont] = &[\n");
     if let Some(dir) = std::env::var_os("CRAFT_FONTS_DIR").map(PathBuf::from) {
@@ -51,6 +52,7 @@ fn craft_fonts(dir: &std::path::Path) -> Result<String, String> {
 fn manifest(dir: &std::path::Path, manifest: &std::path::Path) -> Result<String, String> {
     println!("cargo::rerun-if-changed={}", manifest.display());
     let text = std::fs::read_to_string(manifest).map_err(|e| format!("{}: {e}", manifest.display()))?;
+    let ppm = std::env::var_os("CARGO_FEATURE_PPM").is_some();
     let wasm = std::env::var("CARGO_CFG_TARGET_ARCH").is_ok_and(|a| a == "wasm32");
     let mut out = String::new();
     for line in text.lines().map(str::trim).filter(|l| !l.is_empty() && !l.starts_with('#')) {
@@ -64,7 +66,7 @@ fn manifest(dir: &std::path::Path, manifest: &std::path::Path) -> Result<String,
         }
         // The web build also keeps any Korean face: Hangul draws as boxes without one.
         let korean = scripts.split(',').any(|s| s.trim() == "Kore");
-        if wasm && !korean && !matches!((*family, *style), ("BIZ UDPGothic", "Regular") | ("Inter", "Regular" | "SemiBold" | "Bold" | "Variable")) && !OFFICE_FAMILIES.contains(family) {
+        if wasm && !korean && !matches!((*family, *style), ("BIZ UDPGothic", "Regular") | ("Inter", "Regular" | "SemiBold" | "Bold" | "Variable")) && !(ppm && OFFICE_FAMILIES.contains(family)) {
             continue;
         }
         let path = dir.join(file).canonicalize().map_err(|e| format!("{file}: {e}"))?;

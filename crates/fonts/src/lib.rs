@@ -378,14 +378,20 @@ mod tests {
         assert!(substitutes("Cambria").contains(&"Caladea"));
         assert!(substitutes("Times New Roman").contains(&"Liberation Serif"));
         assert!(substitutes("Aptos").contains(&"Inter"));
+        assert_eq!(substitutes("Consolas")[0], "Liberation Mono");
+        assert_eq!(substitutes("맑은 고딕").is_empty(), !cfg!(feature = "ppm"));
+        assert!(substitutes("zzz").is_empty());
+    }
+
+    #[cfg(feature = "ppm")]
+    #[test]
+    fn ppm_names_map_to_the_office_set() {
         for f in ["Aptos", "Aptos Display", "Aptos Narrow", "Calibri Light", "Segoe UI"] {
             assert_eq!(substitutes(f)[0], "Carlito", "{f}");
         }
         for f in ["맑은 고딕", "Malgun Gothic", "굴림", "Gulim", "돋움", "Dotum", "바탕", "Batang", "궁서", "Gungsuh"] {
             assert_eq!(substitutes(f), ["NanumGothic"], "{f}");
         }
-        assert_eq!(substitutes("Consolas")[0], "Liberation Mono");
-        assert!(substitutes("zzz").is_empty());
     }
 
     #[test]
@@ -427,14 +433,15 @@ mod tests {
         assert_eq!(db.face("Inter", "Regular").family, "Inter");
         if CRAFT_FONTS.iter().any(|f| f.family == "Carlito") {
             assert_eq!(db.face("Calibri", "Bold").family, "Carlito");
-            assert_eq!(db.face("Aptos", "Regular").family, "Carlito");
-        } else {
-            assert_eq!(db.face("Aptos", "Regular").family, "Inter");
         }
+        // Aptos draws in Inter, except in the PPM build, which has the Carlito metrics.
+        let aptos = if cfg!(feature = "ppm") && CRAFT_FONTS.iter().any(|f| f.family == "Carlito") { "Carlito" } else { "Inter" };
+        assert_eq!(db.face("Aptos", "Regular").family, aptos);
     }
 
     /// The PPM set (`ppm/fonts-ko`): every document font name draws in its Office-compatible twin,
     /// Korean names in NanumGothic, an unknown name in Carlito.
+    #[cfg(feature = "ppm")]
     #[test]
     fn office_compatible_set_when_present() {
         if !CRAFT_FONTS.iter().any(|f| f.family == "Liberation Mono") {

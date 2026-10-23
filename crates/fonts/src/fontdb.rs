@@ -36,11 +36,13 @@ pub fn substitutes(family: &str) -> &'static [&'static str] {
         "arial" | "helvetica" | "helvetica neue" | "arial nova" => &["Liberation Sans", "Arial", "Helvetica Neue", "Helvetica", "Inter"],
         "times new roman" | "times" => &["Liberation Serif", "Times New Roman", "Times", "Merriweather"],
         "courier new" | "courier" | "consolas" | "menlo" => &["Liberation Mono", "Courier New", "Menlo", "Courier"],
-        "aptos" | "aptos display" | "aptos narrow" | "segoe ui" | "segoe ui light" | "segoe ui semibold" => {
+        "aptos" | "aptos display" | "aptos narrow" | "segoe ui" | "segoe ui light" | "segoe ui semibold" if cfg!(feature = "ppm") => {
             &["Carlito", "Inter", "Helvetica Neue", "Arial", "Liberation Sans"]
         }
-        "tahoma" | "verdana" => &["Inter", "Helvetica Neue", "Arial", "Liberation Sans"],
-        "맑은 고딕" | "malgun gothic" | "굴림" | "gulim" | "돋움" | "dotum" | "바탕" | "batang" | "궁서" | "gungsuh" => &["NanumGothic"],
+        "맑은 고딕" | "malgun gothic" | "굴림" | "gulim" | "돋움" | "dotum" | "바탕" | "batang" | "궁서" | "gungsuh" if cfg!(feature = "ppm") => &["NanumGothic"],
+        "aptos" | "aptos display" | "aptos narrow" | "segoe ui" | "segoe ui light" | "segoe ui semibold" | "tahoma" | "verdana" => {
+            &["Inter", "Helvetica Neue", "Arial", "Liberation Sans"]
+        }
         "georgia" | "garamond" | "book antiqua" | "palatino" | "palatino linotype" | "constantia" => &["Merriweather", "Liberation Serif", "Georgia"],
         "century gothic" | "avenir" | "avenir next" | "futura" | "gill sans" | "gill sans mt" | "trebuchet ms" | "corbel" | "candara" => {
             &["Montserrat", "Poppins", "Avenir Next", "Inter"]
@@ -91,7 +93,7 @@ fn office_twin(family: &str) -> Option<&'static str> {
 
 /// Office's downloadable (cloud) families: PowerPoint fetches them when a document uses them, so
 /// they draw as themselves there, not as Calibri. Without them DeckCraft keeps their closest open
-/// substitute ([`substitutes`]; Aptos as Carlito).
+/// substitute ([`substitutes`]; Aptos as Inter, or Carlito in the PPM build).
 fn is_office_cloud_font(family: &str) -> bool {
     let f = family.to_ascii_lowercase();
     f.starts_with("aptos") || ["bierstadt", "grandview", "seaford", "skeena", "tenorite"].iter().any(|c| f.starts_with(c))
@@ -1017,7 +1019,8 @@ impl FontDb {
                 return f;
             }
         }
-        for sub in ["Carlito", FALLBACK_FAMILY, "Helvetica Neue", "Arial", "Liberation Sans", "DejaVu Sans", "Segoe UI"] {
+        let first = if cfg!(feature = "ppm") { "Carlito" } else { FALLBACK_FAMILY };
+        for sub in [first, FALLBACK_FAMILY, "Helvetica Neue", "Arial", "Liberation Sans", "DejaVu Sans", "Segoe UI"] {
             if let Some(f) = self.try_family(sub, style) {
                 return f;
             }

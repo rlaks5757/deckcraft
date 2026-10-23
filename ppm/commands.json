@@ -1024,7 +1024,7 @@
     },
     {
       "grades": {
-        "builder": "on"
+        "builder": "locked"
       },
       "id": "file.info",
       "label": "Info",
@@ -1066,7 +1066,7 @@
     },
     {
       "grades": {
-        "builder": "on"
+        "builder": "locked"
       },
       "id": "file.properties",
       "label": "Properties",
