@@ -2,8 +2,12 @@
 //! DeckCraft in an `<iframe>`. Messages are plain objects with a `type`:
 //!
 //! - `deckcraft:ready` (to the parent): `{ version }`, the app is listening; send a file now.
-//! - `deckcraft:open` (from the parent): `{ name, bytes }`, bytes an `ArrayBuffer` or
+//! - `deckcraft:open` (from the parent): `{ name, bytes, policy }`, bytes an `ArrayBuffer` or
 //!   `Uint8Array`. It opens like a presentation picked with File › Open or dropped on the window.
+//!   `policy` is `{ overrides: { "<command id>": true | false } }` with the commands that differ
+//!   from their grade (see `commands.json`); in the PPM build `true` turns an off command on and
+//!   `false` an on command off. A missing or malformed policy changes nothing; ids that are no
+//!   command and values that are no boolean are ignored.
 //! - `deckcraft:save` (to the parent): `{ name, bytes }` (a transferred `ArrayBuffer`) for every
 //!   file DeckCraft would otherwise download: Save and Save As (a .pptx presentation) and Export
 //!   (such as PDF or slide images). The parent stores it and reports failures itself.
@@ -60,7 +64,7 @@ pub struct Bridge {
     parent: web_sys::Window,
     origin: String,
     /// Files from the parent not yet handed to the app: `(name, bytes)`.
-    opened: Rc<RefCell<Vec<(String, Vec<u8>)>>>,
+    opened: Rc<RefCell<Vec<(String, Vec<u8>, Vec<(String, bool)>)>>>,
     /// Tables from the parent not yet inserted.
     tables: Rc<RefCell<Vec<TableRequest>>>,
     /// Names of the files handed to the parent since the last frame.
@@ -84,7 +88,16 @@ impl Bridge {
         if parent.location().origin().ok()? != origin {
             return None;
         }
-        Some(Self { window, parent, origin, opened: Rc::default(), tables: Rc::default(), saved: Rc::default(), reported: Rc::default(), failures: Rc::default() })
+        Some(Self {
+            window,
+            parent,
+            origin,
+            opened: Rc::default(),
+            tables: Rc::default(),
+            saved: Rc::default(),
+            reported: Rc::default(),
+            failures: Rc::default(),
+        })
     }
 
     /// Send saved and exported files to the parent instead of downloading them, and hear files
@@ -121,7 +134,8 @@ impl Bridge {
 
     /// Before each pass: files from the parent open as if picked with File › Open.
     pub fn deliver(&self, app: &mut SlideApp, inbox: &Inbox) {
-        for (name, bytes) in std::mem::take(&mut *self.opened.borrow_mut()) {
+        for (name, bytes, overrides) in std::mem::take(&mut *self.opened.borrow_mut()) {
+            app.session.set_policy(&overrides);
             let id = app.begin_external_file("open");
             inbox.lock().unwrap_or_else(|e| e.into_inner()).push(InboxEvent::File(InboxFile { id, name, bytes }));
         }
@@ -185,7 +199,7 @@ impl Bridge {
                 Some("deckcraft:open") => {
                     let name = string(&data, "name").filter(|n| !n.trim().is_empty()).unwrap_or_else(|| "Presentation.pptx".to_string());
                     let Some(bytes) = bytes(&data) else { return };
-                    opened.borrow_mut().push((name, bytes));
+                    opened.borrow_mut().push((name, bytes, policy_overrides(&data)));
                 }
                 Some("deckcraft:insert-table") => {
                     // Without a usable id there is nobody to answer.
@@ -220,6 +234,24 @@ fn message(fields: &[(&str, JsValue)]) -> Option<js_sys::Object> {
         js_sys::Reflect::set(&m, &JsValue::from_str(key), value).ok()?;
     }
     Some(m)
+}
+
+/// `policy.overrides` as `(command id, on)` pairs; anything else (no policy, not an object,
+/// values that are no boolean) is left out.
+fn policy_overrides(data: &JsValue) -> Vec<(String, bool)> {
+    let overrides = js_sys::Reflect::get(data, &JsValue::from_str("policy"))
+        .and_then(|p| js_sys::Reflect::get(&p, &JsValue::from_str("overrides")))
+        .unwrap_or(JsValue::UNDEFINED);
+    if !overrides.is_object() || js_sys::Array::is_array(&overrides) {
+        return Vec::new();
+    }
+    js_sys::Object::entries(&js_sys::Object::from(overrides))
+        .iter()
+        .filter_map(|entry| {
+            let pair = js_sys::Array::from(&entry);
+            Some((pair.get(0).as_string()?, pair.get(1).as_bool()?))
+        })
+        .collect()
 }
 
 fn string(data: &JsValue, key: &str) -> Option<String> {

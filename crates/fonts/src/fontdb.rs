@@ -27,9 +27,74 @@ pub fn bundled() -> Vec<&'static [u8]> {
     v
 }
 
+/// Does the PPM build map this document font name to a bundled family? Always false elsewhere.
+pub fn is_ppm_mapped(family: &str) -> bool {
+    ppm_target(family).is_some()
+}
+
+/// The PPM build's Office-compatible set: the bundled family a document font name draws in
+/// (exact name, case-insensitive, so every variant is listed). `None` outside the PPM build and
+/// for names not on the list.
+fn ppm_target(family: &str) -> Option<&'static str> {
+    if !cfg!(feature = "ppm") {
+        return None;
+    }
+    Some(match family.to_lowercase().as_str() {
+        "calibri" | "calibri light" | "aptos" | "aptos display" | "aptos narrow" | "aptos light" | "aptos semibold" | "segoe ui"
+        | "segoe ui light" | "segoe ui semibold" | "segoe ui semilight" => "Carlito",
+        "cambria" | "constantia" | "palatino" | "palatino linotype" | "book antiqua" | "georgia" | "garamond" => "Caladea",
+        "arial" | "arial narrow" | "helvetica" | "helvetica neue" => "Liberation Sans",
+        "times" | "times new roman" => "Liberation Serif",
+        "courier" | "courier new" | "consolas" | "lucida console" => "Liberation Mono",
+        "맑은 고딕"
+        | "malgun gothic"
+        | "굴림"
+        | "gulim"
+        | "굴림체"
+        | "gulimche"
+        | "새굴림"
+        | "new gulim"
+        | "돋움"
+        | "dotum"
+        | "돋움체"
+        | "dotumche"
+        | "바탕"
+        | "batang"
+        | "바탕체"
+        | "batangche"
+        | "궁서"
+        | "gungsuh"
+        | "궁서체"
+        | "gungsuhche"
+        | "함초롬바탕"
+        | "hcr batang"
+        | "함초롬돋움"
+        | "hcr dotum"
+        | "나눔고딕"
+        | "nanumgothic"
+        | "나눔명조"
+        | "nanummyeongjo"
+        | "noto sans kr"
+        | "noto sans cjk kr"
+        | "noto serif kr"
+        | "apple sd gothic neo" => "NanumGothic",
+        _ => return None,
+    })
+}
+
 /// Open substitutes for families documents often ask for but we can't ship (metric-compatible
 /// where one exists), tried in order after the family itself.
 pub fn substitutes(family: &str) -> &'static [&'static str] {
+    if let Some(target) = ppm_target(family) {
+        return match target {
+            "Carlito" => &["Carlito", "Liberation Sans", "Arial", "Inter"],
+            "Caladea" => &["Caladea", "Liberation Serif", "Times New Roman", "Merriweather"],
+            "Liberation Sans" => &["Liberation Sans", "Arial", "Helvetica Neue", "Helvetica", "Inter"],
+            "Liberation Serif" => &["Liberation Serif", "Times New Roman", "Times", "Merriweather"],
+            "Liberation Mono" => &["Liberation Mono", "Courier New", "Menlo", "Courier"],
+            _ => &["NanumGothic"],
+        };
+    }
     match family.to_ascii_lowercase().as_str() {
         "calibri" | "calibri light" => &["Carlito", "Liberation Sans", "Arial", "Inter"],
         "cambria" | "cambria math" => &["Caladea", "Liberation Serif", "Times New Roman", "Merriweather"],
@@ -89,7 +154,7 @@ fn office_twin(family: &str) -> Option<&'static str> {
 
 /// Office's downloadable (cloud) families: PowerPoint fetches them when a document uses them, so
 /// they draw as themselves there, not as Calibri. Without them DeckCraft keeps their closest open
-/// substitute ([`substitutes`]; Aptos as Inter).
+/// substitute ([`substitutes`]; Aptos as Inter, or Carlito in the PPM build).
 fn is_office_cloud_font(family: &str) -> bool {
     let f = family.to_ascii_lowercase();
     f.starts_with("aptos") || ["bierstadt", "grandview", "seaford", "skeena", "tenorite"].iter().any(|c| f.starts_with(c))
@@ -1004,7 +1069,7 @@ impl FontDb {
     }
 
     /// Resolve a family + style to a face, falling back to the closest style of the family, then to
-    /// an open substitute ([`substitutes`]), then to Inter. Installed system fonts are found by name
+    /// an open substitute ([`substitutes`]), then to Carlito and Inter. Installed system fonts are found by name
     /// whatever ran before.
     pub fn face(&self, family: &str, style: &str) -> Arc<FontFace> {
         if let Some(f) = self.try_family(family, style) {
@@ -1015,7 +1080,8 @@ impl FontDb {
                 return f;
             }
         }
-        for sub in [FALLBACK_FAMILY, "Helvetica Neue", "Arial", "Liberation Sans", "DejaVu Sans", "Segoe UI"] {
+        let first = if cfg!(feature = "ppm") { "Carlito" } else { FALLBACK_FAMILY };
+        for sub in [first, FALLBACK_FAMILY, "Helvetica Neue", "Arial", "Liberation Sans", "DejaVu Sans", "Segoe UI"] {
             if let Some(f) = self.try_family(sub, style) {
                 return f;
             }
@@ -1032,7 +1098,12 @@ impl FontDb {
     /// see `office_twin`); any other missing family is drawn in Calibri (or Carlito).
     /// DeckCraft's own default family keeps [`FontDb::face`]'s fallbacks.
     pub fn document_face(&self, family: &str, style: &str) -> Arc<FontFace> {
-        if family.eq_ignore_ascii_case(FALLBACK_FAMILY) || has_metric_twin(family) || is_office_cloud_font(family) || self.has_family(family) {
+        if family.eq_ignore_ascii_case(FALLBACK_FAMILY)
+            || has_metric_twin(family)
+            || ppm_target(family).is_some()
+            || is_office_cloud_font(family)
+            || self.has_family(family)
+        {
             return self.face(family, style);
         }
         if let Some(twin) = office_twin(family) {

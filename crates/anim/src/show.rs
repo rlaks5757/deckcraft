@@ -29,11 +29,23 @@ pub enum ShowAction {
     Exit,
 }
 
+/// Unicode format characters (category Cf) that reorder or hide text: soft hyphen, Arabic letter
+/// mark, zero-width and bidi marks/overrides/isolates, invisible operators, BOM, tag characters
+/// (the full category).
+fn is_format_char(c: char) -> bool {
+    matches!(c, '\u{00AD}' | '\u{0600}'..='\u{0605}' | '\u{061C}' | '\u{06DD}' | '\u{070F}' | '\u{0890}'..='\u{0891}' | '\u{08E2}' | '\u{180E}'
+            | '\u{200B}'..='\u{200F}' | '\u{202A}'..='\u{202E}' | '\u{2060}'..='\u{2064}' | '\u{2066}'..='\u{206F}' | '\u{FEFF}' | '\u{FFF9}'..='\u{FFFB}'
+            | '\u{110BD}' | '\u{110CD}' | '\u{13430}'..='\u{1343F}' | '\u{1BCA0}'..='\u{1BCA3}' | '\u{1D173}'..='\u{1D17A}' | '\u{E0001}' | '\u{E0020}'..='\u{E007F}')
+}
+
 /// Can a link from a (possibly untrusted) deck be opened outside the show? Only web pages and
 /// mail: `file:`, `javascript:`, relative paths and other schemes (OS protocol handlers) are not
 /// opened on a click.
 pub fn safe_url(url: &str) -> bool {
     let u = url.trim();
+    if u.chars().any(|c| c.is_control() || is_format_char(c)) {
+        return false;
+    }
     let Some((scheme, rest)) = u.split_once(':') else { return false };
     match scheme.to_ascii_lowercase().as_str() {
         "http" | "https" => rest.starts_with("//") && rest.len() > 2,

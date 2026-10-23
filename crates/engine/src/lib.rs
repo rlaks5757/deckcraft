@@ -15,6 +15,7 @@ pub mod file_access;
 pub mod fonts;
 pub mod gif_export;
 pub mod guard;
+pub mod hostlock;
 pub mod icons;
 pub mod inkshape;
 pub mod io;
@@ -53,6 +54,9 @@ pub enum EngineError {
     BadParams { cmd: String, msg: String },
     #[error("no active presentation")]
     NoDocument,
+    // The text is `hostlock::BLOCKED_TEXT` (thiserror can't take a path in the format string).
+    #[error("command `{0}` is blocked by the PPM host lock")]
+    HostLocked(String),
     #[error("{0}")]
     Other(String),
     #[error("internal error in `{0}` (the presentation was kept as it was): {1}")]
@@ -478,6 +482,12 @@ pub struct Session {
     /// Presentations a host read off the UI thread, waiting for `file.adopt` (by token).
     loaded: Vec<(u64, cmd::file::LoadedFile)>,
     next_loaded: u64,
+    /// The PPM host lock: `Some` once locked (always in the `ppm-host` build), holding the parent's
+    /// overrides of the default grades. Locking is one way.
+    host: Option<hostlock::Policy>,
+    /// The next outermost command skips the host lock (the parent's own file, see
+    /// [`Session::open_host_file`]).
+    trusted: bool,
 }
 
 impl Default for Session {
@@ -509,7 +519,44 @@ impl Session {
             panics_caught: 0,
             loaded: vec![],
             next_loaded: 0,
+            host: hostlock::HOST_BUILD.then(hostlock::Policy::default),
+            trusted: false,
         }
+    }
+    /// Locks the session to its PPM host: only classified commands run, see [`hostlock`]. There
+    /// is no way back.
+    pub fn lock_host(&mut self) {
+        self.host.get_or_insert_with(hostlock::Policy::default);
+    }
+    pub fn host_locked(&self) -> bool {
+        self.host.is_some()
+    }
+    /// The parent's overrides of a locked session; clones share their state.
+    pub fn host_policy(&self) -> Option<hostlock::Policy> {
+        self.host.clone()
+    }
+    /// The parent's policy for the presentation it opens: `(command id, on)` pairs for the
+    /// commands that differ from their grade. Nothing happens in an unlocked session.
+    pub fn set_policy(&self, overrides: &[(String, bool)]) {
+        if let Some(p) = &self.host {
+            p.set(overrides);
+        }
+    }
+    /// Runs `id` past the host lock; only the two callers below use it.
+    fn execute_trusted(&mut self, id: &str, params: &Value) -> Result<Value> {
+        self.trusted = true;
+        let r = self.execute(id, params);
+        self.trusted = false;
+        r
+    }
+    /// Opens the presentation the PPM host sent (`{name, data: base64}`) in a locked session,
+    /// where `file.openBytes` is otherwise refused.
+    pub fn open_host_file(&mut self, params: &Value) -> Result<Value> {
+        self.execute_trusted("file.openBytes", params)
+    }
+    /// The empty presentation a locked session starts with while it waits for the host's file.
+    pub fn start_host_blank(&mut self) -> Result<Value> {
+        self.execute_trusted("file.new", &Value::Null)
     }
     /// Hand over a presentation read on another thread ([`cmd::file::read_presentation_file`]);
     /// `file.adopt` with the returned token adds it as a document, through the command path like
@@ -579,6 +626,10 @@ impl Session {
     /// Run command `id`. A panic inside it becomes [`EngineError::Internal`] and leaves the
     /// presentation as it was.
     pub fn execute(&mut self, id: &str, params: &Value) -> Result<Value> {
+        // Commands run by commands (depth > 0) were allowed with the outermost one.
+        if self.depth == 0 && !self.trusted && !hostlock::permits(self.host.as_ref(), id, params) {
+            return Err(EngineError::HostLocked(id.into()));
+        }
         self.guarded(id, |s| s.execute_unguarded(id, params))
     }
 
@@ -638,7 +689,7 @@ impl Session {
     }
 
     pub fn commands(&self) -> Vec<CommandInfo> {
-        command_specs().iter().map(|c| c.info(self)).collect()
+        command_specs().iter().filter(|c| hostlock::listed(self.host.as_ref(), c.id)).map(|c| c.info(self)).collect()
     }
 
     /// Mutate the active presentation (copy-on-write) and bump the revision.

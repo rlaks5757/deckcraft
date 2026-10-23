@@ -109,7 +109,14 @@ mod tests {
         assert!(current > 0);
         insert_table(&mut a, &rows(&[&["Name", "Qty"], &["{{loop items}}{{name}}", "{{qty}}{{endloop}}"]])).unwrap();
         let st = a.session.doc().unwrap();
-        let tables: Vec<_> = st.doc.slides.iter().enumerate().flat_map(|(i, sl)| sl.shapes.iter().map(move |s| (i, s))).filter(|(_, s)| matches!(s.kind, deckcraft_model::ShapeKind::Table(_))).collect();
+        let tables: Vec<_> = st
+            .doc
+            .slides
+            .iter()
+            .enumerate()
+            .flat_map(|(i, sl)| sl.shapes.iter().map(move |s| (i, s)))
+            .filter(|(_, s)| matches!(s.kind, deckcraft_model::ShapeKind::Table(_)))
+            .collect();
         assert_eq!(tables.len(), 1);
         assert_eq!(tables[0].0, current);
         let deckcraft_model::ShapeKind::Table(t) = &tables[0].1.kind else { unreachable!() };

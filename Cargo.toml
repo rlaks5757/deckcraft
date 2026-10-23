@@ -94,5 +94,13 @@ lto = "thin"
 codegen-units = 16
 debug = 0
 
+# Quick local web builds (ppm/build-web.sh --fast): not for release or deploy.
+[profile.web-fast]
+inherits = "release"
+lto = false
+codegen-units = 16
+incremental = true
+opt-level = 2
+
 [patch.crates-io]
 krilla = { git = "https://github.com/storytold/craft-libs", rev = "c3487320b2d1de657b860b3c8abb44e1f2b32bd8", version = "=0.8.2" }

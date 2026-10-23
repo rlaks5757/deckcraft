@@ -6,6 +6,13 @@
 #![deny(clippy::unwrap_used, clippy::expect_used, clippy::panic, clippy::unimplemented, clippy::todo, clippy::unreachable)]
 #![forbid(unsafe_code)]
 
+/// `tl!("English")`: the string in the interface language (see [`i18n`]).
+macro_rules! tl {
+    ($s:expr) => {
+        $crate::i18n::t($s)
+    };
+}
+
 pub mod animtimeline;
 pub mod backstage;
 pub mod canvas;
@@ -15,7 +22,9 @@ pub mod dialogs;
 pub mod doc_window;
 pub mod eyedropper;
 pub mod fillui;
+pub mod host_lock;
 pub mod host_table;
+pub mod i18n;
 pub mod icons;
 pub mod media;
 pub mod menus;
@@ -41,6 +50,7 @@ pub mod widgets;
 use std::collections::HashMap;
 use std::sync::mpsc::{Receiver, Sender};
 
+use deckcraft_engine::hostlock::{self, Policy};
 use deckcraft_engine::{Mods, Session, Target, UiRequest};
 use deckcraft_model::{LayoutId, MasterId, SlideId};
 use serde::{Deserialize, Serialize};
@@ -224,6 +234,47 @@ pub struct Services {
     pub clipboard_set_html: Option<Box<dyn FnMut(&str, &str) -> bool>>,
     /// Audio output for media playback (cpal on desktop); without one media plays silently.
     pub audio_out: Option<Box<dyn deckcraft_media::AudioOut>>,
+}
+
+impl Services {
+    /// What a presentation locked to its PPM host keeps (see `deckcraft_engine::hostlock`): no
+    /// file pickers or paths, no picker for a presentation to open, and a download that hands
+    /// the parent only what Save (a `.pptx`) and the commands `policy` switched on allow. The
+    /// parent's own file arrives through `inbox`, the clipboard stays.
+    pub fn lock_for_host(&mut self, policy: Policy) {
+        self.pick_open = None;
+        self.pick_save = None;
+        self.read = None;
+        self.write = None;
+        // A picker still serves the pictures, sounds and videos to put in a slide; a
+        // presentation to open (or a drop) never goes through it.
+        if let Some(mut inner) = self.open_async.take() {
+            self.open_async = Some(Box::new(move |purpose: &str, id: u64| {
+                if !matches!(purpose, "open" | "drop") {
+                    inner(purpose, id);
+                }
+            }));
+        }
+        if let Some(mut inner) = self.download.take() {
+            self.download = Some(Box::new(move |name: &str, bytes: &[u8]| {
+                if download_permitted(&policy, name) {
+                    inner(name, bytes);
+                }
+            }));
+        }
+    }
+}
+
+/// Whether the host-locked app may hand `name` to the parent: the presentation always, a PDF with
+/// printing or export on, any other file with export on.
+fn download_permitted(policy: &Policy, name: &str) -> bool {
+    let on = |id| host_lock::enabled(Some(policy), id);
+    let ext = name.rsplit_once('.').map(|(_, e)| e.to_ascii_lowercase()).unwrap_or_default();
+    match ext.as_str() {
+        "pptx" => true,
+        "pdf" => on("app.print") || on("file.export"),
+        _ => on("file.export"),
+    }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
@@ -519,6 +570,8 @@ pub struct SlideApp {
     next_file_id: u64,
     /// Picks and drops whose bytes have not arrived yet.
     pending_files: Vec<PendingFile>,
+    /// The policy the PPM host sent (overrides of the default grades), when the session is locked to its host.
+    host: Option<Policy>,
 }
 
 fn grid_options_touched(p: &Value) -> bool {
@@ -536,7 +589,12 @@ fn grid_flag(p: &Value, key: &str) -> Result<Option<bool>, String> {
 impl SlideApp {
     pub fn new(session: Session, mut services: Services) -> Self {
         let audio_out = services.audio_out.take();
+        let host = session.host_policy();
+        if let Some(policy) = &host {
+            services.lock_for_host(policy.clone());
+        }
         SlideApp {
+            host,
             table_pen: serde_json::json!({"width": 1.0}),
             session,
             services,
@@ -595,14 +653,42 @@ impl SlideApp {
         self
     }
 
+    /// The session is locked to its PPM host: no local open, create, close, Save As, export, print
+    /// or link unless the host's policy turned that command on.
+    pub fn host_locked(&self) -> bool {
+        self.host.is_some()
+    }
+
+    /// May command `id` (an engine or an app command) show and run? Always when unlocked.
+    pub fn allowed(&self, id: &str) -> bool {
+        host_lock::enabled(self.host.as_ref(), id)
+    }
+
+    pub(crate) fn host_policy(&self) -> Option<Policy> {
+        self.host.clone()
+    }
+
+    /// May the File tab show `page`?
+    pub fn page_allowed(&self, page: backstage::Page) -> bool {
+        host_lock::page_permits(self.host.as_ref(), page)
+    }
+
+    /// Drops what a locked app must not hand to the browser: opening an address in a new tab.
+    fn strip_host_output(&self, ctx: &egui::Context) {
+        if !self.allowed("app.externalLinks") {
+            ctx.output_mut(|o| o.commands.retain(|c| !matches!(c, egui::OutputCommand::OpenUrl(_))));
+        }
+    }
+
     pub fn set_status(&mut self, msg: impl Into<String>) {
-        self.status = Some((msg.into(), now_ms()));
+        let msg = msg.into();
+        self.status = Some((tl!(&msg).to_string(), now_ms()));
     }
 
     /// A message that must be seen wherever the user is: a toast, which also shows over the start
     /// screen and the File tab, where there is no status bar.
     pub fn notify(&mut self, msg: impl Into<String>) {
-        self.toast = Some(toast::Toast { text: msg.into(), at: now_ms() });
+        self.toast = Some(toast::Toast { text: tl!(&msg.into()).to_string(), at: now_ms() });
     }
 
     /// The transient status message while it is fresh; clears it once stale. Both the status bar
@@ -658,7 +744,10 @@ impl SlideApp {
     /// Run a command by id (UI commands here, everything else in the engine). Errors show in the
     /// status bar and are returned.
     pub fn run(&mut self, id: &str, params: Value) -> Result<Value, String> {
-        let r = if UI_COMMANDS.iter().any(|c| c.0 == id) {
+        let r = if !self.allowed(id) && UI_COMMANDS.iter().any(|c| c.0 == id) {
+            // Silent like the engine's refusal: the entry isn't in a locked app's menus.
+            return Err(format!("command `{id}` is {}", hostlock::BLOCKED_TEXT));
+        } else if UI_COMMANDS.iter().any(|c| c.0 == id) {
             self.run_ui(id, &params)
         } else {
             self.session.execute(id, &params).map_err(|e| e.to_string())
@@ -672,6 +761,7 @@ impl SlideApp {
                 }
             }
             Ok(_) => {}
+            Err(e) if e.contains(hostlock::BLOCKED_TEXT) => {}
             Err(e) => self.set_status(e.clone()),
         }
         self.drain_requests();
@@ -690,6 +780,8 @@ impl SlideApp {
 
     /// Opens the File tab's view on `page` (keeping its state when it is already open).
     pub fn open_backstage(&mut self, page: backstage::Page) {
+        // A locked app shows its first page for one it doesn't have (there is always a presentation).
+        let page = if self.page_allowed(page) { page } else { backstage::fallback_page(self) };
         let key = self.docs_key();
         match &mut self.backstage {
             Some(b) => b.go(page),
@@ -720,6 +812,10 @@ impl SlideApp {
     /// File › Close and Ctrl+W: closes the active presentation, asking first when it has unsaved
     /// changes (Save, Don't Save, Cancel), as PowerPoint does.
     pub fn close_presentation(&mut self) {
+        // A locked app never closes the presentation (and doesn't ask about it either).
+        if !self.allowed("app.closePresentation") {
+            return;
+        }
         match self.session.active() {
             None => {}
             Some(d) if d.is_dirty() => self.dialog = Some(dialogs::Dialog::new("close")),
@@ -740,6 +836,9 @@ impl SlideApp {
     /// on the web. `extra` adds `file.export` params (the PDF's layout, slides…). The
     /// presentation keeps its own file. Returns whether a file was written or handed over.
     pub fn export_as(&mut self, fmt: &str, extra: Value) -> bool {
+        if !self.allowed("file.export") {
+            return false;
+        }
         let Some(slide) = self.session.active().map(|d| d.selection.slide) else { return false };
         let (ext, format, all) = match fmt {
             "pdf" => ("pdf", "pdf", false),
@@ -751,7 +850,7 @@ impl SlideApp {
             "deckcraft" => ("deckcraft", "deckcraft", false),
             "gif" => ("gif", "gif", false),
             other => {
-                self.set_status(format!("DeckCraft can't export “{other}”"));
+                self.set_status(i18n::fmt(tl!("DeckCraft can't export “{name}”"), &[("name", other)]));
                 return false;
             }
         };
@@ -764,7 +863,7 @@ impl SlideApp {
             }
             return match self.run("file.export", params) {
                 Ok(_) => {
-                    self.set_status(format!("Exported {path}"));
+                    self.set_status(i18n::fmt(tl!("Exported {path}"), &[("path", &path)]));
                     true
                 }
                 Err(_) => false,
@@ -802,7 +901,7 @@ impl SlideApp {
                 false
             }
             (Ok(_), None) => {
-                self.set_status("Saving a copy needs a file picker, which this window doesn't have.");
+                self.set_status(tl!("Saving a copy needs a file picker, which this window doesn't have."));
                 false
             }
         }
@@ -812,6 +911,9 @@ impl SlideApp {
     /// layout, slides and options) is written to the temporary folder and opened in the system's
     /// PDF viewer, which has the printers; on the web it downloads.
     pub fn print_pdf(&mut self, params: Value) -> bool {
+        if !self.allowed("app.print") {
+            return false;
+        }
         let Some((title, doc)) = self.session.active().map(|d| (d.title(), d.doc.clone())) else { return false };
         let mut params = if params.is_object() { params } else { json!({}) };
         if self.services.pick_save.is_none() {
@@ -828,7 +930,7 @@ impl SlideApp {
         match self.run("file.export", params) {
             Ok(_) => {
                 self.open_url(&format!("file:///{}", path.replace('\\', "/").trim_start_matches('/')));
-                self.set_status("Opened the presentation as a PDF to print");
+                self.set_status(tl!("Opened the presentation as a PDF to print"));
                 true
             }
             Err(_) => false,
@@ -1031,7 +1133,7 @@ impl SlideApp {
                     self.pick_and_insert("theme", "design.browseTheme");
                 } else {
                     // The browser's asynchronous picker would open the file as a new document.
-                    self.set_status("Browse for Themes needs the desktop app for now".to_string());
+                    self.set_status(tl!("Browse for Themes needs the desktop app for now").to_string());
                 }
             }
             "app.qat" => return qat::command(self, p),
@@ -1049,7 +1151,7 @@ impl SlideApp {
                     self.pick_and_insert("open", "review.compare");
                 } else {
                     // The browser's asynchronous picker would open the file as a new document.
-                    self.set_status("Compare needs the desktop app for now".to_string());
+                    self.set_status(tl!("Compare needs the desktop app for now").to_string());
                 }
             }
             "app.dialog" => {
@@ -1160,7 +1262,7 @@ impl SlideApp {
         };
         if timeline.is_empty() {
             self.anim_preview = None;
-            self.set_status("This slide has no animations");
+            self.set_status(tl!("This slide has no animations"));
             return Ok(json!({"playing": false}));
         }
         if matches!(self.ui.view, ViewMode::Sorter | ViewMode::NotesPage) {
@@ -1169,11 +1271,14 @@ impl SlideApp {
         self.close_backstage();
         let duration = timeline.total_duration();
         self.anim_preview = Some(AnimPreview { uid, slide, slide_ptr: ptr, started: None, elapsed: 0.0, timeline });
-        self.set_status("Previewing animations");
+        self.set_status(tl!("Previewing animations"));
         Ok(json!({"playing": true, "slide": slide, "duration": duration}))
     }
 
     fn pick_and_open(&mut self) {
+        if self.host_locked() {
+            return;
+        }
         if let Some(pick) = self.services.pick_open.as_mut() {
             if let Some(path) = pick("open") {
                 self.open_path_in_background(&path);
@@ -1233,12 +1338,12 @@ impl SlideApp {
     /// current one (desktop only: the browser picker opens what it picks as a document).
     fn pick_and_reuse(&mut self, keep: bool) {
         let Some(pick) = self.services.pick_open.as_mut() else {
-            self.set_status("Reuse Slides needs the desktop app".to_string());
+            self.set_status(tl!("Reuse Slides needs the desktop app").to_string());
             return;
         };
         let Some(path) = pick("open") else { return };
         match self.session.execute("slide.reuse", &json!({"path": path, "keepFormatting": keep})) {
-            Ok(r) => self.set_status(format!("Inserted {} slides from {path}", r["slides"])),
+            Ok(r) => self.set_status(i18n::fmt(tl!("Inserted {n} slides from {path}"), &[("n", &r["slides"].to_string()), ("path", &path)])),
             Err(e) => self.set_status(e.to_string()),
         }
     }
@@ -1291,7 +1396,7 @@ impl SlideApp {
             if let Some(path) = pick(&suggested) {
                 match self.session.execute("file.saveAs", &json!({"path": path})) {
                     Ok(_) => {
-                        self.set_status(format!("Saved {path}"));
+                        self.set_status(i18n::fmt(tl!("Saved {path}"), &[("path", &path)]));
                         self.ui.recent.retain(|p| *p != path);
                         self.ui.recent.insert(0, path);
                     }
@@ -1325,7 +1430,7 @@ impl SlideApp {
     pub fn save(&mut self) {
         if self.session.active().and_then(|d| d.path.clone()).is_some() {
             match self.session.execute("file.save", &json!({})) {
-                Ok(_) => self.set_status("Saved"),
+                Ok(_) => self.set_status(tl!("Saved")),
                 Err(e) => self.set_status(e.to_string()),
             }
         } else {
@@ -1451,7 +1556,10 @@ impl SlideApp {
         } else {
             json!({"name": name, "data": deckcraft_engine::cmd::base64_encode(bytes)})
         };
-        let result = if cmd == "file.openBytes" || self.viewing_target(&req.target) {
+        let result = if cmd == "file.openBytes" && self.host_locked() {
+            // A locked app opens only the file its host sent (an `open` request), never a drop.
+            if req.purpose == FilePurpose::Open { self.session.open_host_file(&params).map(|_| ()).map_err(|e| e.to_string()) } else { Ok(()) }
+        } else if cmd == "file.openBytes" || self.viewing_target(&req.target) {
             self.session.execute(cmd, &params).map(|_| ()).map_err(|e| e.to_string())
         } else {
             self.execute_on_target(&req.target, name, cmd, &params)
@@ -1566,6 +1674,7 @@ impl SlideApp {
         self.last_time = now;
         self.drain_control(ctx);
         self.poll_opening();
+        self.strip_host_output(ctx);
         if self.fonts_ready {
             self.drain_inbox();
         }
@@ -1586,22 +1695,28 @@ impl SlideApp {
             }
         }
         // AutoRecover: unsaved presentations are written to the recovery folder periodically.
-        if self.session.recovery_dir.is_some() && now - self.last_recovery > (self.session.prefs.recovery_minutes * 60.0).max(10.0) {
+        if !self.host_locked()
+            && self.session.recovery_dir.is_some()
+            && now - self.last_recovery > (self.session.prefs.recovery_minutes * 60.0).max(10.0)
+        {
             self.last_recovery = now;
             if self.session.documents().iter().any(|d| d.is_dirty())
                 && let Err(e) = self.session.execute("file.recovery.save", &json!({}))
             {
-                self.set_status(format!("Couldn't save AutoRecover information: {e}"));
+                self.set_status(i18n::fmt(tl!("Couldn't save AutoRecover information: {error}"), &[("error", &e.to_string())]));
             }
         }
         // On the web, dropped files can only be read asynchronously: the host reads them and
         // delivers them through `Services::inbox`, tagged with the request captured at the drop.
         #[cfg(not(target_arch = "wasm32"))]
-        for f in ctx.input(|i| i.raw.dropped_files.clone()) {
-            let name = f.path().file_name().map(|n| n.to_string_lossy().to_string()).unwrap_or_else(|| "dropped file".into());
-            match f.bytes() {
-                Ok(bytes) => self.open_or_insert_bytes(&name, &bytes),
-                Err(e) => self.set_status(e),
+        {
+            let dropped = if self.host_locked() { Vec::new() } else { ctx.input(|i| i.raw.dropped_files.clone()) };
+            for f in dropped {
+                let name = f.path().file_name().map(|n| n.to_string_lossy().to_string()).unwrap_or_else(|| "dropped file".into());
+                match f.bytes() {
+                    Ok(bytes) => self.open_or_insert_bytes(&name, &bytes),
+                    Err(e) => self.set_status(e),
+                }
             }
         }
         canvas::trackpad_twist(self, ctx);
@@ -1704,6 +1819,7 @@ impl SlideApp {
                     if mods.cmd
                         && matches!(key, egui::Key::N)
                         && let Err(e) = self.session.key(key_name(key), mods)
+                        && !matches!(&e, deckcraft_engine::EngineError::HostLocked(_))
                     {
                         self.set_status(e.to_string());
                     }
@@ -1772,6 +1888,8 @@ impl SlideApp {
                     let name = key_name(key);
                     match self.session.key(name, mods) {
                         Ok(_) => {}
+                        // A key for a command the host lock refuses does nothing, quietly.
+                        Err(deckcraft_engine::EngineError::HostLocked(_)) => {}
                         Err(e) => self.set_status(e.to_string()),
                     }
                 }
@@ -1799,8 +1917,14 @@ impl SlideApp {
         ctx.copy_text(system_clipboard_text(&text));
     }
 
-    /// Lay out the whole window.
+    /// Lay out the whole window. Whatever a locked app must not hand to the browser is dropped
+    /// on the way out, whichever path `ui_inner` returned by (the slide show included).
     pub fn ui(&mut self, ui: &mut egui::Ui) {
+        self.ui_inner(ui);
+        self.strip_host_output(&ui.ctx().clone());
+    }
+
+    fn ui_inner(&mut self, ui: &mut egui::Ui) {
         let ctx = ui.ctx().clone();
         if !self.fonts_ready {
             ctx.request_repaint();
@@ -1901,7 +2025,18 @@ impl SlideApp {
         self.media.tick(ctx, &mut self.session);
     }
 
+    /// Opens `url` in a new tab right now (the slide show has no frame end to queue it for), if
+    /// the policy lets links out. Every link the app opens goes through here or `open_url`.
+    pub(crate) fn open_url_now(&self, ctx: &egui::Context, url: impl ToString) {
+        if self.allowed("app.externalLinks") {
+            ctx.open_url(egui::OpenUrl::new_tab(url.to_string()));
+        }
+    }
+
     pub fn open_url(&mut self, url: &str) {
+        if !self.allowed("app.externalLinks") {
+            return;
+        }
         self.pending_urls.push(url.to_string());
     }
 
@@ -2056,6 +2191,8 @@ mod browsetheme_tests;
 mod compare_tests;
 #[cfg(test)]
 mod eyedropper_tests;
+#[cfg(test)]
+mod host_lock_tests;
 #[cfg(test)]
 mod huge_deck_tests;
 #[cfg(test)]

@@ -20,6 +20,9 @@
 #![deny(clippy::unwrap_used, clippy::expect_used, clippy::panic, clippy::unimplemented, clippy::todo, clippy::unreachable)]
 #![forbid(unsafe_code)]
 
+// The start decision is plain logic, kept out of the wasm-only modules so it is tested natively.
+#[cfg_attr(not(target_arch = "wasm32"), allow(dead_code))]
+mod gate;
 #[cfg(target_arch = "wasm32")]
 mod host;
 #[cfg(target_arch = "wasm32")]

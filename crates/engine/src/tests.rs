@@ -1114,6 +1114,20 @@ fn opening_a_file_lists_the_fonts_it_uses_that_are_missing() {
     assert!(s.doc().unwrap().missing_fonts.is_empty());
 }
 
+/// The PPM build maps Arial and friends to the bundled set, so a deck using them lists nothing.
+#[cfg(feature = "ppm-host")]
+#[test]
+fn ppm_mapped_font_names_are_not_listed_as_missing() {
+    for font in ["Arial", "Georgia", "Aptos"] {
+        let mut p = deckcraft_model::Presentation::default();
+        let slide = std::sync::Arc::make_mut(&mut p.slides[0]);
+        let mut body = deckcraft_model::text::TextBody::from_text("Hello");
+        body.paragraphs[0].runs[0].props.font = Some(font.into());
+        slide.shapes[0].text = Some(body);
+        assert!(crate::fonts::missing_fonts(&p).is_empty(), "{font}");
+    }
+}
+
 #[test]
 fn an_embedded_face_is_used_when_the_machine_lacks_it() {
     let mut p = deckcraft_model::Presentation::default();

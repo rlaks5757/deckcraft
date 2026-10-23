@@ -2,7 +2,8 @@
 //! `docs/integration.md`). With `CRAFT_FONTS_DIR=<checkout>` the fonts in its
 //! `fonts/latin-manifest.txt` (presentation fonts) and `fonts/manifest.txt` are embedded as
 //! `CRAFT_FONTS`, Latin first; unset, `CRAFT_FONTS` is empty. Web (wasm32) builds embed only Inter
-//! Regular/Bold, BIZ UDPGothic Regular and any `Kore` face, to stay within the web size budget. It only reads the
+//! Regular/Bold, BIZ UDPGothic Regular and any `Kore` face (the `ppm` feature adds the
+//! Office-compatible families and Inter SemiBold), to stay within the web size budget. It only reads the
 //! local checkout: no network.
 use std::fmt::Write as _;
 use std::path::PathBuf;
@@ -10,8 +11,13 @@ use std::path::PathBuf;
 /// Families DeckCraft never embeds (AGENTS.md §1: no Adobe-authored visual design).
 const EXCLUDED_FAMILIES: &[&str] = &["Source Sans 3", "Source Serif 4", "Source Han Sans", "Source Han Serif", "Noto Sans CJK SC"];
 
+/// Office-compatible families (metric twins of Calibri, Cambria, Arial, Times New Roman, Courier
+/// New) the PPM build (`ppm` feature) embeds in every style, web build included.
+const OFFICE_FAMILIES: &[&str] = &["Carlito", "Caladea", "Liberation Sans", "Liberation Serif", "Liberation Mono"];
+
 fn main() {
     println!("cargo::rerun-if-env-changed=CRAFT_FONTS_DIR");
+    println!("cargo::rerun-if-env-changed=CARGO_FEATURE_PPM");
     println!("cargo::rerun-if-env-changed=CRAFT_FONTS_REQUIRED");
     let mut src = String::from("pub static CRAFT_FONTS: &[CraftFont] = &[\n");
     if let Some(dir) = std::env::var_os("CRAFT_FONTS_DIR").map(PathBuf::from) {
@@ -46,6 +52,7 @@ fn craft_fonts(dir: &std::path::Path) -> Result<String, String> {
 fn manifest(dir: &std::path::Path, manifest: &std::path::Path) -> Result<String, String> {
     println!("cargo::rerun-if-changed={}", manifest.display());
     let text = std::fs::read_to_string(manifest).map_err(|e| format!("{}: {e}", manifest.display()))?;
+    let ppm = std::env::var_os("CARGO_FEATURE_PPM").is_some();
     let wasm = std::env::var("CARGO_CFG_TARGET_ARCH").is_ok_and(|a| a == "wasm32");
     let mut out = String::new();
     for line in text.lines().map(str::trim).filter(|l| !l.is_empty() && !l.starts_with('#')) {
@@ -59,7 +66,9 @@ fn manifest(dir: &std::path::Path, manifest: &std::path::Path) -> Result<String,
         }
         // The web build also keeps any Korean face: Hangul draws as boxes without one.
         let korean = scripts.split(',').any(|s| s.trim() == "Kore");
-        if wasm && !korean && !matches!((*family, *style), ("BIZ UDPGothic", "Regular") | ("Inter", "Regular" | "Bold" | "Variable")) {
+        // The PPM build also keeps the Office-compatible families and Inter SemiBold (the UI's bold).
+        let ppm_keep = ppm && (OFFICE_FAMILIES.contains(family) || (*family, *style) == ("Inter", "SemiBold"));
+        if wasm && !korean && !ppm_keep && !matches!((*family, *style), ("BIZ UDPGothic", "Regular") | ("Inter", "Regular" | "Bold" | "Variable")) {
             continue;
         }
         let path = dir.join(file).canonicalize().map_err(|e| format!("{file}: {e}"))?;

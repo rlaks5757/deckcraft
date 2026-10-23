@@ -30,7 +30,15 @@ pub fn start() {
         }
         // `?host=parent`: a same-origin page framing DeckCraft opens presentations in it and
         // stores what it saves (`host`).
-        let bridge = if query_param("host").as_deref() == Some("parent") { crate::host::Bridge::new() } else { None };
+        let host_param = query_param("host");
+        let bridge = if host_param.as_deref() == Some("parent") { crate::host::Bridge::new() } else { None };
+        // The PPM build runs only inside the PPM page: opened any other way it opens nothing.
+        if crate::gate::decide(deckcraft_engine::hostlock::HOST_BUILD, host_param.as_deref(), bridge.is_some()) == crate::gate::Start::OpenFromPpm {
+            if let Some(el) = document.get_element_by_id(LOADING_ID) {
+                el.set_inner_html(crate::gate::OPEN_FROM_PPM);
+            }
+            return;
+        }
         let app_bridge = bridge.clone();
         let result = eframe::WebRunner::new()
             .start(
@@ -48,7 +56,12 @@ pub fn start() {
                     let mut app = SlideApp::new(Session::new(), services);
                     let q = query();
                     // In host mode the parent sends the presentation to edit; no sample meanwhile.
-                    if !q.contains("blank") && app_bridge.is_none() {
+                    if app.host_locked() {
+                        // The lock refuses `file.new`; the host start is the one trusted way in.
+                        if let Err(e) = app.session.start_host_blank() {
+                            log::error!("new presentation: {e}");
+                        }
+                    } else if !q.contains("blank") && app_bridge.is_none() {
                         if let Err(e) = deckcraft_engine::sample::open_sample(&mut app.session) {
                             log::error!("sample deck: {e}");
                         }
@@ -100,6 +113,10 @@ impl eframe::App for WebShell {
     fn logic(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
         let dropped = ctx.input_mut(|i| std::mem::take(&mut i.raw.dropped_files));
         for f in dropped {
+            // A locked host opens nothing from the user's disk.
+            if self.app.host_locked() {
+                continue;
+            }
             // Capture the document and slide now. The bytes arrive later, after the user may
             // have switched slides.
             let id = self.app.begin_external_file("drop");

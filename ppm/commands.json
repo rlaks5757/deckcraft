@@ -1,0 +1,4136 @@
+{
+  "app": "deck",
+  "commands": [
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "animation.add",
+      "label": "Add Animation",
+      "labelKo": "애니메이션 추가",
+      "location": [
+        "Animations",
+        "Advanced Animation"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "animation.clear",
+      "label": "Remove All Animations",
+      "labelKo": "모든 애니메이션 제거",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "animation.get",
+      "label": "Animations on Slide",
+      "labelKo": "슬라이드의 애니메이션",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "animation.list",
+      "label": "Animation Gallery",
+      "labelKo": "애니메이션 갤러리",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "animation.move",
+      "label": "Reorder Animation",
+      "labelKo": "애니메이션 순서 바꾸기",
+      "location": [
+        "Animations",
+        "Timing"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "animation.options",
+      "label": "Effect Options",
+      "labelKo": "효과 옵션",
+      "location": [
+        "Animations",
+        "Animation"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "animation.painter",
+      "label": "Animation Painter",
+      "labelKo": "애니메이션 복사",
+      "location": [
+        "Animations",
+        "Advanced Animation"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "animation.painterApply",
+      "label": "Apply Animation",
+      "labelKo": "애니메이션 적용",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "animation.preview",
+      "label": "Preview Animations",
+      "labelKo": "애니메이션 미리 보기",
+      "location": [
+        "Animations",
+        "Preview"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "animation.remove",
+      "label": "Remove Animation",
+      "labelKo": "애니메이션 제거",
+      "location": [
+        "Animation Pane"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "animation.set",
+      "label": "Animation Styles",
+      "labelKo": "애니메이션 스타일",
+      "location": [
+        "Animations",
+        "Animation"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "animation.timing",
+      "label": "Timing",
+      "labelKo": "타이밍",
+      "location": [
+        "Animations",
+        "Timing"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "app.about",
+      "label": "About DeckCraft",
+      "labelKo": "DeckCraft 정보",
+      "location": [
+        "File",
+        "Help"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "app.backstage",
+      "label": "File",
+      "labelKo": "파일",
+      "location": [
+        "File"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "app.browseThemeDialog",
+      "label": "Browse for Themes…",
+      "labelKo": "테마 찾아보기…",
+      "location": [
+        "Design",
+        "Themes"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "app.changePictureDialog",
+      "label": "Change Picture…",
+      "labelKo": "그림 변경…",
+      "location": [
+        "Picture Format",
+        "Adjust"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "locked"
+      },
+      "id": "app.closePresentation",
+      "label": "Close",
+      "labelKo": "닫기",
+      "location": [
+        "File",
+        "Close"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "app.compareDialog",
+      "label": "Compare…",
+      "labelKo": "비교…",
+      "location": [
+        "Review",
+        "Compare"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "app.dialog",
+      "label": "Open Dialog",
+      "labelKo": "대화 상자 열기",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "off"
+      },
+      "id": "app.externalLinks",
+      "label": "Open links in a new tab",
+      "labelKo": "링크를 새 탭에서 열기",
+      "location": [
+        "File",
+        "Help"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "app.find",
+      "label": "Find…",
+      "labelKo": "찾기…",
+      "location": [
+        "Home",
+        "Editing"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "locked"
+      },
+      "id": "app.home",
+      "label": "Home",
+      "labelKo": "홈",
+      "location": [
+        "File",
+        "Home"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "app.insertAudioDialog",
+      "label": "Audio from File…",
+      "labelKo": "파일의 오디오…",
+      "location": [
+        "Insert",
+        "Media"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "app.insertPictureDialog",
+      "label": "Picture from File…",
+      "labelKo": "파일에서 그림…",
+      "location": [
+        "Insert",
+        "Images"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "app.insertVideoDialog",
+      "label": "Video from File…",
+      "labelKo": "파일의 비디오…",
+      "location": [
+        "Insert",
+        "Media"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "locked"
+      },
+      "id": "app.openDialog",
+      "label": "Open…",
+      "labelKo": "열기…",
+      "location": [
+        "File",
+        "Open"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "app.palette",
+      "label": "Command Palette",
+      "labelKo": "명령 팔레트",
+      "location": [
+        "View"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "app.pasteSpecial",
+      "label": "Paste Special…",
+      "labelKo": "선택하여 붙여넣기…",
+      "location": [
+        "Home",
+        "Clipboard"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "app.preferences",
+      "label": "Preferences…",
+      "labelKo": "환경 설정…",
+      "location": [
+        "File",
+        "Options"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "off"
+      },
+      "id": "app.print",
+      "label": "Print",
+      "labelKo": "인쇄",
+      "location": [
+        "File",
+        "Print"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "app.qat",
+      "label": "Quick Access Toolbar",
+      "labelKo": "빠른 실행 도구 모음",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "app.replace",
+      "label": "Replace…",
+      "labelKo": "바꾸기…",
+      "location": [
+        "Home",
+        "Editing"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "app.reuseSlidesDialog",
+      "label": "Reuse Slides…",
+      "labelKo": "슬라이드 재사용…",
+      "location": [
+        "Home",
+        "Slides"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "app.smartArtPictureDialog",
+      "label": "Insert Picture in SmartArt…",
+      "labelKo": "SmartArt에 그림 삽입…",
+      "location": [
+        "SmartArt Design"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "arrange.align",
+      "label": "Align",
+      "labelKo": "맞춤",
+      "location": [
+        "Arrange",
+        "Align or Distribute"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "arrange.bringForward",
+      "label": "Bring Forward",
+      "labelKo": "앞으로 가져오기",
+      "location": [
+        "Arrange"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "arrange.bringToFront",
+      "label": "Bring to Front",
+      "labelKo": "맨 앞으로 가져오기",
+      "location": [
+        "Arrange"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "arrange.distribute",
+      "label": "Distribute",
+      "labelKo": "분포",
+      "location": [
+        "Arrange",
+        "Align or Distribute"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "arrange.flipHorizontal",
+      "label": "Flip Horizontal",
+      "labelKo": "가로로 뒤집기",
+      "location": [
+        "Arrange",
+        "Rotate or Flip"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "arrange.flipVertical",
+      "label": "Flip Vertical",
+      "labelKo": "세로로 뒤집기",
+      "location": [
+        "Arrange",
+        "Rotate or Flip"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "arrange.group",
+      "label": "Group",
+      "labelKo": "그룹",
+      "location": [
+        "Arrange"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "arrange.nudge",
+      "label": "Nudge",
+      "labelKo": "미세 이동",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "arrange.regroup",
+      "label": "Regroup",
+      "labelKo": "다시 그룹화",
+      "location": [
+        "Arrange"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "arrange.reorder",
+      "label": "Reorder Objects",
+      "labelKo": "개체 순서 바꾸기",
+      "location": [
+        "Arrange"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "arrange.rotateLeft",
+      "label": "Rotate Left 90°",
+      "labelKo": "왼쪽으로 90° 회전",
+      "location": [
+        "Arrange",
+        "Rotate or Flip"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "arrange.rotateRight",
+      "label": "Rotate Right 90°",
+      "labelKo": "오른쪽으로 90° 회전",
+      "location": [
+        "Arrange",
+        "Rotate or Flip"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "arrange.sendBackward",
+      "label": "Send Backward",
+      "labelKo": "뒤로 보내기",
+      "location": [
+        "Arrange"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "arrange.sendToBack",
+      "label": "Send to Back",
+      "labelKo": "맨 뒤로 보내기",
+      "location": [
+        "Arrange"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "arrange.ungroup",
+      "label": "Ungroup",
+      "labelKo": "그룹 해제",
+      "location": [
+        "Arrange"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "chart.data",
+      "label": "Edit Data",
+      "labelKo": "데이터 편집",
+      "location": [
+        "Chart Design",
+        "Data"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "chart.options",
+      "label": "Chart Elements",
+      "labelKo": "차트 요소",
+      "location": [
+        "Chart Design",
+        "Chart Layouts"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "chart.type",
+      "label": "Change Chart Type",
+      "labelKo": "차트 종류 변경",
+      "location": [
+        "Chart Design",
+        "Type"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "commands.list",
+      "label": "List Commands",
+      "labelKo": "명령 목록",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "comment.add",
+      "label": "New Comment",
+      "labelKo": "새 메모",
+      "location": [
+        "Review",
+        "Comments"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "comment.delete",
+      "label": "Delete Comment",
+      "labelKo": "메모 삭제",
+      "location": [
+        "Review",
+        "Comments"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "comment.list",
+      "label": "Comments",
+      "labelKo": "메모",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "comment.next",
+      "label": "Next Comment",
+      "labelKo": "다음 메모",
+      "location": [
+        "Review",
+        "Comments"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "comment.prev",
+      "label": "Previous Comment",
+      "labelKo": "이전 메모",
+      "location": [
+        "Review",
+        "Comments"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "comment.reply",
+      "label": "Reply",
+      "labelKo": "답글",
+      "location": [
+        "Comments"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "comment.resolve",
+      "label": "Resolve Thread",
+      "labelKo": "스레드 해결",
+      "location": [
+        "Comments"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "design.applyIdea",
+      "label": "Apply Design Idea",
+      "labelKo": "디자인 아이디어 적용",
+      "location": [
+        "Home",
+        "Designer"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "design.background",
+      "label": "Format Background",
+      "labelKo": "배경 서식",
+      "location": [
+        "Design",
+        "Customize"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "design.browseTheme",
+      "label": "Browse for Themes…",
+      "labelKo": "테마 찾아보기…",
+      "location": [
+        "Design",
+        "Themes"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "design.colors",
+      "label": "Colors",
+      "labelKo": "색",
+      "location": [
+        "Design",
+        "Variants"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "design.effects",
+      "label": "Effects",
+      "labelKo": "효과",
+      "location": [
+        "Design",
+        "Variants"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "design.fonts",
+      "label": "Fonts",
+      "labelKo": "글꼴",
+      "location": [
+        "Design",
+        "Variants"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "design.headerFooter",
+      "label": "Header and Footer…",
+      "labelKo": "머리글/바닥글…",
+      "location": [
+        "Insert",
+        "Text"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "design.hideBackgroundGraphics",
+      "label": "Hide Background Graphics",
+      "labelKo": "배경 그래픽 숨기기",
+      "location": [
+        "Format Background"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "design.ideas",
+      "label": "Design Ideas",
+      "labelKo": "디자인 아이디어",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "design.slideSize",
+      "label": "Slide Size",
+      "labelKo": "슬라이드 크기",
+      "location": [
+        "Design",
+        "Customize"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "design.theme",
+      "label": "Themes",
+      "labelKo": "테마",
+      "location": [
+        "Design",
+        "Themes"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "design.themes",
+      "label": "Theme Gallery",
+      "labelKo": "테마 갤러리",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "design.variant",
+      "label": "Variants",
+      "labelKo": "변형",
+      "location": [
+        "Design",
+        "Variants"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "design.variants",
+      "label": "Variant Gallery",
+      "labelKo": "변형 갤러리",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "document.inspect",
+      "label": "Inspect Presentation",
+      "labelKo": "프레젠테이션 검사",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "draw.inkToShape",
+      "label": "Ink to Shape",
+      "labelKo": "잉크를 도형으로 변환",
+      "location": [
+        "Draw",
+        "Convert"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "edit.copy",
+      "label": "Copy",
+      "labelKo": "복사",
+      "location": [
+        "Home",
+        "Clipboard"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "edit.cut",
+      "label": "Cut",
+      "labelKo": "잘라내기",
+      "location": [
+        "Home",
+        "Clipboard"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "edit.delete",
+      "label": "Delete",
+      "labelKo": "삭제",
+      "location": [
+        "Edit"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "edit.deselect",
+      "label": "Deselect",
+      "labelKo": "선택 해제",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "edit.duplicate",
+      "label": "Duplicate",
+      "labelKo": "복제",
+      "location": [
+        "Edit"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "edit.paste",
+      "label": "Paste",
+      "labelKo": "붙여넣기",
+      "location": [
+        "Home",
+        "Clipboard"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "edit.pasteSpecial",
+      "label": "Paste Special",
+      "labelKo": "선택하여 붙여넣기",
+      "location": [
+        "Home",
+        "Clipboard"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "edit.pasteText",
+      "label": "Paste and Match Formatting",
+      "labelKo": "대상 서식에 맞추기",
+      "location": [
+        "Edit"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "edit.redo",
+      "label": "Redo",
+      "labelKo": "다시 실행",
+      "location": [
+        "Edit"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "edit.select",
+      "label": "Select Objects",
+      "labelKo": "개체 선택",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "edit.selectAll",
+      "label": "Select All",
+      "labelKo": "모두 선택",
+      "location": [
+        "Edit"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "edit.undo",
+      "label": "Undo",
+      "labelKo": "실행 취소",
+      "location": [
+        "Edit"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "locked"
+      },
+      "id": "file.adopt",
+      "label": "Open",
+      "labelKo": "열기",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "locked"
+      },
+      "id": "file.close",
+      "label": "Close",
+      "labelKo": "닫기",
+      "location": [
+        "File"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "off"
+      },
+      "id": "file.export",
+      "label": "Export…",
+      "labelKo": "내보내기…",
+      "location": [
+        "File"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "locked"
+      },
+      "id": "file.info",
+      "label": "Info",
+      "labelKo": "정보",
+      "location": [
+        "File"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "locked"
+      },
+      "id": "file.new",
+      "label": "New Presentation",
+      "labelKo": "새 프레젠테이션",
+      "location": [
+        "File"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "locked"
+      },
+      "id": "file.open",
+      "label": "Open…",
+      "labelKo": "열기…",
+      "location": [
+        "File"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "locked"
+      },
+      "id": "file.openBytes",
+      "label": "Open Data",
+      "labelKo": "데이터 열기",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "locked"
+      },
+      "id": "file.properties",
+      "label": "Properties",
+      "labelKo": "속성",
+      "location": [
+        "File"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "locked"
+      },
+      "id": "file.recovery.discard",
+      "label": "Discard Recovered Presentations",
+      "labelKo": "복구된 프레젠테이션 삭제",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "locked"
+      },
+      "id": "file.recovery.list",
+      "label": "Recovered Presentations",
+      "labelKo": "복구된 프레젠테이션",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "locked"
+      },
+      "id": "file.recovery.open",
+      "label": "Open Recovered Presentations",
+      "labelKo": "복구된 프레젠테이션 열기",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "locked"
+      },
+      "id": "file.recovery.save",
+      "label": "Save AutoRecover Information",
+      "labelKo": "자동 복구 정보 저장",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "file.render",
+      "label": "Render Slide",
+      "labelKo": "슬라이드 그리기",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "locked"
+      },
+      "id": "file.revert",
+      "label": "Revert",
+      "labelKo": "되돌리기",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "file.save",
+      "label": "Save",
+      "labelKo": "저장",
+      "location": [
+        "File"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "off"
+      },
+      "id": "file.saveAs",
+      "label": "Save As…",
+      "labelKo": "다른 이름으로 저장…",
+      "location": [
+        "File"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "file.saveBytes",
+      "label": "Save to Data",
+      "labelKo": "데이터에 저장",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "off"
+      },
+      "id": "file.saveTemplate",
+      "label": "Save as Template…",
+      "labelKo": "서식 파일로 저장…",
+      "location": [
+        "File"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "locked"
+      },
+      "id": "file.templates",
+      "label": "Starter Templates",
+      "labelKo": "시작 서식 파일",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "font.add",
+      "label": "Add Font",
+      "labelKo": "글꼴 추가",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "font.replace",
+      "label": "Replace Fonts",
+      "labelKo": "글꼴 바꾸기",
+      "location": [
+        "Home",
+        "Editing",
+        "Replace"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "font.rescan",
+      "label": "Rescan Installed Fonts",
+      "labelKo": "설치된 글꼴 다시 검색",
+      "location": [
+        "Home",
+        "Font"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "font.used",
+      "label": "Fonts in Presentation",
+      "labelKo": "프레젠테이션의 글꼴",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.align",
+      "label": "Align",
+      "labelKo": "맞춤",
+      "location": [
+        "Home",
+        "Paragraph"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.alignCenter",
+      "label": "Center",
+      "labelKo": "가운데 맞춤",
+      "location": [
+        "Home",
+        "Paragraph"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.alignLeft",
+      "label": "Align Left",
+      "labelKo": "왼쪽 맞춤",
+      "location": [
+        "Home",
+        "Paragraph"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.alignRight",
+      "label": "Align Right",
+      "labelKo": "오른쪽 맞춤",
+      "location": [
+        "Home",
+        "Paragraph"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.anchor",
+      "label": "Align Text",
+      "labelKo": "텍스트 맞춤",
+      "location": [
+        "Home",
+        "Paragraph"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.autofit",
+      "label": "Autofit",
+      "labelKo": "자동 맞춤",
+      "location": [
+        "Format Shape",
+        "Text Box"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.bold",
+      "label": "Bold",
+      "labelKo": "굵게",
+      "location": [
+        "Home",
+        "Font"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.bullets",
+      "label": "Bullets",
+      "labelKo": "글머리 기호",
+      "location": [
+        "Home",
+        "Paragraph"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.caps",
+      "label": "Caps",
+      "labelKo": "대문자",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.case",
+      "label": "Change Case",
+      "labelKo": "대/소문자 바꾸기",
+      "location": [
+        "Home",
+        "Font"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.clear",
+      "label": "Clear All Formatting",
+      "labelKo": "모든 서식 지우기",
+      "location": [
+        "Home",
+        "Font"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.color",
+      "label": "Font Color",
+      "labelKo": "글꼴 색",
+      "location": [
+        "Home",
+        "Font"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.columns",
+      "label": "Columns",
+      "labelKo": "열",
+      "location": [
+        "Home",
+        "Paragraph"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.direction",
+      "label": "Text Direction",
+      "labelKo": "텍스트 방향",
+      "location": [
+        "Home",
+        "Paragraph"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.font",
+      "label": "Font",
+      "labelKo": "글꼴",
+      "location": [
+        "Home",
+        "Font"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.fontDialog",
+      "label": "Font…",
+      "labelKo": "글꼴…",
+      "location": [
+        "Home",
+        "Font"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.grow",
+      "label": "Increase Font Size",
+      "labelKo": "글꼴 크기 키우기",
+      "location": [
+        "Home",
+        "Font"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.highlight",
+      "label": "Text Highlight Color",
+      "labelKo": "텍스트 강조 색",
+      "location": [
+        "Home",
+        "Font"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.indent",
+      "label": "Increase List Level",
+      "labelKo": "목록 수준 늘림",
+      "location": [
+        "Home",
+        "Paragraph"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.italic",
+      "label": "Italic",
+      "labelKo": "기울임꼴",
+      "location": [
+        "Home",
+        "Font"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.justify",
+      "label": "Justify",
+      "labelKo": "양쪽 맞춤",
+      "location": [
+        "Home",
+        "Paragraph"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.language",
+      "label": "Language",
+      "labelKo": "언어",
+      "location": [
+        "Review",
+        "Language"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.lineSpacing",
+      "label": "Line Spacing",
+      "labelKo": "줄 간격",
+      "location": [
+        "Home",
+        "Paragraph"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.margins",
+      "label": "Text Box Margins",
+      "labelKo": "텍스트 상자 여백",
+      "location": [
+        "Format Shape",
+        "Text Box"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.numbering",
+      "label": "Numbering",
+      "labelKo": "번호 매기기",
+      "location": [
+        "Home",
+        "Paragraph"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.outdent",
+      "label": "Decrease List Level",
+      "labelKo": "목록 수준 줄임",
+      "location": [
+        "Home",
+        "Paragraph"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.painter",
+      "label": "Format Painter",
+      "labelKo": "서식 복사",
+      "location": [
+        "Home",
+        "Clipboard"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.painterApply",
+      "label": "Paste Formatting",
+      "labelKo": "서식 붙여넣기",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.paragraph",
+      "label": "Paragraph…",
+      "labelKo": "단락…",
+      "location": [
+        "Format"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.paragraphDialog",
+      "label": "Paragraph…",
+      "labelKo": "단락…",
+      "location": [
+        "Home",
+        "Paragraph"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.rtl",
+      "label": "Right-to-Left Text Direction",
+      "labelKo": "오른쪽에서 왼쪽 텍스트 방향",
+      "location": [
+        "Home",
+        "Paragraph"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.ruler",
+      "label": "Ruler",
+      "labelKo": "눈금자",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.shrink",
+      "label": "Decrease Font Size",
+      "labelKo": "글꼴 크기 줄이기",
+      "location": [
+        "Home",
+        "Font"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.size",
+      "label": "Font Size",
+      "labelKo": "글꼴 크기",
+      "location": [
+        "Home",
+        "Font"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.spacing",
+      "label": "Character Spacing",
+      "labelKo": "문자 간격",
+      "location": [
+        "Home",
+        "Font"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.state",
+      "label": "Formatting State",
+      "labelKo": "서식 상태",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.strikethrough",
+      "label": "Strikethrough",
+      "labelKo": "취소선",
+      "location": [
+        "Home",
+        "Font"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.subscript",
+      "label": "Subscript",
+      "labelKo": "아래 첨자",
+      "location": [
+        "Home",
+        "Font"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.superscript",
+      "label": "Superscript",
+      "labelKo": "위 첨자",
+      "location": [
+        "Home",
+        "Font"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.tabs",
+      "label": "Tabs…",
+      "labelKo": "탭…",
+      "location": [
+        "Home",
+        "Paragraph"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.textOutline",
+      "label": "Text Outline",
+      "labelKo": "텍스트 윤곽선",
+      "location": [
+        "Shape Format",
+        "WordArt Styles"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.textShadow",
+      "label": "Text Shadow",
+      "labelKo": "텍스트 그림자",
+      "location": [
+        "Home",
+        "Font"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.textTransparency",
+      "label": "Text Transparency",
+      "labelKo": "텍스트 투명도",
+      "location": [
+        "Shape Format",
+        "WordArt Styles"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.textWarp",
+      "label": "Text Transform",
+      "labelKo": "텍스트 변환",
+      "location": [
+        "Shape Format",
+        "WordArt Styles"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.underline",
+      "label": "Underline",
+      "labelKo": "밑줄",
+      "location": [
+        "Home",
+        "Font"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "format.wrap",
+      "label": "Wrap Text in Shape",
+      "labelKo": "도형에서 텍스트 줄 바꿈",
+      "location": [
+        "Format Shape",
+        "Text Box"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "guide.add",
+      "label": "Add Guide",
+      "labelKo": "안내선 추가",
+      "location": [
+        "View",
+        "Show",
+        "Guides"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "guide.delete",
+      "label": "Delete Guide",
+      "labelKo": "안내선 삭제",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "guide.list",
+      "label": "Guides",
+      "labelKo": "안내선",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "guide.move",
+      "label": "Move Guide",
+      "labelKo": "안내선 이동",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "handout.placeholders",
+      "label": "Handout Placeholders",
+      "labelKo": "유인물 개체 틀",
+      "location": [
+        "Handout Master",
+        "Placeholders"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "insert.actionButton",
+      "label": "Action Buttons",
+      "labelKo": "동작 단추",
+      "location": [
+        "Insert",
+        "Illustrations"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "insert.audio",
+      "label": "Audio from File…",
+      "labelKo": "파일의 오디오…",
+      "location": [
+        "Insert",
+        "Media",
+        "Audio"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "insert.chart",
+      "label": "Chart…",
+      "labelKo": "차트…",
+      "location": [
+        "Insert",
+        "Illustrations"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "insert.dateTime",
+      "label": "Date & Time",
+      "labelKo": "날짜 및 시간",
+      "location": [
+        "Insert",
+        "Text"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "insert.hyperlink",
+      "label": "Link",
+      "labelKo": "링크",
+      "location": [
+        "Insert",
+        "Links"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "insert.icon",
+      "label": "Icons",
+      "labelKo": "아이콘",
+      "location": [
+        "Insert",
+        "Illustrations"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "insert.icons",
+      "label": "Icon Gallery",
+      "labelKo": "아이콘 갤러리",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "insert.photoAlbum",
+      "label": "Photo Album…",
+      "labelKo": "포토 앨범…",
+      "location": [
+        "Insert",
+        "Images"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "insert.photoAlbumEdit",
+      "label": "Edit Photo Album…",
+      "labelKo": "포토 앨범 편집…",
+      "location": [
+        "Insert",
+        "Images"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "insert.picture",
+      "label": "Picture from File…",
+      "labelKo": "파일에서 그림…",
+      "location": [
+        "Insert",
+        "Images",
+        "Pictures"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "insert.slideNumber",
+      "label": "Slide Number",
+      "labelKo": "슬라이드 번호",
+      "location": [
+        "Insert",
+        "Text"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "insert.smartArt",
+      "label": "SmartArt",
+      "labelKo": "SmartArt",
+      "location": [
+        "Insert",
+        "Illustrations"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "insert.symbol",
+      "label": "Symbol",
+      "labelKo": "기호",
+      "location": [
+        "Insert",
+        "Symbols"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "insert.table",
+      "label": "Table…",
+      "labelKo": "표…",
+      "location": [
+        "Insert",
+        "Tables"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "insert.textBox",
+      "label": "Text Box",
+      "labelKo": "텍스트 상자",
+      "location": [
+        "Insert",
+        "Text"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "insert.video",
+      "label": "Video from File…",
+      "labelKo": "파일의 비디오…",
+      "location": [
+        "Insert",
+        "Media",
+        "Video"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "insert.wordArt",
+      "label": "WordArt",
+      "labelKo": "WordArt",
+      "location": [
+        "Insert",
+        "Text"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "insert.zoom",
+      "label": "Zoom",
+      "labelKo": "확대/축소",
+      "location": [
+        "Insert",
+        "Links"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "master.deleteLayout",
+      "label": "Delete Layout",
+      "labelKo": "레이아웃 삭제",
+      "location": [
+        "Slide Master",
+        "Edit Master"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "master.insertLayout",
+      "label": "Insert Layout",
+      "labelKo": "레이아웃 삽입",
+      "location": [
+        "Slide Master",
+        "Edit Master"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "master.insertPlaceholder",
+      "label": "Insert Placeholder",
+      "labelKo": "개체 틀 삽입",
+      "location": [
+        "Slide Master",
+        "Master Layout"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "master.placeholders",
+      "label": "Layout Placeholders",
+      "labelKo": "레이아웃 개체 틀",
+      "location": [
+        "Slide Master",
+        "Edit Master"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "master.preserve",
+      "label": "Preserve",
+      "labelKo": "유지",
+      "location": [
+        "Slide Master",
+        "Edit Master"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "master.renameLayout",
+      "label": "Rename Layout",
+      "labelKo": "레이아웃 이름 바꾸기",
+      "location": [
+        "Slide Master",
+        "Edit Master"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "media.gifPlay",
+      "label": "Play/Pause GIF",
+      "labelKo": "GIF 재생/일시 중지",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "media.info",
+      "label": "Media Info",
+      "labelKo": "미디어 정보",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "media.options",
+      "label": "Playback",
+      "labelKo": "재생",
+      "location": [
+        "Playback"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "media.pause",
+      "label": "Pause",
+      "labelKo": "일시 정지",
+      "location": [
+        "Playback",
+        "Preview"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "media.play",
+      "label": "Play",
+      "labelKo": "재생",
+      "location": [
+        "Playback",
+        "Preview"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "media.posterFrame",
+      "label": "Poster Frame",
+      "labelKo": "포스터 프레임",
+      "location": [
+        "Video Format",
+        "Adjust"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "media.seek",
+      "label": "Seek",
+      "labelKo": "탐색",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "media.stop",
+      "label": "Stop",
+      "labelKo": "중지",
+      "location": [
+        "Playback",
+        "Preview"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "media.toggle",
+      "label": "Play/Pause",
+      "labelKo": "재생/일시 정지",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "notes.placeholders",
+      "label": "Notes Placeholders",
+      "labelKo": "노트 개체 틀",
+      "location": [
+        "Notes Master",
+        "Placeholders"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "picture.adjust",
+      "label": "Corrections",
+      "labelKo": "수정 사항",
+      "location": [
+        "Picture Format",
+        "Adjust"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "picture.artisticEffect",
+      "label": "Artistic Effects",
+      "labelKo": "꾸밈 효과",
+      "location": [
+        "Picture Format",
+        "Adjust"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "picture.change",
+      "label": "Change Picture",
+      "labelKo": "그림 변경",
+      "location": [
+        "Picture Format",
+        "Adjust"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "picture.compress",
+      "label": "Compress Pictures",
+      "labelKo": "그림 압축",
+      "location": [
+        "Picture Format",
+        "Adjust"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "picture.crop",
+      "label": "Crop",
+      "labelKo": "자르기",
+      "location": [
+        "Picture Format",
+        "Size"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "picture.recolor",
+      "label": "Recolor",
+      "labelKo": "다시 칠하기",
+      "location": [
+        "Picture Format",
+        "Adjust",
+        "Color"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "picture.recolors",
+      "label": "Recolor Gallery",
+      "labelKo": "다시 칠하기 갤러리",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "picture.removeBackground",
+      "label": "Remove Background",
+      "labelKo": "배경 제거",
+      "location": [
+        "Picture Format",
+        "Adjust"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "picture.reset",
+      "label": "Reset Picture",
+      "labelKo": "그림 재설정",
+      "location": [
+        "Picture Format",
+        "Adjust"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "picture.style",
+      "label": "Picture Styles",
+      "labelKo": "그림 스타일",
+      "location": [
+        "Picture Format",
+        "Picture Styles"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "picture.styles",
+      "label": "Picture Style Gallery",
+      "labelKo": "그림 스타일 갤러리",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "picture.transparentColor",
+      "label": "Set Transparent Color",
+      "labelKo": "투명한 색 설정",
+      "location": [
+        "Picture Format",
+        "Adjust",
+        "Color"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "review.accept",
+      "label": "Accept Revision",
+      "labelKo": "변경 내용 수락",
+      "location": [
+        "Review",
+        "Compare"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "review.accessibility",
+      "label": "Check Accessibility",
+      "labelKo": "접근성 검사",
+      "location": [
+        "Review",
+        "Accessibility"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "review.addToDictionary",
+      "label": "Add to Dictionary",
+      "labelKo": "사전에 추가",
+      "location": [
+        "Review",
+        "Proofing"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "review.compare",
+      "label": "Compare",
+      "labelKo": "비교",
+      "location": [
+        "Review",
+        "Compare"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "review.dictionary",
+      "label": "Spelling Dictionary",
+      "labelKo": "맞춤법 사전",
+      "location": [
+        "Review",
+        "Proofing"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "review.endCompare",
+      "label": "End Review",
+      "labelKo": "검토 종료",
+      "location": [
+        "Review",
+        "Compare"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "review.replaceWord",
+      "label": "Insert Synonym",
+      "labelKo": "동의어 삽입",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "review.revisions",
+      "label": "Revisions",
+      "labelKo": "변경 내용",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "review.spelling",
+      "label": "Spelling",
+      "labelKo": "맞춤법",
+      "location": [
+        "Review",
+        "Proofing"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "review.spellingChange",
+      "label": "Change Spelling",
+      "labelKo": "맞춤법 변경",
+      "location": [
+        "Review",
+        "Proofing"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "review.thesaurus",
+      "label": "Thesaurus",
+      "labelKo": "유의어 사전",
+      "location": [
+        "Review",
+        "Proofing"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "review.thesaurusPane",
+      "label": "Thesaurus",
+      "labelKo": "유의어 사전",
+      "location": [
+        "Review",
+        "Proofing"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "section.add",
+      "label": "Add Section",
+      "labelKo": "구역 추가",
+      "location": [
+        "Home",
+        "Slides",
+        "Section"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "section.move",
+      "label": "Move Section",
+      "labelKo": "구역 이동",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "section.remove",
+      "label": "Remove Section",
+      "labelKo": "구역 제거",
+      "location": [
+        "Home",
+        "Slides",
+        "Section"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "section.removeAll",
+      "label": "Remove All Sections",
+      "labelKo": "모든 구역 제거",
+      "location": [
+        "Home",
+        "Slides",
+        "Section"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "section.rename",
+      "label": "Rename Section",
+      "labelKo": "구역 이름 바꾸기",
+      "location": [
+        "Home",
+        "Slides",
+        "Section"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "selection.hideAll",
+      "label": "Hide All",
+      "labelKo": "모두 숨기기",
+      "location": [
+        "Selection Pane"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "selection.select",
+      "label": "Select",
+      "labelKo": "선택",
+      "location": [
+        "Selection Pane"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "selection.showAll",
+      "label": "Show All",
+      "labelKo": "모두 표시",
+      "location": [
+        "Selection Pane"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.action",
+      "label": "Action Settings",
+      "labelKo": "동작 설정",
+      "location": [
+        "Insert",
+        "Links"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.addPoint",
+      "label": "Add Point",
+      "labelKo": "점 추가",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.adjust",
+      "label": "Adjust Shape",
+      "labelKo": "도형 조정",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.altText",
+      "label": "Alt Text",
+      "labelKo": "대체 텍스트",
+      "location": [
+        "Shape Format",
+        "Accessibility"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.change",
+      "label": "Change Shape",
+      "labelKo": "도형 변경",
+      "location": [
+        "Shape Format",
+        "Insert Shapes",
+        "Edit Shape"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.connect",
+      "label": "Connect Shapes",
+      "labelKo": "도형 연결",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.deletePoint",
+      "label": "Delete Point",
+      "labelKo": "점 삭제",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.editPoints",
+      "label": "Edit Points",
+      "labelKo": "점 편집",
+      "location": [
+        "Shape Format",
+        "Insert Shapes",
+        "Edit Shape"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.effects",
+      "label": "Shape Effects",
+      "labelKo": "도형 효과",
+      "location": [
+        "Shape Format",
+        "Shape Styles"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.fill",
+      "label": "Shape Fill",
+      "labelKo": "도형 채우기",
+      "location": [
+        "Shape Format",
+        "Shape Styles"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.flip",
+      "label": "Flip",
+      "labelKo": "대칭",
+      "location": [
+        "Shape Format",
+        "Arrange",
+        "Rotate"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.freeform",
+      "label": "Freeform",
+      "labelKo": "자유형",
+      "location": [
+        "Insert",
+        "Shapes"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.insert",
+      "label": "Shapes",
+      "labelKo": "도형",
+      "location": [
+        "Insert",
+        "Illustrations"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.inspect",
+      "label": "Inspect Shape",
+      "labelKo": "도형 검사",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.line",
+      "label": "Shape Outline",
+      "labelKo": "도형 윤곽선",
+      "location": [
+        "Shape Format",
+        "Shape Styles"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.lock",
+      "label": "Lock",
+      "labelKo": "잠금",
+      "location": [
+        "Selection Pane"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.merge",
+      "label": "Merge Shapes",
+      "labelKo": "도형 병합",
+      "location": [
+        "Shape Format",
+        "Insert Shapes",
+        "Merge Shapes"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.move",
+      "label": "Move",
+      "labelKo": "이동",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.moveHandle",
+      "label": "Move Handle",
+      "labelKo": "핸들 이동",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.movePoint",
+      "label": "Move Point",
+      "labelKo": "점 이동",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.pointType",
+      "label": "Point Type",
+      "labelKo": "점 종류",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.points",
+      "label": "Points",
+      "labelKo": "포인트",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.presets",
+      "label": "Shape Gallery",
+      "labelKo": "도형 갤러리",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.quickStyle",
+      "label": "Quick Styles",
+      "labelKo": "빠른 스타일",
+      "location": [
+        "Home",
+        "Drawing"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.rename",
+      "label": "Rename",
+      "labelKo": "이름 바꾸기",
+      "location": [
+        "Selection Pane"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.resize",
+      "label": "Size",
+      "labelKo": "크기",
+      "location": [
+        "Shape Format",
+        "Size"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.rotate",
+      "label": "Rotation",
+      "labelKo": "회전",
+      "location": [
+        "Shape Format",
+        "Arrange",
+        "Rotate"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.setBounds",
+      "label": "Position and Size",
+      "labelKo": "위치 및 크기",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.setDefault",
+      "label": "Set as Default Shape",
+      "labelKo": "기본 도형으로 설정",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.sites",
+      "label": "Connection Sites",
+      "labelKo": "연결 지점",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.sizePosition",
+      "label": "Size and Position…",
+      "labelKo": "크기 및 위치…",
+      "location": [
+        "Shape Format",
+        "Size"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.smoothCorners",
+      "label": "Smooth Corners",
+      "labelKo": "모서리 부드럽게",
+      "location": [
+        "Shape Format",
+        "Insert Shapes",
+        "Edit Shape"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "shape.visible",
+      "label": "Show/Hide",
+      "labelKo": "표시/숨기기",
+      "location": [
+        "Selection Pane"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "show.customShow",
+      "label": "Custom Slide Show",
+      "labelKo": "사용자 지정 슬라이드 쇼",
+      "location": [
+        "Slide Show",
+        "Start Slide Show"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "show.end",
+      "label": "End Show",
+      "labelKo": "쇼 마침",
+      "location": [
+        "Slide Show"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "show.fromCurrent",
+      "label": "Play from Current Slide",
+      "labelKo": "현재 슬라이드부터 재생",
+      "location": [
+        "Slide Show",
+        "Start Slide Show"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "show.fromStart",
+      "label": "Play from Start",
+      "labelKo": "처음부터 재생",
+      "location": [
+        "Slide Show",
+        "Start Slide Show"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "show.presenter",
+      "label": "Presenter View",
+      "labelKo": "발표자 보기",
+      "location": [
+        "Slide Show"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "show.setup",
+      "label": "Set Up Slide Show…",
+      "labelKo": "슬라이드 쇼 설정…",
+      "location": [
+        "Slide Show",
+        "Set Up"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "show.start",
+      "label": "Slide Show",
+      "labelKo": "슬라이드 쇼",
+      "location": [
+        "Slide Show"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "slide.colorAt",
+      "label": "Color At",
+      "labelKo": "지점의 색",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "slide.delete",
+      "label": "Delete Slide",
+      "labelKo": "슬라이드 삭제",
+      "location": [
+        "Edit"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "slide.duplicate",
+      "label": "Duplicate Slide",
+      "labelKo": "슬라이드 복제",
+      "location": [
+        "Insert"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "slide.first",
+      "label": "First Slide",
+      "labelKo": "첫 슬라이드",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "slide.fromOutline",
+      "label": "Slides from Outline…",
+      "labelKo": "개요에서 슬라이드…",
+      "location": [
+        "Insert",
+        "Slides From"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "slide.go",
+      "label": "Go to Slide",
+      "labelKo": "슬라이드로 이동",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "slide.hide",
+      "label": "Hide Slide",
+      "labelKo": "슬라이드 숨기기",
+      "location": [
+        "Slide Show",
+        "Set Up"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "slide.inspect",
+      "label": "Inspect Slide",
+      "labelKo": "슬라이드 검사",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "slide.last",
+      "label": "Last Slide",
+      "labelKo": "마지막 슬라이드",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "slide.layout",
+      "label": "Layout",
+      "labelKo": "레이아웃",
+      "location": [
+        "Home",
+        "Slides"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "slide.move",
+      "label": "Move Slide",
+      "labelKo": "슬라이드 이동",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "slide.new",
+      "label": "New Slide",
+      "labelKo": "새 슬라이드",
+      "location": [
+        "Home",
+        "Slides"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "slide.next",
+      "label": "Next Slide",
+      "labelKo": "다음 슬라이드",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "slide.notes",
+      "label": "Notes",
+      "labelKo": "노트",
+      "location": [
+        "View"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "slide.previous",
+      "label": "Previous Slide",
+      "labelKo": "이전 슬라이드",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "slide.rename",
+      "label": "Rename Slide",
+      "labelKo": "슬라이드 이름 바꾸기",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "slide.reset",
+      "label": "Reset",
+      "labelKo": "재설정",
+      "location": [
+        "Home",
+        "Slides"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "slide.reuse",
+      "label": "Reuse Slides…",
+      "labelKo": "슬라이드 재사용…",
+      "location": [
+        "Home",
+        "Slides",
+        "New Slide"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "slide.selectSlides",
+      "label": "Select Slides",
+      "labelKo": "슬라이드 선택",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "smartArt.addNode",
+      "label": "Add Shape",
+      "labelKo": "도형 추가",
+      "location": [
+        "SmartArt Design",
+        "Create Graphic"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "smartArt.colors",
+      "label": "Change Colors",
+      "labelKo": "색 변경",
+      "location": [
+        "SmartArt Design",
+        "SmartArt Styles"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "smartArt.demote",
+      "label": "Demote",
+      "labelKo": "수준 내리기",
+      "location": [
+        "SmartArt Design",
+        "Create Graphic"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "smartArt.fromText",
+      "label": "Convert to SmartArt",
+      "labelKo": "SmartArt로 변환",
+      "location": [
+        "Home",
+        "Paragraph"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "smartArt.layout",
+      "label": "Change Layout",
+      "labelKo": "레이아웃 변경",
+      "location": [
+        "SmartArt Design",
+        "Layouts"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "smartArt.nodes",
+      "label": "Text Pane",
+      "labelKo": "텍스트 창",
+      "location": [
+        "SmartArt Design",
+        "Create Graphic"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "smartArt.picture",
+      "label": "Insert Picture in SmartArt",
+      "labelKo": "SmartArt에 그림 삽입",
+      "location": [
+        "SmartArt Design",
+        "Create Graphic"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "smartArt.promote",
+      "label": "Promote",
+      "labelKo": "수준 올리기",
+      "location": [
+        "SmartArt Design",
+        "Create Graphic"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "smartArt.removeNode",
+      "label": "Remove Shape",
+      "labelKo": "도형 제거",
+      "location": [
+        "SmartArt Design",
+        "Create Graphic"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "smartArt.setNodes",
+      "label": "Edit SmartArt Text",
+      "labelKo": "SmartArt 텍스트 편집",
+      "location": [
+        "SmartArt Design",
+        "Create Graphic"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "smartArt.style",
+      "label": "SmartArt Styles",
+      "labelKo": "SmartArt 스타일",
+      "location": [
+        "SmartArt Design",
+        "SmartArt Styles"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "smartArt.toShapes",
+      "label": "Convert to Shapes",
+      "labelKo": "도형으로 변환",
+      "location": [
+        "SmartArt Design",
+        "Reset"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "smartArt.toText",
+      "label": "Convert to Text",
+      "labelKo": "텍스트로 변환",
+      "location": [
+        "SmartArt Design",
+        "Reset"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "table.borders",
+      "label": "Borders",
+      "labelKo": "테두리",
+      "location": [
+        "Table Design",
+        "Draw Borders"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "table.cellAlign",
+      "label": "Align Cell Text",
+      "labelKo": "셀 텍스트 맞춤",
+      "location": [
+        "Table Layout",
+        "Alignment"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "table.cellFill",
+      "label": "Shading",
+      "labelKo": "음영",
+      "location": [
+        "Table Design",
+        "Table Styles"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "table.cellMargins",
+      "label": "Cell Margins",
+      "labelKo": "셀 여백",
+      "location": [
+        "Table Layout",
+        "Alignment"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "table.columnWidth",
+      "label": "Width",
+      "labelKo": "너비",
+      "location": [
+        "Table Layout",
+        "Cell Size"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "table.deleteColumn",
+      "label": "Delete Columns",
+      "labelKo": "열 삭제",
+      "location": [
+        "Table Layout",
+        "Rows & Columns"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "table.deleteRow",
+      "label": "Delete Rows",
+      "labelKo": "행 삭제",
+      "location": [
+        "Table Layout",
+        "Rows & Columns"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "table.distributeColumns",
+      "label": "Distribute Columns",
+      "labelKo": "열 균등 분할",
+      "location": [
+        "Table Layout",
+        "Cell Size"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "table.distributeRows",
+      "label": "Distribute Rows",
+      "labelKo": "행 균등 분할",
+      "location": [
+        "Table Layout",
+        "Cell Size"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "table.drawLine",
+      "label": "Draw Table",
+      "labelKo": "표 그리기",
+      "location": [
+        "Table Design",
+        "Draw Borders"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "table.eraseLine",
+      "label": "Table Eraser",
+      "labelKo": "표 지우개",
+      "location": [
+        "Table Design",
+        "Draw Borders"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "table.insertColumnLeft",
+      "label": "Insert Left",
+      "labelKo": "왼쪽에 삽입",
+      "location": [
+        "Table Layout",
+        "Rows & Columns"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "table.insertColumnRight",
+      "label": "Insert Right",
+      "labelKo": "오른쪽에 삽입",
+      "location": [
+        "Table Layout",
+        "Rows & Columns"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "table.insertRowAbove",
+      "label": "Insert Above",
+      "labelKo": "위에 삽입",
+      "location": [
+        "Table Layout",
+        "Rows & Columns"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "table.insertRowBelow",
+      "label": "Insert Below",
+      "labelKo": "아래에 삽입",
+      "location": [
+        "Table Layout",
+        "Rows & Columns"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "table.merge",
+      "label": "Merge Cells",
+      "labelKo": "셀 병합",
+      "location": [
+        "Table Layout",
+        "Merge"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "table.options",
+      "label": "Table Style Options",
+      "labelKo": "표 스타일 옵션",
+      "location": [
+        "Table Design",
+        "Table Style Options"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "table.rowHeight",
+      "label": "Height",
+      "labelKo": "높이",
+      "location": [
+        "Table Layout",
+        "Cell Size"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "table.selectCells",
+      "label": "Select Cells",
+      "labelKo": "셀 선택",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "table.split",
+      "label": "Split Cells",
+      "labelKo": "셀 분할",
+      "location": [
+        "Table Layout",
+        "Merge"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "table.style",
+      "label": "Table Styles",
+      "labelKo": "표 스타일",
+      "location": [
+        "Table Design",
+        "Table Styles"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "text.autocorrect",
+      "label": "AutoCorrect Options",
+      "labelKo": "자동 고침 옵션",
+      "location": [
+        "Tools"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "text.commit",
+      "label": "Commit Composition",
+      "labelKo": "입력 확정",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "text.compose",
+      "label": "Compose Text",
+      "labelKo": "텍스트 입력",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "text.delete",
+      "label": "Delete Text",
+      "labelKo": "텍스트 삭제",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "text.edit",
+      "label": "Edit Text",
+      "labelKo": "텍스트 편집",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "text.exit",
+      "label": "Stop Editing Text",
+      "labelKo": "텍스트 편집 중지",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "text.find",
+      "label": "Find",
+      "labelKo": "찾기",
+      "location": [
+        "Home",
+        "Editing"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "text.get",
+      "label": "Get Text",
+      "labelKo": "텍스트 가져오기",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "text.insert",
+      "label": "Type Text",
+      "labelKo": "텍스트 입력",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "text.move",
+      "label": "Move Insertion Point",
+      "labelKo": "삽입 점 이동",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "text.replace",
+      "label": "Replace",
+      "labelKo": "바꾸기",
+      "location": [
+        "Home",
+        "Editing"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "text.select",
+      "label": "Select Text",
+      "labelKo": "텍스트 선택",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "text.selectAll",
+      "label": "Select All Text",
+      "labelKo": "텍스트 모두 선택",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "text.selectParagraph",
+      "label": "Select Paragraph",
+      "labelKo": "단락 선택",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "text.selectWord",
+      "label": "Select Word",
+      "labelKo": "단어 선택",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "text.set",
+      "label": "Set Text",
+      "labelKo": "텍스트 설정",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "transition.applyAll",
+      "label": "Apply To All",
+      "labelKo": "모두 적용",
+      "location": [
+        "Transitions",
+        "Timing"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "transition.list",
+      "label": "Transition Gallery",
+      "labelKo": "전환 갤러리",
+      "location": []
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "transition.options",
+      "label": "Effect Options",
+      "labelKo": "효과 옵션",
+      "location": [
+        "Transitions",
+        "Transition to This Slide"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "transition.set",
+      "label": "Transition",
+      "labelKo": "전환",
+      "location": [
+        "Transitions",
+        "Transition to This Slide"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "transition.sound",
+      "label": "Sound",
+      "labelKo": "소리",
+      "location": [
+        "Transitions",
+        "Timing"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "transition.timing",
+      "label": "Timing",
+      "labelKo": "타이밍",
+      "location": [
+        "Transitions",
+        "Timing"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.closeMaster",
+      "label": "Close Master View",
+      "labelKo": "마스터 보기 닫기",
+      "location": [
+        "Slide Master",
+        "Close"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.collapseRibbon",
+      "label": "Collapse the Ribbon",
+      "labelKo": "리본 메뉴 축소",
+      "location": [
+        "View"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.dark",
+      "label": "Dark Mode",
+      "labelKo": "어두운 모드",
+      "location": [
+        "View"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.fit",
+      "label": "Fit to Window",
+      "labelKo": "창에 맞춤",
+      "location": [
+        "View"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.grayscale",
+      "label": "Grayscale",
+      "labelKo": "회색조",
+      "location": [
+        "View"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.gridOptions",
+      "label": "Grid Options…",
+      "labelKo": "눈금 옵션…",
+      "location": [
+        "View"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.gridlines",
+      "label": "Gridlines",
+      "labelKo": "눈금선",
+      "location": [
+        "View"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.guides",
+      "label": "Guides",
+      "labelKo": "안내선",
+      "location": [
+        "View"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.handoutMaster",
+      "label": "Handout Master",
+      "labelKo": "유인물 마스터",
+      "location": [
+        "View",
+        "Master Views"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.newWindow",
+      "label": "New Window",
+      "labelKo": "새 창",
+      "location": [
+        "View"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.normal",
+      "label": "Normal",
+      "labelKo": "기본",
+      "location": [
+        "View"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.notes",
+      "label": "Notes",
+      "labelKo": "노트",
+      "location": [
+        "View"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.notesMaster",
+      "label": "Notes Master",
+      "labelKo": "노트 마스터",
+      "location": [
+        "View",
+        "Master Views"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.notesPage",
+      "label": "Notes Page",
+      "labelKo": "노트 페이지",
+      "location": [
+        "View"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.outline",
+      "label": "Outline View",
+      "labelKo": "개요 보기",
+      "location": [
+        "View"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.pane",
+      "label": "Task Pane",
+      "labelKo": "작업 창",
+      "location": [
+        "View"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.reading",
+      "label": "Reading View",
+      "labelKo": "읽기용 보기",
+      "location": [
+        "View"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.ruler",
+      "label": "Ruler",
+      "labelKo": "눈금자",
+      "location": [
+        "View"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.slideMaster",
+      "label": "Slide Master",
+      "labelKo": "슬라이드 마스터",
+      "location": [
+        "View",
+        "Master Views"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.sorter",
+      "label": "Slide Sorter",
+      "labelKo": "여러 슬라이드",
+      "location": [
+        "View"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.tab",
+      "label": "Ribbon Tab",
+      "labelKo": "리본 탭",
+      "location": [
+        "View"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.zoom",
+      "label": "Set Zoom",
+      "labelKo": "확대/축소 설정",
+      "location": [
+        "View"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.zoomDialog",
+      "label": "Zoom…",
+      "labelKo": "확대/축소…",
+      "location": [
+        "View"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.zoomIn",
+      "label": "Zoom In",
+      "labelKo": "확대",
+      "location": [
+        "View"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "view.zoomOut",
+      "label": "Zoom Out",
+      "labelKo": "축소",
+      "location": [
+        "View"
+      ]
+    },
+    {
+      "grades": {
+        "builder": "on"
+      },
+      "id": "window.next",
+      "label": "Next Window",
+      "labelKo": "다음 창",
+      "location": [
+        "Window"
+      ]
+    }
+  ],
+  "schema": 1
+}

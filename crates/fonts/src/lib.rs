@@ -15,7 +15,8 @@ mod shape;
 
 pub use fallback::{bundled_families, covers_cluster, is_emoji_cluster, ligature_carets};
 pub use fontdb::{
-    FALLBACK_FAMILY, FaceRef, FontDb, FontFace, LAST_RESORT_FAMILY, MISSING_FONT_FAMILY, base_style, bundled, substitutes, system_font_dirs,
+    FALLBACK_FAMILY, FaceRef, FontDb, FontFace, LAST_RESORT_FAMILY, MISSING_FONT_FAMILY, base_style, bundled, is_ppm_mapped, substitutes,
+    system_font_dirs,
 };
 pub use harfrust::Feature;
 use harfrust::Tag;
@@ -378,6 +379,82 @@ mod tests {
         assert!(substitutes("Cambria").contains(&"Caladea"));
         assert!(substitutes("Times New Roman").contains(&"Liberation Serif"));
         assert!(substitutes("Aptos").contains(&"Inter"));
+        assert_eq!(substitutes("Consolas")[0], "Liberation Mono");
+        assert_eq!(substitutes("맑은 고딕").is_empty(), !cfg!(feature = "ppm"));
+        assert!(substitutes("zzz").is_empty());
+    }
+
+    /// The team's canonical mapping (target family, document font names).
+    #[cfg(feature = "ppm")]
+    const PPM_MAPPING: &[(&str, &[&str])] = &[
+        (
+            "Carlito",
+            &[
+                "Calibri",
+                "Calibri Light",
+                "Aptos",
+                "Aptos Display",
+                "Aptos Narrow",
+                "Aptos Light",
+                "Aptos SemiBold",
+                "Segoe UI",
+                "Segoe UI Light",
+                "Segoe UI Semibold",
+                "Segoe UI Semilight",
+            ],
+        ),
+        ("Caladea", &["Cambria", "Constantia", "Palatino", "Palatino Linotype", "Book Antiqua", "Georgia", "Garamond"]),
+        ("Liberation Sans", &["Arial", "Arial Narrow", "Helvetica", "Helvetica Neue"]),
+        ("Liberation Serif", &["Times", "Times New Roman"]),
+        ("Liberation Mono", &["Courier", "Courier New", "Consolas", "Lucida Console"]),
+        (
+            "NanumGothic",
+            &[
+                "맑은 고딕",
+                "Malgun Gothic",
+                "굴림",
+                "Gulim",
+                "굴림체",
+                "GulimChe",
+                "새굴림",
+                "New Gulim",
+                "돋움",
+                "Dotum",
+                "돋움체",
+                "DotumChe",
+                "바탕",
+                "Batang",
+                "바탕체",
+                "BatangChe",
+                "궁서",
+                "Gungsuh",
+                "궁서체",
+                "GungsuhChe",
+                "함초롬바탕",
+                "HCR Batang",
+                "함초롬돋움",
+                "HCR Dotum",
+                "나눔고딕",
+                "NanumGothic",
+                "나눔명조",
+                "NanumMyeongjo",
+                "Noto Sans KR",
+                "Noto Sans CJK KR",
+                "Noto Serif KR",
+                "Apple SD Gothic Neo",
+            ],
+        ),
+    ];
+
+    #[cfg(feature = "ppm")]
+    #[test]
+    fn ppm_names_map_to_the_office_set() {
+        for (target, names) in PPM_MAPPING {
+            for n in *names {
+                assert_eq!(substitutes(n)[0], *target, "{n}");
+                assert_eq!(substitutes(&n.to_uppercase())[0], *target, "{n} upper");
+            }
+        }
         assert!(substitutes("zzz").is_empty());
     }
 
@@ -418,9 +495,39 @@ mod tests {
         let db = FontDb::with_font_dirs(Vec::new());
         db.set_system_fallback(false);
         assert_eq!(db.face("Inter", "Regular").family, "Inter");
-        assert_eq!(db.face("Aptos", "Regular").family, "Inter");
         if CRAFT_FONTS.iter().any(|f| f.family == "Carlito") {
             assert_eq!(db.face("Calibri", "Bold").family, "Carlito");
+        }
+        // Aptos draws in Inter, except in the PPM build, which has the Carlito metrics.
+        let aptos = if cfg!(feature = "ppm") && CRAFT_FONTS.iter().any(|f| f.family == "Carlito") { "Carlito" } else { "Inter" };
+        assert_eq!(db.face("Aptos", "Regular").family, aptos);
+    }
+
+    /// The PPM set (`ppm/fonts-ko`): every document font name draws in its Office-compatible twin,
+    /// Korean names in NanumGothic, an unknown name in Carlito.
+    #[cfg(feature = "ppm")]
+    #[test]
+    fn office_compatible_set_when_present() {
+        if !CRAFT_FONTS.iter().any(|f| f.family == "Liberation Mono") {
+            eprintln!("skipped: built without the PPM font set (CRAFT_FONTS_DIR=ppm/fonts-ko)");
+            return;
+        }
+        let db = FontDb::with_font_dirs(Vec::new());
+        db.set_system_fallback(false);
+        for (target, names) in PPM_MAPPING {
+            for name in *names {
+                assert_eq!(db.face(name, "Regular").family, *target, "{name}");
+                assert_eq!(db.document_face(name, "Regular").family, *target, "document {name}");
+            }
+        }
+        for (name, want) in [("Inter", "Inter"), ("No Such Family", "Carlito")] {
+            assert_eq!(db.face(name, "Regular").family, want, "{name}");
+            assert_eq!(db.document_face(name, "Regular").family, want, "document {name}");
+        }
+        for style in ["Bold", "Italic", "Bold Italic"] {
+            let f = db.face("Calibri", style);
+            assert_eq!(f.family, "Carlito", "{style}");
+            assert_eq!((f.weight >= 700.0, f.italic), (style.starts_with("Bold"), style.ends_with("Italic")), "{style}");
         }
     }
 

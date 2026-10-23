@@ -8,6 +8,10 @@ description = "DeckCraft fonts: font database (craft-fonts + system), substitute
 [lints]
 workspace = true
 
+# ppm: the PPM build's Office-compatible font set and name mapping (ppm/fonts-ko); off, nothing changes.
+[features]
+ppm = []
+
 [dependencies]
 kurbo = { workspace = true }
 skrifa = { workspace = true }
