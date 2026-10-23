@@ -2,8 +2,8 @@
 //! `docs/integration.md`). With `CRAFT_FONTS_DIR=<checkout>` the fonts in its
 //! `fonts/latin-manifest.txt` (presentation fonts) and `fonts/manifest.txt` are embedded as
 //! `CRAFT_FONTS`, Latin first; unset, `CRAFT_FONTS` is empty. Web (wasm32) builds embed only Inter
-//! Regular/SemiBold/Bold, the Office-compatible families, BIZ UDPGothic Regular and any `Kore`
-//! face, to stay within the web size budget. It only reads the
+//! Regular/Bold, BIZ UDPGothic Regular and any `Kore` face (the `ppm` feature adds the
+//! Office-compatible families and Inter SemiBold), to stay within the web size budget. It only reads the
 //! local checkout: no network.
 use std::fmt::Write as _;
 use std::path::PathBuf;
@@ -66,7 +66,9 @@ fn manifest(dir: &std::path::Path, manifest: &std::path::Path) -> Result<String,
         }
         // The web build also keeps any Korean face: Hangul draws as boxes without one.
         let korean = scripts.split(',').any(|s| s.trim() == "Kore");
-        if wasm && !korean && !matches!((*family, *style), ("BIZ UDPGothic", "Regular") | ("Inter", "Regular" | "SemiBold" | "Bold" | "Variable")) && !(ppm && OFFICE_FAMILIES.contains(family)) {
+        // The PPM build also keeps the Office-compatible families and Inter SemiBold (the UI's bold).
+        let ppm_keep = ppm && (OFFICE_FAMILIES.contains(family) || (*family, *style) == ("Inter", "SemiBold"));
+        if wasm && !korean && !ppm_keep && !matches!((*family, *style), ("BIZ UDPGothic", "Regular") | ("Inter", "Regular" | "Bold" | "Variable")) {
             continue;
         }
         let path = dir.join(file).canonicalize().map_err(|e| format!("{file}: {e}"))?;
