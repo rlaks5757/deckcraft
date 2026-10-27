@@ -932,6 +932,32 @@ impl FontDb {
         self.add_fonts(vec![bytes])
     }
 
+    /// Add an uploaded font under the name its owner gave it (`family`, used when the file holds one
+    /// family), so it wins over a loaded face of the same family and style: that face is dropped
+    /// from the lookup (the handles already given out stay valid). Returns the number of faces
+    /// added (0 if unparseable).
+    pub fn add_uploaded_font(&self, bytes: Vec<u8>, family: &str) -> usize {
+        let data = Arc::new(bytes);
+        let found = enumerate_faces(&data);
+        // A file of several families (a collection) keeps its own names.
+        let single = found.windows(2).all(|w| w[0].1 == w[1].1);
+        let new: Vec<Arc<FontFace>> = found
+            .into_iter()
+            .filter_map(|(i, own, style, coords)| {
+                let name = if single && !family.is_empty() { family.to_string() } else { own };
+                make_face(FontBytes::Owned(data.clone()), i, name, style, coords).map(Arc::new)
+            })
+            .collect();
+        if new.is_empty() {
+            return 0;
+        }
+        let mut faces = self.faces.write().unwrap_or_else(|e| e.into_inner());
+        faces.retain(|f| !new.iter().any(|n| n.family.eq_ignore_ascii_case(&f.family) && n.style.eq_ignore_ascii_case(&f.style)));
+        let added = new.len();
+        faces.extend(new);
+        added
+    }
+
     /// Add font files together: lookups see all of their faces or none, never part of a family.
     /// Returns the number of faces added.
     fn add_fonts(&self, files: Vec<Vec<u8>>) -> usize {

@@ -201,6 +201,22 @@ mod tests {
     }
 
     #[test]
+    fn an_uploaded_font_wins_over_a_loaded_face_of_the_same_family() {
+        let db = FontDb::with_font_dirs(Vec::new());
+        let first = include_bytes!("../tests/fixtures/legacy-regular.ttf").to_vec();
+        let second = include_bytes!("../../render/tests/fixtures/colr-squares.ttf").to_vec();
+        assert_eq!(db.add_uploaded_font(first, "Admin Face"), 1);
+        assert!(db.has_family("admin face"), "found by the name the owner gave it");
+        let style = db.face("Admin Face", "Regular").style.clone();
+        assert!(!db.face("Admin Face", &style).is_color());
+        // Same family and style again: the new face replaces the old one.
+        assert_eq!(db.add_uploaded_font(second, "Admin Face"), 1);
+        assert!(db.face("Admin Face", &style).is_color());
+        assert_eq!(db.add_uploaded_font(b"not a font".to_vec(), "Nope"), 0);
+        assert!(!db.has_family("Nope"));
+    }
+
+    #[test]
     fn last_resort_face_parses() {
         let f = fontdb::last_resort_face();
         assert_eq!(f.family, fontdb::LAST_RESORT_FAMILY);

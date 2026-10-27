@@ -26,11 +26,13 @@
 //!   named as Save would name it. Purpose `"save"` counts as saved, as Save does; `"check"` and
 //!   `"preview"` leave the app's state alone.
 //! - `deckcraft:bytes-failed` (to the parent): `{ id, purpose, reason }`; reason `"not-ready"` when
-//!   no presentation is open or one is still opening, `"bad-purpose"` for an unknown purpose.
+//!   the parent's presentation has not arrived yet or is still opening, `"bad-purpose"` for an unknown purpose.
 //! - `deckcraft:add-fonts` (from the parent): `{ id, fonts: [{ family, bytes, format }] }`, format
 //!   `"ttf"` or `"otf"`. Each font goes into the font database (the font menu and the slides use
-//!   it, and win over a built-in family of the same name). A family sent again is not installed
-//!   twice; it counts as installed. Slides are drawn again with the new fonts.
+//!   it). A font is known by the `family` the parent sent, not the name inside the file, and
+//!   replaces a built-in face of the same family and style, as a registered `FontFace` wins in
+//!   the parent page. A family sent again is not installed twice; it counts as installed. Slides
+//!   are drawn again with the new fonts.
 //! - `deckcraft:fonts-added` (to the parent): `{ id, installed, failed }`, lists of family names.
 //!
 //! Only the parent window on the page's own origin is heard or answered. With a parent on another
@@ -120,6 +122,8 @@ pub struct Bridge {
     byte_requests: Rc<RefCell<Vec<BytesRequest>>>,
     /// Font batches from the parent not yet installed.
     fonts: Rc<RefCell<Vec<FontRequest>>>,
+    /// The parent has sent a presentation (before that the app holds only its blank one).
+    document_sent: Rc<Cell<bool>>,
     /// Families (lower case) already installed from the parent.
     installed: Rc<RefCell<HashSet<String>>>,
 }
@@ -148,6 +152,7 @@ impl Bridge {
             failures: Rc::default(),
             byte_requests: Rc::default(),
             fonts: Rc::default(),
+            document_sent: Rc::default(),
             installed: Rc::default(),
         })
     }
@@ -156,6 +161,7 @@ impl Bridge {
     /// from it.
     pub fn connect(&self, services: &mut Services, ctx: egui::Context) {
         self.listen(ctx);
+        self.block_page_save();
         let bridge = self.clone();
         services.save_as_pptx = true;
         services.download = Some(Box::new(move |name: &str, bytes: &[u8]| {
@@ -187,6 +193,7 @@ impl Bridge {
     /// Before each pass: files from the parent open as if picked with File › Open.
     pub fn deliver(&self, app: &mut SlideApp, inbox: &Inbox) {
         for (name, bytes, overrides) in std::mem::take(&mut *self.opened.borrow_mut()) {
+            self.document_sent.set(true);
             app.session.set_policy(&overrides);
             let id = app.begin_external_file("open");
             inbox.lock().unwrap_or_else(|e| e.into_inner()).push(InboxEvent::File(InboxFile { id, name, bytes }));
@@ -219,9 +226,7 @@ impl Bridge {
                     installed.push(family);
                     continue;
                 }
-                // The file's own family name decides what the font is called in the database; one
-                // the database already has (bundled, or added before) adds no face but is there.
-                let added = bytes.is_some_and(|b| db.add_font(b) > 0 || db.has_family(&family));
+                let added = bytes.is_some_and(|b| db.add_uploaded_font(b, &family) > 0);
                 if added {
                     self.installed.borrow_mut().insert(key);
                     installed.push(family);
@@ -247,7 +252,7 @@ impl Bridge {
         for BytesRequest { id, purpose } in std::mem::take(&mut *self.byte_requests.borrow_mut()) {
             let result = if !matches!(purpose.as_str(), "save" | "check" | "preview") {
                 Err("bad-purpose".to_string())
-            } else if !self.opened.borrow().is_empty() || app.opening_file() {
+            } else if !self.document_sent.get() || !self.opened.borrow().is_empty() || app.opening_file() {
                 Err("not-ready".to_string())
             } else if let Some(doc) = app.session.active() {
                 // The name and format Save gives a presentation with no file name.
@@ -322,6 +327,19 @@ impl Bridge {
             .map_err(|e| format!("failed: {}", e.as_string().unwrap_or_else(|| format!("{e:?}"))))
     }
 
+    /// Ctrl/Cmd+S must not open the browser's "save page" dialog. eframe stops it for keys the
+    /// canvas hears; this also covers focus elsewhere in the frame. The app still gets the key.
+    fn block_page_save(&self) {
+        let on_key = Closure::<dyn FnMut(web_sys::KeyboardEvent)>::new(|event: web_sys::KeyboardEvent| {
+            if (event.ctrl_key() || event.meta_key()) && (event.key().eq_ignore_ascii_case("s") || event.code() == "KeyS") {
+                event.prevent_default();
+            }
+        });
+        if self.window.add_event_listener_with_callback("keydown", on_key.as_ref().unchecked_ref()).is_ok() {
+            on_key.forget();
+        }
+    }
+
     fn listen(&self, ctx: egui::Context) {
         let parent = self.parent.clone();
         let origin = self.origin.clone();
@@ -329,6 +347,7 @@ impl Bridge {
         let tables = self.tables.clone();
         let byte_requests = self.byte_requests.clone();
         let fonts = self.fonts.clone();
+        let installed = self.installed.clone();
         let on_message = Closure::<dyn FnMut(web_sys::MessageEvent)>::new(move |event: web_sys::MessageEvent| {
             if event.origin() != origin || !event.source().is_some_and(|s| js_sys::Object::is(&s, &parent)) {
                 return;
@@ -358,7 +377,7 @@ impl Bridge {
                 Some("deckcraft:add-fonts") => {
                     let Some(id) = string(&data, "id").filter(|id| !id.is_empty() && id.len() <= MAX_ID_BYTES) else { return };
                     if fonts.borrow().len() < MAX_PENDING_REQUESTS {
-                        fonts.borrow_mut().push(FontRequest { id, fonts: font_entries(&data) });
+                        fonts.borrow_mut().push(FontRequest { id, fonts: font_entries(&data, &installed.borrow()) });
                     }
                 }
                 _ => return,
@@ -449,18 +468,23 @@ fn rows(data: &JsValue) -> Result<Vec<Vec<String>>, String> {
 /// `fonts` as family names with their bytes: a font with no usable family name is left out, one
 /// whose bytes, size or format are wrong keeps its name with no bytes (it fails), and fonts past
 /// the limit keep their names only.
-fn font_entries(data: &JsValue) -> Vec<FontEntry> {
+fn font_entries(data: &JsValue, installed: &HashSet<String>) -> Vec<FontEntry> {
     let Ok(list) = js_sys::Reflect::get(data, &JsValue::from_str("fonts")) else { return Vec::new() };
     if !js_sys::Array::is_array(&list) {
         return Vec::new();
     }
+    // Families already installed, or earlier in this message, keep their names only: their bytes
+    // are not copied.
+    let mut seen = HashSet::<String>::new();
     js_sys::Array::from(&list)
         .iter()
         .enumerate()
         .filter_map(|(i, font)| {
             let family = string(&font, "family").map(|f| f.trim().to_string()).filter(|f| !f.is_empty() && f.len() <= MAX_FAMILY_BYTES)?;
             let format_ok = matches!(string(&font, "format").as_deref(), Some("ttf" | "otf"));
-            let bytes = if i < MAX_FONTS_PER_MESSAGE && format_ok { bytes_within(&font, MAX_FONT_BYTES) } else { None };
+            let key = family.to_lowercase();
+            let wanted = !installed.contains(&key) && seen.insert(key);
+            let bytes = if wanted && i < MAX_FONTS_PER_MESSAGE && format_ok { bytes_within(&font, MAX_FONT_BYTES) } else { None };
             Some(FontEntry { family, bytes })
         })
         .collect()

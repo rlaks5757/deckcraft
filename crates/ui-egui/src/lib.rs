@@ -1479,15 +1479,15 @@ impl SlideApp {
         }
     }
 
-    /// Remember the open presentation, the slide (or master/layout) and the operation for a
-    /// file the host will read asynchronously. Returns the cancellation identity the host must
-    /// echo on the [`InboxEvent`]. Call this when the pick or the drop starts, not when the
-    /// bytes arrive.
     /// A presentation picked, dropped or sent by the host is still being read or opened.
     pub fn opening_file(&self) -> bool {
         self.pending_files.iter().any(|r| r.purpose == FilePurpose::Open)
     }
 
+    /// Remember the open presentation, the slide (or master/layout) and the operation for a
+    /// file the host will read asynchronously. Returns the cancellation identity the host must
+    /// echo on the [`InboxEvent`]. Call this when the pick or the drop starts, not when the
+    /// bytes arrive.
     pub fn begin_external_file(&mut self, purpose: &str) -> u64 {
         let id = self.next_file_id;
         self.next_file_id = self.next_file_id.wrapping_add(1).max(1);
