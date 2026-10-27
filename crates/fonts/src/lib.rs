@@ -217,6 +217,25 @@ mod tests {
     }
 
     #[test]
+    fn an_upload_named_like_a_stand_in_only_draws_text_that_names_it() {
+        let db = FontDb::with_font_dirs(Vec::new());
+        // A loaded face stands in for its family; then an upload takes the same name.
+        assert_eq!(db.add_font(include_bytes!("../tests/fixtures/legacy-regular.ttf").to_vec()), 1);
+        let loaded = db
+            .families()
+            .into_iter()
+            .find(|f| db.face(f, "Regular").data().len() < 1 << 20 && f.to_lowercase().contains("legacy"))
+            .expect("the loaded family");
+        let loaded_id = db.face(&loaded, "Regular").id();
+        let colr = include_bytes!("../../render/tests/fixtures/colr-squares.ttf").to_vec();
+        assert_eq!(db.add_uploaded_font(colr, &loaded), 1);
+        assert!(db.face(&loaded, "Regular").is_color(), "text that names the family gets the upload");
+        let stand_in = db.stand_in(&loaded, "Regular").expect("the loaded face is still there for stand-in lookups");
+        assert!(!stand_in.is_color() && stand_in.id() == loaded_id, "a stand-in lookup keeps the loaded face");
+        assert!(db.stand_in("Never Heard Of It", "Regular").is_none());
+    }
+
+    #[test]
     fn last_resort_face_parses() {
         let f = fontdb::last_resort_face();
         assert_eq!(f.family, fontdb::LAST_RESORT_FAMILY);

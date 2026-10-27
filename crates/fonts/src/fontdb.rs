@@ -365,6 +365,11 @@ struct CatalogEntry {
 /// Process-wide font database.
 pub struct FontDb {
     faces: RwLock<Vec<Arc<FontFace>>>,
+    /// Faces an uploaded face replaced, and the ids of the uploaded faces: stand-in lookups (not
+    /// the family a text names) use the former, so an upload under a stand-in's name doesn't
+    /// change how every unnamed font is drawn.
+    replaced: RwLock<Vec<Arc<FontFace>>>,
+    uploaded: RwLock<std::collections::HashSet<u32>>,
     outlines: Mutex<HashMap<(u32, u32), Arc<BezPath>>>,
     #[cfg(not(target_arch = "wasm32"))]
     catalog: RwLock<Vec<CatalogEntry>>,
@@ -852,6 +857,8 @@ impl FontDb {
         }
         Self {
             faces: RwLock::new(faces),
+            replaced: RwLock::new(Vec::new()),
+            uploaded: RwLock::new(std::collections::HashSet::new()),
             outlines: Mutex::new(HashMap::new()),
             #[cfg(not(target_arch = "wasm32"))]
             catalog: RwLock::new(Vec::new()),
@@ -952,7 +959,14 @@ impl FontDb {
             return 0;
         }
         let mut faces = self.faces.write().unwrap_or_else(|e| e.into_inner());
-        faces.retain(|f| !new.iter().any(|n| n.family.eq_ignore_ascii_case(&f.family) && n.style.eq_ignore_ascii_case(&f.style)));
+        let (gone, kept): (Vec<_>, Vec<_>) =
+            faces.drain(..).partition(|f| new.iter().any(|n| n.family.eq_ignore_ascii_case(&f.family) && n.style.eq_ignore_ascii_case(&f.style)));
+        *faces = kept;
+        let mut uploaded = self.uploaded.write().unwrap_or_else(|e| e.into_inner());
+        // An earlier upload replaced by this one is not a baseline face.
+        let mut replaced = self.replaced.write().unwrap_or_else(|e| e.into_inner());
+        replaced.extend(gone.into_iter().filter(|f| !uploaded.contains(&f.id())));
+        uploaded.extend(new.iter().map(|f| f.id()));
         let added = new.len();
         faces.extend(new);
         added
@@ -1098,22 +1112,48 @@ impl FontDb {
     /// an open substitute ([`substitutes`]), then to Carlito and Inter. Installed system fonts are found by name
     /// whatever ran before.
     pub fn face(&self, family: &str, style: &str) -> Arc<FontFace> {
-        if let Some(f) = self.try_family(family, style) {
+        self.face_for(family, style, true)
+    }
+
+    /// The face of `family` before any upload replaced it, when an upload did; else what
+    /// [`FontDb::try_family`] finds. Stand-in lookups use it.
+    pub(crate) fn stand_in(&self, family: &str, style: &str) -> Option<Arc<FontFace>> {
+        let uploaded = self.uploaded.read().unwrap_or_else(|e| e.into_inner());
+        let faces = self.read_faces();
+        if uploaded.is_empty() || !faces.iter().any(|f| uploaded.contains(&f.id()) && f.family.eq_ignore_ascii_case(family)) {
+            drop(faces);
+            drop(uploaded);
+            return self.try_family(family, style);
+        }
+        let replaced = self.replaced.read().unwrap_or_else(|e| e.into_inner());
+        let pool: Vec<&Arc<FontFace>> =
+            replaced.iter().chain(faces.iter().filter(|f| !uploaded.contains(&f.id()))).filter(|f| f.family.eq_ignore_ascii_case(family)).collect();
+        let ns = norm(style);
+        let (tw, ti) = (style_weight(style), style_italic(style));
+        let score = |f: &Arc<FontFace>| (f.weight - tw).abs() + if f.italic != ti { 1000.0 } else { 0.0 };
+        pool.iter().find(|f| norm(&f.style) == ns).or_else(|| pool.iter().min_by(|a, b| score(a).total_cmp(&score(b)))).map(|f| (*f).clone())
+    }
+
+    /// [`FontDb::face`]; `named` is false when `family` is not what the text asked for but a
+    /// stand-in chosen for it, which an upload of that name does not take over.
+    fn face_for(&self, family: &str, style: &str, named: bool) -> Arc<FontFace> {
+        let first = if named { self.try_family(family, style) } else { self.stand_in(family, style) };
+        if let Some(f) = first {
             return f;
         }
         for sub in substitutes(family) {
-            if let Some(f) = self.try_family(sub, style) {
+            if let Some(f) = self.stand_in(sub, style) {
                 return f;
             }
         }
         let first = if cfg!(feature = "ppm") { "Carlito" } else { FALLBACK_FAMILY };
         for sub in [first, FALLBACK_FAMILY, "Helvetica Neue", "Arial", "Liberation Sans", "DejaVu Sans", "Segoe UI"] {
-            if let Some(f) = self.try_family(sub, style) {
+            if let Some(f) = self.stand_in(sub, style) {
                 return f;
             }
         }
         self.find(LAST_RESORT_FAMILY, "Regular")
-            .or_else(|| self.find(FALLBACK_FAMILY, "Regular"))
+            .or_else(|| self.stand_in(FALLBACK_FAMILY, "Regular"))
             .or_else(|| self.read_faces().first().cloned())
             .unwrap_or_else(last_resort_face)
     }
@@ -1133,9 +1173,9 @@ impl FontDb {
             return self.face(family, style);
         }
         if let Some(twin) = office_twin(family) {
-            return self.face(twin, style);
+            return self.face_for(twin, style, false);
         }
-        self.face(MISSING_FONT_FAMILY, style)
+        self.face_for(MISSING_FONT_FAMILY, style, false)
     }
 
     fn try_family(&self, family: &str, style: &str) -> Option<Arc<FontFace>> {
