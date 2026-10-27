@@ -266,7 +266,13 @@ pub fn dropdown(ui: &mut Ui, id: &str, current: &str, width: f32, enabled: bool,
     chevron(&painter, pos2(rect.max.x - 9.0, rect.center().y), 3.0, t.text_dim);
     let _ = id;
     egui::Popup::menu(&resp).width(width.max(140.0)).show(|ui| {
-        egui::ScrollArea::vertical().max_height(360.0).show(ui, add_items);
+        // A long list (fonts) shows its scroll bar in the PPM build, where the administrator's fonts can make it long.
+        let bar = if deckcraft_engine::hostlock::HOST_BUILD {
+            egui::scroll_area::ScrollBarVisibility::AlwaysVisible
+        } else {
+            egui::scroll_area::ScrollBarVisibility::VisibleWhenNeeded
+        };
+        egui::ScrollArea::vertical().max_height(360.0).scroll_bar_visibility(bar).show(ui, add_items);
     });
     resp
 }

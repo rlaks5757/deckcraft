@@ -131,9 +131,7 @@ pub const ALLOWED: &[&str] = &[
     "edit.undo",
     "file.render",
     "file.saveBytes",
-    "font.add",
     "font.replace",
-    "font.rescan",
     "font.used",
     "format.align",
     "format.alignCenter",
@@ -385,6 +383,9 @@ pub const BLOCKED: &[&str] = &[
     "file.recovery.save",
     "file.revert",
     "file.templates",
+    // The user's own fonts: the parent installs the administrator's with `add-fonts`.
+    "font.add",
+    "font.rescan",
 ];
 
 /// Commands that are off until the policy turns them on.

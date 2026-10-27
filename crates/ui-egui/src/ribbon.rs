@@ -520,11 +520,14 @@ fn font_group(app: &mut SlideApp, ui: &mut Ui, st: &Value) {
                             ui.separator();
                         }
                     }
-                    ui.separator();
-                    // Fonts installed while DeckCraft runs (e.g. into ~/.local/share/fonts).
-                    if ui.button(tl!("Rescan Installed Fonts")).clicked() {
-                        run(app, "font.rescan", json!({}));
-                        ui.close();
+                    // Fonts installed while DeckCraft runs (e.g. into ~/.local/share/fonts); a locked
+                    // host has no such fonts, only the administrator's.
+                    if app.allowed("font.rescan") {
+                        ui.separator();
+                        if ui.button(tl!("Rescan Installed Fonts")).clicked() {
+                            run(app, "font.rescan", json!({}));
+                            ui.close();
+                        }
                     }
                 });
                 let size_text = size.map(|s| widgets::fmt_num(s, "")).unwrap_or_default();

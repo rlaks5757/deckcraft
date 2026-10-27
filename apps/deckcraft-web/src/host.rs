@@ -233,6 +233,7 @@ impl Bridge {
             if !installed.is_empty() {
                 app.textures.invalidate();
             }
+            log::info!("add-fonts {id}: installed [{}], failed [{}]", installed.join(", "), failed.join(", "));
             let list = |names: &[String]| names.iter().map(|n| JsValue::from_str(n)).collect::<js_sys::Array>();
             self.send(&[
                 ("type", "deckcraft:fonts-added".into()),

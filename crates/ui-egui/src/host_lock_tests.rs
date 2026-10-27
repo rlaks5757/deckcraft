@@ -86,6 +86,8 @@ fn blocked_commands_do_nothing_quietly() {
         "file.close",
         "file.revert",
         "file.templates",
+        "font.add",
+        "font.rescan",
         "file.export",
         "file.saveAs",
         "app.openDialog",
