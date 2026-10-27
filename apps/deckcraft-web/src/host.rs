@@ -26,7 +26,7 @@
 //!   named as Save would name it. Purpose `"save"` counts as saved, as Save does; `"check"` and
 //!   `"preview"` leave the app's state alone.
 //! - `deckcraft:bytes-failed` (to the parent): `{ id, purpose, reason }`; reason `"not-ready"` when
-//!   the parent's presentation has not arrived yet or is still opening, `"bad-purpose"` for an unknown purpose.
+//!   the parent's presentation has not arrived, is still opening or failed to open, `"bad-purpose"` for an unknown purpose.
 //! - `deckcraft:add-fonts` (from the parent): `{ id, fonts: [{ family, bytes, format }] }`, format
 //!   `"ttf"` or `"otf"`. Each font goes into the font database (the font menu and the slides use
 //!   it). A font is known by the `family` the parent sent, not the name inside the file, and
@@ -122,8 +122,6 @@ pub struct Bridge {
     byte_requests: Rc<RefCell<Vec<BytesRequest>>>,
     /// Font batches from the parent not yet installed.
     fonts: Rc<RefCell<Vec<FontRequest>>>,
-    /// The parent has sent a presentation (before that the app holds only its blank one).
-    document_sent: Rc<Cell<bool>>,
     /// Families (lower case) already installed from the parent.
     installed: Rc<RefCell<HashSet<String>>>,
 }
@@ -152,7 +150,6 @@ impl Bridge {
             failures: Rc::default(),
             byte_requests: Rc::default(),
             fonts: Rc::default(),
-            document_sent: Rc::default(),
             installed: Rc::default(),
         })
     }
@@ -193,7 +190,6 @@ impl Bridge {
     /// Before each pass: files from the parent open as if picked with File › Open.
     pub fn deliver(&self, app: &mut SlideApp, inbox: &Inbox) {
         for (name, bytes, overrides) in std::mem::take(&mut *self.opened.borrow_mut()) {
-            self.document_sent.set(true);
             app.session.set_policy(&overrides);
             let id = app.begin_external_file("open");
             inbox.lock().unwrap_or_else(|e| e.into_inner()).push(InboxEvent::File(InboxFile { id, name, bytes }));
@@ -252,7 +248,7 @@ impl Bridge {
         for BytesRequest { id, purpose } in std::mem::take(&mut *self.byte_requests.borrow_mut()) {
             let result = if !matches!(purpose.as_str(), "save" | "check" | "preview") {
                 Err("bad-purpose".to_string())
-            } else if !self.document_sent.get() || !self.opened.borrow().is_empty() || app.opening_file() {
+            } else if !app.opened_ok() || !self.opened.borrow().is_empty() || app.opening_file() {
                 Err("not-ready".to_string())
             } else if let Some(doc) = app.session.active() {
                 // The name and format Save gives a presentation with no file name.

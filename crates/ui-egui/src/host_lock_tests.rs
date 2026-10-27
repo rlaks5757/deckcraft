@@ -263,6 +263,20 @@ fn the_host_opens_its_presentation_and_nothing_else_does() {
 }
 
 #[test]
+fn the_app_reports_a_host_presentation_ready_only_after_it_opened() {
+    let (mut h, _, _, inbox) = locked(&[]);
+    assert!(!h.state().opened_ok(), "nothing sent yet: only the blank presentation");
+    let id = h.state_mut().begin_external_file("open");
+    inbox.lock().unwrap().push(InboxEvent::File(InboxFile { id, name: "bad.pptx".into(), bytes: b"not a presentation".to_vec() }));
+    h.run_steps(3);
+    assert!(!h.state().opened_ok() && !h.state().opening_file(), "a failed open is not ready");
+    let id = h.state_mut().begin_external_file("open");
+    inbox.lock().unwrap().push(InboxEvent::File(InboxFile { id, name: "y.pptx".into(), bytes: pptx_with_slides(1) }));
+    h.run_steps(3);
+    assert!(h.state().opened_ok(), "the next successful open is ready again");
+}
+
+#[test]
 fn overrides_turn_commands_on_and_off() {
     let (mut h, ..) = locked(&[("file.export", true), ("app.print", true), ("slide.new", false)]);
     assert!(h.state().allowed("file.export") && h.state().allowed("app.print"));
