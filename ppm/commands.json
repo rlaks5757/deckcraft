@@ -1182,7 +1182,7 @@
     },
     {
       "grades": {
-        "builder": "on"
+        "builder": "locked"
       },
       "id": "font.add",
       "label": "Add Font",
@@ -1204,7 +1204,7 @@
     },
     {
       "grades": {
-        "builder": "on"
+        "builder": "locked"
       },
       "id": "font.rescan",
       "label": "Rescan Installed Fonts",

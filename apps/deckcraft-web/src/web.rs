@@ -139,7 +139,9 @@ impl eframe::App for WebShell {
         }
         if let Some(bridge) = &self.bridge {
             bridge.deliver(&mut self.app, &self.inbox);
+            bridge.deliver_fonts(&mut self.app);
             bridge.deliver_tables(&mut self.app);
+            bridge.deliver_bytes(&mut self.app);
         }
         self.app.logic(ctx);
     }

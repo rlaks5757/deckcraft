@@ -570,6 +570,8 @@ pub struct SlideApp {
     next_file_id: u64,
     /// Picks and drops whose bytes have not arrived yet.
     pending_files: Vec<PendingFile>,
+    /// How the last presentation opened with `Open` purpose went (`None` before any).
+    last_open_ok: Option<bool>,
     /// The policy the PPM host sent (overrides of the default grades), when the session is locked to its host.
     host: Option<Policy>,
 }
@@ -645,6 +647,7 @@ impl SlideApp {
             twisting: false,
             next_file_id: 1,
             pending_files: Vec::new(),
+            last_open_ok: None,
         }
     }
 
@@ -1479,6 +1482,17 @@ impl SlideApp {
         }
     }
 
+    /// The last presentation opened (not dropped or inserted) came open without an error: the
+    /// document in the app is the one the user chose, not the blank one it started with.
+    pub fn opened_ok(&self) -> bool {
+        self.last_open_ok == Some(true)
+    }
+
+    /// A presentation picked, dropped or sent by the host is still being read or opened.
+    pub fn opening_file(&self) -> bool {
+        self.pending_files.iter().any(|r| r.purpose == FilePurpose::Open)
+    }
+
     /// Remember the open presentation, the slide (or master/layout) and the operation for a
     /// file the host will read asynchronously. Returns the cancellation identity the host must
     /// echo on the [`InboxEvent`]. Call this when the pick or the drop starts, not when the
@@ -1547,6 +1561,9 @@ impl SlideApp {
         let cmd = match command_for(req.purpose, name, bytes) {
             Ok(cmd) => cmd,
             Err(e) => {
+                if req.purpose == FilePurpose::Open {
+                    self.last_open_ok = Some(false);
+                }
                 self.set_status(e);
                 return;
             }
@@ -1564,6 +1581,9 @@ impl SlideApp {
         } else {
             self.execute_on_target(&req.target, name, cmd, &params)
         };
+        if req.purpose == FilePurpose::Open {
+            self.last_open_ok = Some(result.is_ok());
+        }
         match result {
             Err(e) if cmd == "file.openBytes" => self.notify(e),
             Err(e) => self.set_status(e),
